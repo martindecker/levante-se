@@ -2,12 +2,12 @@
 <DataForMorningP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <WhereSundayToSaturday>
     <LocationOfDayWork>Frei</LocationOfDayWork>
-    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
     <LocationOfDayWork>Externarbeit</LocationOfDayWork>
     <LocationOfDayWork>Externarbeit</LocationOfDayWork>
     <LocationOfDayWork>Externarbeit</LocationOfDayWork>
-    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
-    <LocationOfDayWork>Frei</LocationOfDayWork>
+    <LocationOfDayWork>Externarbeit</LocationOfDayWork>
+    <LocationOfDayWork>HaushaltUndHeimarbeit</LocationOfDayWork>
+    <LocationOfDayWork>EinkaufenUndHaushalt</LocationOfDayWork>
   </WhereSundayToSaturday>
   <DayOfLastWalkOrJogging>1</DayOfLastWalkOrJogging>
 </DataForMorningP>
