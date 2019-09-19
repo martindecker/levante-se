@@ -14,8 +14,7 @@ Module Program
     Public todo3 = VbLf
 
     Sub Main(args As String())
-        Dim stoerungen1 = janein1("Lärm hörbar")
-        Dim stoerungen2 = If(stoerungen1 = False, False, janein1("Straße arg befahren"))
+        Dim stoerungen2 = If( False, False, janein1("Straße arg befahren"))
         If stoerungen2 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
             todo3 = todo3 & "Ursache fuer stark befahrene Straße herausfinden"
         Else
