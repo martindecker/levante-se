@@ -10,4 +10,9 @@
     <LocationOfDayWork>EinkaufenUndHaushalt</LocationOfDayWork>
   </WhereSundayToSaturday>
   <DayOfLastWalkOrJogging>1</DayOfLastWalkOrJogging>
+  <FruehsportModeArray>
+    <FruehsportMode>Sommerhalbjahr</FruehsportMode>
+    <FruehsportMode>WetterAbApril</FruehsportMode>
+    <FruehsportMode>Keiner</FruehsportMode>
+  </FruehsportModeArray>
 </DataForMorningP>
