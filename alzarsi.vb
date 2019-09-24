@@ -21,7 +21,7 @@ Module Program
   Dim dataForM as DataForMorningP
 
   Private Sub LoadAData()
-    Dim fn = "jsonxmlm\daten_fuer_morgen.xml"
+    Dim fn = "jsonxmlm/daten_fuer_morgen.xml"
     Try
 	  For Teste = 1 To 5
 	    If not File.Exists(fn) Then fn = "../" & fn
