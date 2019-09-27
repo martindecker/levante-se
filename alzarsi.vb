@@ -56,8 +56,8 @@ Public Module Interf
     Externarbeit = 3          '
     Frei = 4                  '
     Fruehschicht = 5          '
-    ExterneWeiterbildung = 6  '
-    Lernen = 7                '
+    Lernen = 6                '
+    ExterneWeiterbildung = 7  '
   End Enum
   
   Public Enum FruehsportMode
