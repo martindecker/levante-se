@@ -19,6 +19,7 @@ Module Program
     End Sub
 	
   Dim dataForM as DataForMorningP
+  Dim wForM    as WorteForMorningP
 
   Private Sub LoadAData()
     Dim fn = "jsonxmlm/daten_fuer_morgen.xml"
@@ -30,6 +31,14 @@ Module Program
       Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DataForMorningP))
       dataForM = CType(xmlSer.Deserialize(stm), DataForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(dataForM.DayOfLastWalkOrJogging)
+	  fn = "jsonxmlm/worte_fuer_morgen.xml"
+ 	  For Teste = 1 To 5
+	    If not File.Exists(fn) Then fn = "../" & fn
+	  Next
+      stm = New FileStream(fn, FileMode.Open)
+      xmlSer = New XmlSerializer(GetType(WorteForMorningP))
+      wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
+      stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
     Catch eee As Exception
       Console.WriteLine(fn & "   Error:")    
 	  Console.WriteLine(eee)
@@ -41,8 +50,9 @@ Module Program
     Dim line As String
     Do
       Console.Write("{0} ? (j/n) ", text)
-      line = Console.ReadLine()
+      line = Console.ReadKey(true).KeyChar 
     Loop Until "jnJN".Contains(line)
+	Console.WriteLine(" ")
     Return line.ToUpper() = "J"
   End Function
 
@@ -73,6 +83,10 @@ Public Module Interf
     Public DayOfLastWalkOrJogging As Integer
     Public FruehsportModeArray() As FruehsportMode
   End Structure
-  
+
+  Public Structure WorteForMorningP
+    Public VersionOfStruct As Decimal
+  End Structure
+    
 End Module
 
