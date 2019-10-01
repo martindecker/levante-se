@@ -52,6 +52,11 @@ Module Program
       Console.Write("{0} ? (j/n) ", text)
       line = Console.ReadKey(true).KeyChar 
     Loop Until "jnJN".Contains(line)
+	If line.ToUpper() = "J" then 
+	  Console.Write(" Ja ")
+	Else 
+	  Console.Write(" Nein ")
+	End If
 	Console.WriteLine(" ")
     Return line.ToUpper() = "J"
   End Function
@@ -86,6 +91,7 @@ Public Module Interf
 
   Public Structure WorteForMorningP
     Public VersionOfStruct As Decimal
+	Public OftR() as String
   End Structure
     
 End Module
