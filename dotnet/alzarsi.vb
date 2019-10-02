@@ -61,6 +61,32 @@ Module Program
     Return line.ToUpper() = "J"
   End Function
 
+ 
+  Private Sub dozweispaltigchecklist(left() As String,r() As String)
+    Console.WriteLine("Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (l/r)"& vbCrlf)
+	Dim lindex as Integer = 1
+	Dim rindex as Integer = 1
+    Dim line As String
+	Do While lindex < len(left) or rindex < len(r) 
+     Do
+	  If lindex < len(left) and rindex < len(r) then
+        Console.Write(vbcr &  "{0},[1] ?       ", left(lindex),r(rindex))
+	  Elseif lindex < len(left) then
+        Console.Write(vbcr &  "{0}, nix ?       ", left(lindex))
+	  Else
+        Console.Write(vbcr &  "nix,[1] ?       ",  r(rindex))
+	  End if
+      line = Console.ReadKey(true).KeyChar 
+     Loop Until "lLrR".Contains(line)
+	 If line.ToUpper() = "R" then 
+	  rindex  = rindex  + 1
+	 Else 
+	  lindex  = lindex  + 1
+	 End If
+	Loop
+	Console.WriteLine("Fertig ")
+  End sub
+	
 End Module
 
 Public Module Interf
