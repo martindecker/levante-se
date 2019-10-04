@@ -6,7 +6,7 @@ Module Program
     Public todo3 = VbLf
 
     Sub Main(args As String())
-	    LoadAData()
+        LoadAData()
         Dim stoerungen2 = If( False, False, janein1("Straße arg befahren"))
         If stoerungen2 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
             todo3 = todo3 & "Ursache fuer stark befahrene Straße herausfinden"
@@ -17,33 +17,33 @@ Module Program
         Console.WriteLine("I began the project on August 22, 2018. Please enter sth to end the program.")
         Console.ReadKey()
     End Sub
-	
+    
   Dim dataForM as DataForMorningP
   Dim wForM    as WorteForMorningP
 
   Private Sub LoadAData()
     Dim fn = "jsonxmlm/daten_fuer_morgen.xml"
     Try
-	  For Teste = 1 To 5
-	    If not File.Exists(fn) Then fn = "../" & fn
-	  Next
+      For Teste = 1 To 5
+        If not File.Exists(fn) Then fn = "../" & fn
+      Next
       Dim stm As FileStream = New FileStream(fn, FileMode.Open)
       Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DataForMorningP))
       dataForM = CType(xmlSer.Deserialize(stm), DataForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(dataForM.DayOfLastWalkOrJogging)
-	  fn = "jsonxmlm/worte_fuer_morgen.xml"
- 	  For Teste = 1 To 5
-	    If not File.Exists(fn) Then fn = "../" & fn
-	  Next
+      fn = "jsonxmlm/worte_fuer_morgen.xml"
+      For Teste = 1 To 5
+        If not File.Exists(fn) Then fn = "../" & fn
+      Next
       stm = New FileStream(fn, FileMode.Open)
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
     Catch eee As Exception
       Console.WriteLine(fn & "   Error:")    
-	  Console.WriteLine(eee)
-	  Environment.Exit(-1)
-    End Try	
+      Console.WriteLine(eee)
+      Environment.Exit(-1)
+    End Try 
   End Sub
   
   Function janein1(text As String)
@@ -52,41 +52,41 @@ Module Program
       Console.Write("{0} ? (j/n) ", text)
       line = Console.ReadKey(true).KeyChar 
     Loop Until "jnJN".Contains(line)
-	If line.ToUpper() = "J" then 
-	  Console.Write(" Ja ")
-	Else 
-	  Console.Write(" Nein ")
-	End If
-	Console.WriteLine(" ")
+    If line.ToUpper() = "J" then 
+      Console.Write(" Ja ")
+    Else 
+      Console.Write(" Nein ")
+    End If
+    Console.WriteLine(" ")
     Return line.ToUpper() = "J"
   End Function
 
  
   Private Sub dozweispaltigchecklist(left() As String,r() As String)
     Console.WriteLine("Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (l/r)"& vbCrlf)
-	Dim lindex as Integer = 1
-	Dim rindex as Integer = 1
+    Dim lindex as Integer = 1
+    Dim rindex as Integer = 1
     Dim line As String
-	Do While lindex < len(left) or rindex < len(r) 
+    Do While lindex < len(left) or rindex < len(r) 
      Do
-	  If lindex < len(left) and rindex < len(r) then
+      If lindex < len(left) and rindex < len(r) then
         Console.Write(vbcr &  "{0},[1] ?       ", left(lindex),r(rindex))
-	  Elseif lindex < len(left) then
+      Elseif lindex < len(left) then
         Console.Write(vbcr &  "{0}, nix ?       ", left(lindex))
-	  Else
+      Else
         Console.Write(vbcr &  "nix,[1] ?       ",  r(rindex))
-	  End if
+      End if
       line = Console.ReadKey(true).KeyChar 
      Loop Until "lLrR".Contains(line)
-	 If line.ToUpper() = "R" then 
-	  rindex  = rindex  + 1
-	 Else 
-	  lindex  = lindex  + 1
-	 End If
-	Loop
-	Console.WriteLine("Fertig ")
+     If line.ToUpper() = "R" then 
+      rindex  = rindex  + 1
+     Else 
+      lindex  = lindex  + 1
+     End If
+    Loop
+    Console.WriteLine("Fertig ")
   End sub
-	
+    
 End Module
 
 Public Module Interf
@@ -103,10 +103,10 @@ Public Module Interf
   
   Public Enum FruehsportMode
     Keiner
-	Sommerhalbjahr
-	Wetterfrage
-	WetterAbApril
-	FastImmer
+    Sommerhalbjahr
+    Wetterfrage
+    WetterAbApril
+    FastImmer
   End Enum
   
   Public Structure DataForMorningP
@@ -117,7 +117,7 @@ Public Module Interf
 
   Public Structure WorteForMorningP
     Public VersionOfStruct As Decimal
-	Public OftR() as String
+    Public OftR() as String
   End Structure
     
 End Module
