@@ -62,6 +62,11 @@ Module Program
   End Function
 
  
+  Function BewegungsVorfestleg( day146097 As Integer, regelstruct As DataForMorningP ) As FruehsportMode
+    Return FruehsportMode.FastImmer
+  End Function
+
+ 
   Private Sub dozweispaltigchecklist(left() As String,r() As String)
     Console.WriteLine("Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (l/r)"& vbCrlf)
     Dim lindex as Integer = 1
@@ -108,7 +113,7 @@ Public Module Interf
     WetterAbApril
     FastImmer
   End Enum
-  
+
   Public Structure DataForMorningP
     Public WhereSundayToSaturday() As LocationOfDayWork REM Anzahl kann ich hier nicht festlegen.
     Public DayOfLastWalkOrJogging As Integer
