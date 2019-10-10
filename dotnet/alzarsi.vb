@@ -61,9 +61,36 @@ Module Program
     Return line.ToUpper() = "J"
   End Function
 
- 
+  Sub Planungsfragen
+    Dim day146097 As Integer = DateDiff(DateInterval.Day, GlobalConstants.base_sunday , Date.Now)
+    day146097 = day146097 mod 146097
+    Dim fs as FruehsportMode
+    fs = BewegungsVorfestleg( day146097 , dataForM )
+    ' FruehsportMode auf Keiner und FastImmer reduzieren
+    if FruehsportMode.Wetterfrage = fs AndAlso janein1("Regnet es oder ist es unter -5 Grad") then
+      fs = FruehsportMode.Keiner
+    Elseif FruehsportMode.Wetterfrage = fs then
+      fs = FruehsportMode.FastImmer
+    End if
+    if fs = FruehsportMode.FastImmer Then Console.WriteLine("Heute Frühsport")  
+  End Sub
+   
   Function BewegungsVorfestleg( day146097 As Integer, regelstruct As DataForMorningP ) As FruehsportMode
-    Return FruehsportMode.FastImmer
+    Dim laenge = regelstruct.FruehsportModeArray.Length()
+    if 0=laenge Then Return FruehsportMode.FastImmer
+    Dim fs as FruehsportMode
+    fs = regelstruct.FruehsportModeArray( day146097 mod laenge )
+    ' FruehsportMode auf Keiner, Wetterfrage und FastImmer reduzieren
+    If FruehsportMode.Sommerhalbjahr = fs AndAlso DateTime.Today.Month >= 5 AndAlso DateTime.Today.Month <= 10 Then
+      fs = FruehsportMode.FastImmer
+    Elseif FruehsportMode.Sommerhalbjahr = fs then
+      fs = FruehsportMode.Keiner
+    Elseif FruehsportMode.WetterAbApril = fs AndAlso DateTime.Today.Month >= 4 then
+      fs = FruehsportMode.Wetterfrage
+    Elseif FruehsportMode.WetterAbApril = fs then
+      fs = FruehsportMode.Keiner
+    End If
+    Return fs
   End Function
 
  
@@ -91,7 +118,6 @@ Module Program
     Loop
     Console.WriteLine("Fertig ")
   End sub
-    
 End Module
 
 Public Module Interf
@@ -115,7 +141,8 @@ Public Module Interf
   End Enum
 
   Public Structure DataForMorningP
-    Public WhereSundayToSaturday() As LocationOfDayWork REM Anzahl kann ich hier nicht festlegen.
+    Public WhereSundayToSaturday() As LocationOfDayWork REM Anzahl 7 kann ich hier nicht festlegen.
+    Public URL_ofDay() As String
     Public DayOfLastWalkOrJogging As Integer
     Public FruehsportModeArray() As FruehsportMode
   End Structure
@@ -124,6 +151,8 @@ Public Module Interf
     Public VersionOfStruct As Decimal
     Public OftR() as String
   End Structure
-    
 End Module
 
+Public Module GlobalConstants
+    Public ReadOnly base_sunday As Date = New Date(2018, 9, 2) ' Muss ein Sonntag sein = Tag 0. Die Zshl der Tage ab dem 31.12.1899 ist durch 63 teilbar.
+End Module

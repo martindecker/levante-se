@@ -2,13 +2,17 @@
 <DataForMorningP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <WhereSundayToSaturday>
     <LocationOfDayWork>Frei</LocationOfDayWork>
-    <LocationOfDayWork>Externarbeit</LocationOfDayWork>
-    <LocationOfDayWork>Externarbeit</LocationOfDayWork>
-    <LocationOfDayWork>Externarbeit</LocationOfDayWork>
-    <LocationOfDayWork>Externarbeit</LocationOfDayWork>
-    <LocationOfDayWork>HaushaltUndHeimarbeit</LocationOfDayWork>
+    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
+    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
+    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
+    <LocationOfDayWork>Lernen</LocationOfDayWork>
+    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
     <LocationOfDayWork>EinkaufenUndHaushalt</LocationOfDayWork>
   </WhereSundayToSaturday>
+  <URL_ofDay>
+    <string>https://twitter.com/v_language</string>
+    <string>https://merkurist.de</string>
+  </URL_ofDay>
   <DayOfLastWalkOrJogging>1</DayOfLastWalkOrJogging>
   <FruehsportModeArray>
     <FruehsportMode>Sommerhalbjahr</FruehsportMode>
