@@ -14,6 +14,7 @@ Module Program
             Console.WriteLine("nix")
         End If
         Console.WriteLine(todo3)
+		Planungsfragen()
         Console.WriteLine("I began the project on August 22, 2018. Please enter sth to end the program.")
         Console.ReadKey()
     End Sub
