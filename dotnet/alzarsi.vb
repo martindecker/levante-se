@@ -40,9 +40,8 @@ Module Program
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
-    Catch eee As Exception
-      Console.WriteLine(fn & "   Error:")    
-      Console.WriteLine(eee)
+    Catch eee As Exception  
+      errorAbbruch(fn & "   Error:", eee)
       Environment.Exit(-1)
     End Try 
   End Sub
@@ -74,6 +73,7 @@ Module Program
       fs = FruehsportMode.FastImmer
     End if
     if fs = FruehsportMode.FastImmer Then Console.WriteLine("Heute Frühsport")  
+	Dim work1 as LocationOfDayWork
   End Sub
    
   Function BewegungsVorfestleg( day146097 As Integer, regelstruct As DataForMorningP ) As FruehsportMode
@@ -118,8 +118,17 @@ Module Program
      End If
     Loop
     Console.WriteLine("Fertig ")
-  End sub
+  End Sub
+
+
+  Sub errorAbbruch( text1 as String, text2 as Exception )
+      Console.WriteLine(text1)    
+      Console.WriteLine(text2)
+      Environment.Exit(-1)
+  End Sub
 End Module
+
+
 
 Public Module Interf
   Public Enum LocationOfDayWork
