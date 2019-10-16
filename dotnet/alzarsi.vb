@@ -13,9 +13,9 @@ Module Program
         Else
             Console.WriteLine("nix")
         End If
-        Console.WriteLine(todo3)
+        Console.WriteLine(VbLf)
 		Planungsfragen()
-        Console.WriteLine("I began the project on August 22, 2018. Please enter sth to end the program.")
+        Console.WriteLine("Please enter sth to end the program.")
         Console.ReadKey()
     End Sub
     
@@ -42,7 +42,6 @@ Module Program
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
     Catch eee As Exception  
       errorAbbruch(fn & "   Error:", eee)
-      Environment.Exit(-1)
     End Try 
   End Sub
   
@@ -72,8 +71,17 @@ Module Program
     Elseif FruehsportMode.Wetterfrage = fs then
       fs = FruehsportMode.FastImmer
     End if
-    if fs = FruehsportMode.FastImmer Then Console.WriteLine("Heute Frühsport")  
+    Console.WriteLine(VbLf)
+    if fs = FruehsportMode.FastImmer Then Console.WriteLine("-----> " & "Heute Frühsport, dann")  
 	Dim work1 as LocationOfDayWork
+	if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorAbbruch( "WhereSundayToSaturday.Length()", Nothing )
+	work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
+	Console.WriteLine( "-----> " & work1.ToString() ) 
+    Console.WriteLine(VbLf)
+    If dataForM.URL_ofDay.Length() > 0 Then
+	  Dim url as String = dataForM.URL_ofDay( day146097 mod dataForM.URL_ofDay.Length() )
+	  Console.WriteLine( "-----> " & url ) 
+    End if	
   End Sub
    
   Function BewegungsVorfestleg( day146097 As Integer, regelstruct As DataForMorningP ) As FruehsportMode
@@ -122,8 +130,8 @@ Module Program
 
 
   Sub errorAbbruch( text1 as String, text2 as Exception )
-      Console.WriteLine(text1)    
-      Console.WriteLine(text2)
+      Console.WriteLine(text1)	  
+      if text2 IsNot Nothing Then Console.WriteLine(text2)
       Environment.Exit(-1)
   End Sub
 End Module
