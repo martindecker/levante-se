@@ -32,6 +32,7 @@ Module Program
       Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DataForMorningP))
       dataForM = CType(xmlSer.Deserialize(stm), DataForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(dataForM.DayOfLastWalkOrJogging)
+	  Console.Write( fn & " + " )
       fn = "jsonxmlm/worte_fuer_morgen.xml"
       For Teste = 1 To 5
         If not File.Exists(fn) Then fn = "../" & fn
@@ -40,6 +41,7 @@ Module Program
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
+	  Console.WriteLine( fn & " geladen" )
     Catch eee As Exception  
       errorAbbruch(fn & "   Error:", eee)
     End Try 
