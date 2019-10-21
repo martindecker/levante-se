@@ -14,7 +14,7 @@ Module Program
             Console.WriteLine("nix")
         End If
         Console.WriteLine(VbLf)
-		Planungsfragen()
+        Planungsfragen()
         Console.WriteLine("Please enter sth to end the program.")
         Console.ReadKey()
     End Sub
@@ -32,16 +32,20 @@ Module Program
       Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DataForMorningP))
       dataForM = CType(xmlSer.Deserialize(stm), DataForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(dataForM.DayOfLastWalkOrJogging)
-	  Console.Write( fn & " + " )
+      Console.Write( Directory.GetCurrentDirectory() )
       fn = "jsonxmlm/worte_fuer_morgen.xml"
       For Teste = 1 To 5
-        If not File.Exists(fn) Then fn = "../" & fn
+        If not File.Exists(fn) Then 
+          fn = "../" & fn
+          Console.Write("/..")
+        End if
+        
       Next
       stm = New FileStream(fn, FileMode.Open)
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
-	  Console.WriteLine( fn & " geladen" )
+      Console.WriteLine( "/*.xml geladen" )
     Catch eee As Exception  
       errorAbbruch(fn & "   Error:", eee)
     End Try 
@@ -75,15 +79,15 @@ Module Program
     End if
     Console.WriteLine(VbLf)
     if fs = FruehsportMode.FastImmer Then Console.WriteLine("-----> " & "Heute Frühsport, dann")  
-	Dim work1 as LocationOfDayWork
-	if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorAbbruch( "WhereSundayToSaturday.Length()", Nothing )
-	work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
-	Console.WriteLine( "-----> " & work1.ToString() ) 
+    Dim work1 as LocationOfDayWork
+    if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorAbbruch( "WhereSundayToSaturday.Length()", Nothing )
+    work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
+    Console.WriteLine( "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
     If dataForM.URL_ofDay.Length() > 0 Then
-	  Dim url as String = dataForM.URL_ofDay( day146097 mod dataForM.URL_ofDay.Length() )
-	  Console.WriteLine( "-----> " & url ) 
-    End if	
+      Dim url as String = dataForM.URL_ofDay( day146097 mod dataForM.URL_ofDay.Length() )
+      Console.WriteLine( "-----> " & url ) 
+    End if  
   End Sub
    
   Function BewegungsVorfestleg( day146097 As Integer, regelstruct As DataForMorningP ) As FruehsportMode
@@ -132,8 +136,10 @@ Module Program
 
 
   Sub errorAbbruch( text1 as String, text2 as Exception )
-      Console.WriteLine(text1)	  
+      Console.WriteLine(text1)    
       if text2 IsNot Nothing Then Console.WriteLine(text2)
+      Console.WriteLine("Please enter sth to end the program.")
+      Console.ReadKey()
       Environment.Exit(-1)
   End Sub
 End Module
