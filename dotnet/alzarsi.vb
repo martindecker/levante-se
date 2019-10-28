@@ -22,6 +22,7 @@ Module Program
   Dim dataForM as DataForMorningP
   Dim wForM    as WorteForMorningP
 
+
   Private Sub LoadAData()
     Dim fn = "jsonxmlm/daten_fuer_morgen.xml"
     Try
@@ -38,8 +39,7 @@ Module Program
         If not File.Exists(fn) Then 
           fn = "../" & fn
           Console.Write("/..")
-        End if
-        
+        End if        
       Next
       stm = New FileStream(fn, FileMode.Open)
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
@@ -50,6 +50,7 @@ Module Program
       errorAbbruch(fn & "   Error:", eee)
     End Try 
   End Sub
+
   
   Function janein1(text As String)
     Dim line As String
@@ -65,7 +66,8 @@ Module Program
     Console.WriteLine(" ")
     Return line.ToUpper() = "J"
   End Function
-
+  
+  
   Sub Planungsfragen
     Dim day146097 As Integer = DateDiff(DateInterval.Day, GlobalConstants.base_sunday , Date.Now)
     day146097 = day146097 mod 146097
@@ -87,9 +89,17 @@ Module Program
     If dataForM.URL_ofDay.Length() > 0 Then
       Dim url as String = dataForM.URL_ofDay( day146097 mod dataForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
+      Try
+          dim psi as new ProcessStartInfo(url)
+          psi.UseShellExecute = true
+          System.Diagnostics.Process.Start( psi )
+      Catch ee As Exception
+          errorAbbruch( url  , ee )
+      End Try
     End if  
   End Sub
-   
+ 
+ 
   Function BewegungsVorfestleg( day146097 As Integer, regelstruct As DataForMorningP ) As FruehsportMode
     Dim laenge = regelstruct.FruehsportModeArray.Length()
     if 0=laenge Then Return FruehsportMode.FastImmer
