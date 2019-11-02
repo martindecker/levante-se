@@ -7,11 +7,13 @@ Module Program
 
     Sub Main(args As String())
         LoadAData()
-        Dim stoerungen2 = If( False, False, janein1("Straße arg befahren"))
-        If stoerungen2 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
-            todo3 = todo3 & "Ursache fuer stark befahrene Straße herausfinden"
-        Else
-            Console.WriteLine("nix")
+        If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
+          Dim stoerungen2 = janein1("Straße arg befahren")
+          If  stoerungen2 Then
+              todo3 = todo3 & "Ursache fuer stark befahrene Straße herausfinden"
+          Else
+              Console.WriteLine("nix")
+          End If
         End If
         Console.WriteLine(VbLf)
         Planungsfragen()
@@ -46,6 +48,9 @@ Module Program
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
       Console.WriteLine( "/*.xml geladen" )
+      If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden") 
+      If dataForM.URL_ofDay Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
+      If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
     Catch eee As Exception  
       errorAbbruch(fn & "   Error:", eee)
     End Try 
