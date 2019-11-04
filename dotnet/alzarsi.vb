@@ -1,22 +1,30 @@
 Imports System
 Imports System.Xml.Serialization
 Imports System.IO
+Imports System.Text
 
 Module Program
-    Public todo3 = VbLf
+    Public todo2(20) As String
+    Public filled2bis As Integer = 0
+    Public todo3 As String = Nothing
 
     Sub Main(args As String())
-        LoadAData()
+        LoadAData
         If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
           Dim stoerungen2 = janein1("Straße arg befahren")
           If  stoerungen2 Then
-              todo3 = todo3 & "Ursache fuer stark befahrene Straße herausfinden"
+              todo3 = "Ursache fuer stark befahrene Straße herausfinden"
           Else
               Console.WriteLine("nix")
           End If
         End If
         Console.WriteLine(VbLf)
-        Planungsfragen()
+        Planungsfragen
+        Array.Resize( todo2,filled2bis+1 )
+        left = todo2
+        r = wForM.OftR
+        dozweispaltigchecklist
+        ' dozweispaltigchecklist( todo2, wForM.OftR )
         Console.WriteLine("Please enter sth to end the program.")
         Console.ReadKey()
     End Sub
@@ -25,7 +33,7 @@ Module Program
   Dim wForM    as WorteForMorningP
 
 
-  Private Sub LoadAData()
+  Private Sub LoadAData
     Dim fn = "jsonxmlm/daten_fuer_morgen.xml"
     Try
       For Teste = 1 To 5
@@ -35,19 +43,27 @@ Module Program
       Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DataForMorningP))
       dataForM = CType(xmlSer.Deserialize(stm), DataForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(dataForM.DayOfLastWalkOrJogging)
-      Console.Write( Directory.GetCurrentDirectory() )
+      Dim cd = new StringBuilder( Directory.GetCurrentDirectory() )
+      Console.Write( cd )
       fn = "jsonxmlm/worte_fuer_morgen.xml"
       For Teste = 1 To 5
         If not File.Exists(fn) Then 
           fn = "../" & fn
-          Console.Write("/..")
+          Dim lin as Integer =   cd.ToString().LastIndexOf("\")
+          If lin = -1 Then lin = cd.ToString().LastIndexOf("/")
+          If Teste = 1 AndAlso lin > 4 Then
+            cd.Length = lin
+            Console.Write( VbCr & cd.ToString() )
+          Else
+            Console.Write("/..")
+          End If
         End if        
       Next
       stm = New FileStream(fn, FileMode.Open)
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
-      Console.WriteLine( "/*.xml geladen" )
+      Console.WriteLine( "/jsonxmlm/*.xml" & " geladen" )
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden") 
       If dataForM.URL_ofDay Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
       If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
@@ -85,7 +101,34 @@ Module Program
       fs = FruehsportMode.FastImmer
     End if
     Console.WriteLine(VbLf)
-    if fs = FruehsportMode.FastImmer Then Console.WriteLine("-----> " & "Heute Frühsport, dann")  
+    If DateTime.Now.Hour >= 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = "ggf Spülmaschine ein"
+    End If
+    if fs = FruehsportMode.FastImmer Then
+      Console.WriteLine("-----> " & "Heute Frühsport, dann")  
+    Else
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = "Waschen"
+    End If
+    If todo3 IsNot Nothing Then 
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = todo3
+    End If
+    If dataForM.LowCarbTeil.Length() > 0 Then
+      Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = If( len(ur)<23, "Ggf. " & ur, ur )     
+    End If
+    If fs <> FruehsportMode.FastImmer Then
+      If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
+        filled2bis = filled2bis + 2
+        todo2(filled2bis-1) = "Warmes Frühstück zubereiten"
+        todo2(filled2bis) = "Kleidung auf Sauberkeit Prüfen"
+      End If
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Haupt-Frühstück" , "Frühstück" )
+    End If
     Dim work1 as LocationOfDayWork
     if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorAbbruch( "WhereSundayToSaturday.Length()", Nothing )
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
@@ -94,6 +137,8 @@ Module Program
     If dataForM.URL_ofDay.Length() > 0 Then
       Dim url as String = dataForM.URL_ofDay( day146097 mod dataForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = If( len(url)<27, url, "Bitte o.g. URL ansehen")     
       Try
           dim psi as new ProcessStartInfo(url)
           psi.UseShellExecute = true
@@ -102,6 +147,18 @@ Module Program
           errorAbbruch( url  , ee )
       End Try
     End if  
+    If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = "ggf Spülmaschine ein"
+    End If
+    if fs = FruehsportMode.FastImmer Then
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = "Sportkleidung für Outdoor"     
+    ElseIf work1 = LocationOfDayWork.EinkaufenUndHaushalt OrElse work1 = LocationOfDayWork.Externarbeit OrElse 
+           work1=LocationOfDayWork.Fruehschicht OrElse work1=LocationOfDayWork.ExterneWeiterbildung Then
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = "Kleidung für Outdoor" 
+    End If
   End Sub
  
  
@@ -123,30 +180,35 @@ Module Program
     Return fs
   End Function
 
+  Dim left() as String
+  Dim r() as String
+
  
-  Private Sub dozweispaltigchecklist(left() As String,r() As String)
-    Console.WriteLine("Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (l/r)"& vbCrlf)
+  Private Sub dozweispaltigchecklist
+  ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
+    Console.WriteLine( VbCrLf & "Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (e oder l / r)."& vbCrlf)
     Dim lindex as Integer = 1
     Dim rindex as Integer = 1
     Dim line As String
-    Do While lindex < len(left) or rindex < len(r) 
+    Console.WriteLine("Es sind {0}+{1} Items abzuarbeiten." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
+    Do While lindex < left.Length OrElse rindex < r.Length
      Do
-      If lindex < len(left) and rindex < len(r) then
-        Console.Write(vbcr &  "{0},[1] ?       ", left(lindex),r(rindex))
-      Elseif lindex < len(left) then
-        Console.Write(vbcr &  "{0}, nix ?       ", left(lindex))
+      If lindex < left.length and rindex < r.length then
+        Console.Write(vbcr &  "{0},    {1} ?                ", left(lindex),r(rindex))
+      Elseif lindex < left.length then
+        Console.Write(vbcr &  "{0},      nix ?                     ", left(lindex))
       Else
-        Console.Write(vbcr &  "nix,[1] ?       ",  r(rindex))
+        Console.Write(vbcr &  "nix,      {0} ?                     ",  r(rindex))
       End if
       line = Console.ReadKey(true).KeyChar 
-     Loop Until "lLrR".Contains(line)
+     Loop Until "eElLrR".Contains(line)
      If line.ToUpper() = "R" then 
       rindex  = rindex  + 1
      Else 
       lindex  = lindex  + 1
      End If
     Loop
-    Console.WriteLine("Fertig ")
+    Console.WriteLine( VbCrLf & VbCrLf & "Fertig." & VbCrLf )
   End Sub
 
 
@@ -158,7 +220,6 @@ Module Program
       Environment.Exit(-1)
   End Sub
 End Module
-
 
 
 Public Module Interf
@@ -173,6 +234,7 @@ Public Module Interf
     ExterneWeiterbildung = 7  '
   End Enum
   
+  
   Public Enum FruehsportMode
     Keiner
     Sommerhalbjahr
@@ -184,6 +246,9 @@ Public Module Interf
   Public Structure DataForMorningP
     Public WhereSundayToSaturday() As LocationOfDayWork REM Anzahl 7 kann ich hier nicht festlegen.
     Public URL_ofDay() As String
+    Public LowCarbTeil()  As String
+    Public ZeitknapperAbTag As Integer
+    Public ZeitknapperBisTag As Integer
     Public DayOfLastWalkOrJogging As Integer
     Public FruehsportModeArray() As FruehsportMode
   End Structure

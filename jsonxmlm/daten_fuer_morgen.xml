@@ -13,6 +13,17 @@
     <string>https://twitter.com/v_language</string>
     <string>https://merkurist.de</string>
   </URL_ofDay>
+  <LowCarbTeil>
+    <string>Erdnüsse geröstet.</string>
+    <string>Kartoffelchips ölreich.</string>
+    <string>Käsescheibe.</string>
+    <string>Koch-Ei.</string>
+    <string>Koch-Ei.</string>
+    <string>Low Carb Schokolade.</string>
+    <string>Kräuterbutter + 50% Tortilla-Chips.</string>
+  </LowCarbTeil>
+  <ZeitknapperAbTag>1</ZeitknapperAbTag>
+  <ZeitknapperBisTag>4</ZeitknapperBisTag>
   <DayOfLastWalkOrJogging>1</DayOfLastWalkOrJogging>
   <FruehsportModeArray>
     <FruehsportMode>Sommerhalbjahr</FruehsportMode>
