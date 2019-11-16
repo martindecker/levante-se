@@ -13,7 +13,7 @@ Module Program
         If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
           Dim stoerungen2 = janein1("Straße arg befahren")
           If  stoerungen2 Then
-              todo3 = "Ursache fuer stark befahrene Straße herausfinden"
+              todo3 = "Ursache fuer stark befahrene Straße rausfinden"
           Else
               Console.WriteLine("nix")
           End If
@@ -128,6 +128,10 @@ Module Program
       End If
       filled2bis = filled2bis + 1
       todo2(filled2bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Haupt-Frühstück" , "Frühstück" )
+    Else
+      filled2bis = filled2bis + 1
+      todo2(filled2bis) = If( day146097 And 1 > 0 , "Mini Kuchen-Muschel" , "Milchbrötchen einstecken" )
+      ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
     Dim work1 as LocationOfDayWork
     if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorAbbruch( "WhereSundayToSaturday.Length()", Nothing )
@@ -191,14 +195,20 @@ Module Program
     Dim rindex as Integer = 1
     Dim line As String
     Console.WriteLine("Es sind {0}+{1} Items abzuarbeiten." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
+    Dim spaceline = new String( " "c, 78)
     Do While lindex < left.Length OrElse rindex < r.Length
+     Console.Write(vbcr &  spaceline )
      Do
-      If lindex < left.length and rindex < r.length then
-        Console.Write(vbcr &  "{0},    {1} ?                ", left(lindex),r(rindex))
+      If lindex < left.length and rindex < r.length and len(left(lindex))>36 then
+        Console.Write(vbcr &  "{0}, {1} ? ", left(lindex),r(rindex))
+      ElseIf lindex < left.length and rindex < r.length then
+        Console.Write(vbcr &  "{0},    {1} ?   ", left(lindex),r(rindex))
+      Elseif lindex < left.length  and len(left(lindex))>39  then
+        Console.Write(vbcr &  "{0},      nix ?  ", left(lindex))
       Elseif lindex < left.length then
-        Console.Write(vbcr &  "{0},      nix ?                     ", left(lindex))
+        Console.Write(vbcr &  "{0},      nix ? ", left(lindex))
       Else
-        Console.Write(vbcr &  "nix,      {0} ?                     ",  r(rindex))
+        Console.Write(vbcr &  "nix,      {0} ? ",  r(rindex))
       End if
       line = Console.ReadKey(true).KeyChar 
      Loop Until "eElLrR".Contains(line)
