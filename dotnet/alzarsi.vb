@@ -23,6 +23,9 @@ Module Program
         Array.Resize( todo2,filled2bis+1 )
         left = todo2
         r = wForM.OftR
+		If Not istHeizperiode() Then 
+		  r = Array.FindAll( wForM.OftR, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
+		End If
         dozweispaltigchecklist
         ' dozweispaltigchecklist( todo2, wForM.OftR )
         Console.WriteLine("Please enter sth to end the program.")
@@ -73,19 +76,20 @@ Module Program
   End Sub
 
   
-  Function janein1(text As String)
-    Dim line As String
-    Do
-      Console.Write("{0} ? (j/n) ", text)
-      line = Console.ReadKey(true).KeyChar 
-    Loop Until "jnJN".Contains(line)
-    If line.ToUpper() = "J" then 
-      Console.Write(" Ja ")
-    Else 
-      Console.Write(" Nein ")
+  Function istHeizperiode()
+    Dim mon = DateTime.Now.Month
+    Dim day = DateTime.Now.Day
+    If dataForM.WinterHeizAbMMDD < dataForM.WinterHeizBisMDD Then
+	  If dataForM.WinterHeizAbMMDD/100 < mon AndAlso mon < dataForM.WinterHeizBisMDD/100 Then Return true
+	  If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
+	  If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
+	  Return False
+	Else
+	  If dataForM.WinterHeizAbMMDD/100 > mon OrElse mon < dataForM.WinterHeizBisMDD/100 Then Return true
+	  If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
+	  If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
+	  Return False
     End If
-    Console.WriteLine(" ")
-    Return line.ToUpper() = "J"
   End Function
   
   
@@ -188,6 +192,22 @@ Module Program
   Dim r() as String
 
  
+  Function janein1(text As String)
+    Dim line As String
+    Do
+      Console.Write("{0} ? (j/n) ", text)
+      line = Console.ReadKey(true).KeyChar 
+    Loop Until "jnJN".Contains(line)
+    If line.ToUpper() = "J" then 
+      Console.Write(" Ja ")
+    Else 
+      Console.Write(" Nein ")
+    End If
+    Console.WriteLine(" ")
+    Return line.ToUpper() = "J"
+  End Function
+  
+  
   Private Sub dozweispaltigchecklist
   ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
     Console.WriteLine( VbCrLf & "Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (e oder l / r)."& vbCrlf)
@@ -261,6 +281,8 @@ Public Module Interf
     Public ZeitknapperBisTag As Integer
     Public DayOfLastWalkOrJogging As Integer
     Public FruehsportModeArray() As FruehsportMode
+    Public WinterHeizAbMMDD  As Integer
+    Public WinterHeizBisMDD  As Integer
   End Structure
 
   Public Structure WorteForMorningP

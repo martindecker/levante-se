@@ -30,4 +30,6 @@
     <FruehsportMode>WetterAbApril</FruehsportMode>
     <FruehsportMode>Keiner</FruehsportMode>
   </FruehsportModeArray>
+  <WinterHeizAbMMDD>1119</WinterHeizAbMMDD>
+  <WinterHeizBisMDD>315</WinterHeizBisMDD>
 </DataForMorningP>
