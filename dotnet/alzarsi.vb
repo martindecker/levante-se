@@ -4,33 +4,34 @@ Imports System.IO
 Imports System.Text
 
 Module Program
-    Public todo2(20) As String
-    Public filled2bis As Integer = 0
-    Public todo3 As String = Nothing
+  Public todo1(20) As String
+  Public filled1bis As Integer = 0
+  Public todo3 As String = Nothing
+  Dim todayurl = Nothing
 
-    Sub Main(args As String())
-        LoadAData
-        If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
+  Sub Main(args As String())
+      LoadAData
+      If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
           Dim stoerungen2 = janein1("Straße arg befahren")
           If  stoerungen2 Then
               todo3 = "Ursache fuer stark befahrene Straße rausfinden"
           Else
               Console.WriteLine("nix")
           End If
-        End If
-        Console.WriteLine(VbLf)
-        Planungsfragen
-        Array.Resize( todo2,filled2bis+1 )
-        left = todo2
-        r = wForM.OftR
-		If Not istHeizperiode() Then 
-		  r = Array.FindAll( wForM.OftR, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
-		End If
-        dozweispaltigchecklist
-        ' dozweispaltigchecklist( todo2, wForM.OftR )
-        Console.WriteLine("Please enter sth to end the program.")
-        Console.ReadKey()
-    End Sub
+      End If
+      Console.WriteLine(VbLf)
+      Planungsfragen
+      Array.Resize( todo1,filled1bis+1 )
+      left = todo1
+      r = wForM.OftR
+      If Not istHeizperiode() Then 
+          r = Array.FindAll( wForM.OftR, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
+      End If
+      dozweispaltigchecklist( todayurl )
+      ' dozweispaltigchecklist( todo1, wForM.OftR )
+      Console.WriteLine("Please enter sth to end the program.")
+      Console.ReadKey()
+  End Sub
     
   Dim dataForM as DataForMorningP
   Dim wForM    as WorteForMorningP
@@ -80,20 +81,21 @@ Module Program
     Dim mon = DateTime.Now.Month
     Dim day = DateTime.Now.Day
     If dataForM.WinterHeizAbMMDD < dataForM.WinterHeizBisMDD Then
-	  If dataForM.WinterHeizAbMMDD/100 < mon AndAlso mon < dataForM.WinterHeizBisMDD/100 Then Return true
-	  If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
-	  If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
-	  Return False
-	Else
-	  If dataForM.WinterHeizAbMMDD/100 > mon OrElse mon < dataForM.WinterHeizBisMDD/100 Then Return true
-	  If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
-	  If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
-	  Return False
+      If dataForM.WinterHeizAbMMDD/100 < mon AndAlso mon < dataForM.WinterHeizBisMDD/100 Then Return true
+      If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
+      If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
+      Return False
+    Else
+      If dataForM.WinterHeizAbMMDD/100 > mon OrElse mon < dataForM.WinterHeizBisMDD/100 Then Return true
+      If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
+      If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
+      Return False
     End If
   End Function
   
   
   Sub Planungsfragen
+    ' Setzt todo1, filled1bis, todayurl
     Dim day146097 As Integer = DateDiff(DateInterval.Day, GlobalConstants.base_sunday , Date.Now)
     day146097 = day146097 mod 146097
     Dim fs as FruehsportMode
@@ -106,35 +108,35 @@ Module Program
     End if
     Console.WriteLine(VbLf)
     If DateTime.Now.Hour >= 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = "ggf Spülmaschine ein"
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = "ggf Spülmaschine ein"
     End If
     if fs = FruehsportMode.FastImmer Then
       Console.WriteLine("-----> " & "Heute Frühsport, dann")  
     Else
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = "Waschen"
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = "Waschen"
     End If
     If todo3 IsNot Nothing Then 
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = todo3
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = todo3
     End If
     If dataForM.LowCarbTeil.Length() > 0 Then
       Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = If( len(ur)<23, "Ggf. " & ur, ur )     
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = If( len(ur)<23, "Ggf. " & ur, ur )     
     End If
     If fs <> FruehsportMode.FastImmer Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
-        filled2bis = filled2bis + 2
-        todo2(filled2bis-1) = "Warmes Frühstück zubereiten"
-        todo2(filled2bis) = "Kleidung auf Sauberkeit Prüfen"
+        filled1bis = filled1bis + 2
+        todo1(filled1bis-1) = "Warmes Frühstück zubereiten"
+        todo1(filled1bis) = "Kleidung auf Sauberkeit Prüfen"
       End If
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Haupt-Frühstück" , "Frühstück" )
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Haupt-Frühstück" , "Frühstück" )
     Else
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = If( day146097 And 1 > 0 , "Mini Kuchen-Muschel" , "Milchbrötchen einstecken" )
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini Kuchen-Muschel" , "Milchbrötchen einstecken" )
       ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
     Dim work1 as LocationOfDayWork
@@ -145,27 +147,21 @@ Module Program
     If dataForM.URL_ofDay.Length() > 0 Then
       Dim url as String = dataForM.URL_ofDay( day146097 mod dataForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = If( len(url)<27, url, "Bitte o.g. URL ansehen")     
-      Try
-          dim psi as new ProcessStartInfo(url)
-          psi.UseShellExecute = true
-          System.Diagnostics.Process.Start( psi )
-      Catch ee As Exception
-          errorAbbruch( url  , ee )
-      End Try
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = If( len(url)<27, url, "Bitte o.g. URL ansehen (U)")     
+      todayurl = url
     End if  
     If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = "ggf Spülmaschine ein"
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = "ggf Spülmaschine ein"
     End If
     if fs = FruehsportMode.FastImmer Then
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = "Sportkleidung für Outdoor"     
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = "Sportkleidung für Outdoor"     
     ElseIf work1 = LocationOfDayWork.EinkaufenUndHaushalt OrElse work1 = LocationOfDayWork.Externarbeit OrElse 
            work1=LocationOfDayWork.Fruehschicht OrElse work1=LocationOfDayWork.ExterneWeiterbildung Then
-      filled2bis = filled2bis + 1
-      todo2(filled2bis) = "Kleidung für Outdoor" 
+      filled1bis = filled1bis + 1
+      todo1(filled1bis) = "Kleidung für Outdoor" 
     End If
   End Sub
  
@@ -208,9 +204,12 @@ Module Program
   End Function
   
   
-  Private Sub dozweispaltigchecklist
+  Private Sub dozweispaltigchecklist( url As String )
   ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
     Console.WriteLine( VbCrLf & "Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (e oder l / r)."& vbCrlf)
+    If Not IsNothing(url) Then
+      Console.WriteLine( "Zwischendurch U eingebbar um die URL aufzurufen."& vbCrlf)
+    End If
     Dim lindex as Integer = 1
     Dim rindex as Integer = 1
     Dim line As String
@@ -219,21 +218,31 @@ Module Program
     Do While lindex < left.Length OrElse rindex < r.Length
      Console.Write(vbcr &  spaceline )
      Do
-      If lindex < left.length and rindex < r.length and len(left(lindex))>36 then
+      If lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>36 then
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex),r(rindex))
-      ElseIf lindex < left.length and rindex < r.length then
+      ElseIf lindex < left.length AndAlso rindex < r.length then
         Console.Write(vbcr &  "{0},    {1} ?   ", left(lindex),r(rindex))
-      Elseif lindex < left.length  and len(left(lindex))>39  then
-        Console.Write(vbcr &  "{0},      nix ?  ", left(lindex))
+      Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
+        Console.Write(vbcr &  "{0}, - ?  ", left(lindex))
       Elseif lindex < left.length then
-        Console.Write(vbcr &  "{0},      nix ? ", left(lindex))
+        Console.Write(vbcr &  "{0},  dann E=L drücken ? ", left(lindex))
       Else
-        Console.Write(vbcr &  "nix,      {0} ? ",  r(rindex))
+        Console.Write(vbcr &  "R drücken nach:  {0} ? ",  r(rindex))
       End if
       line = Console.ReadKey(true).KeyChar 
-     Loop Until "eElLrR".Contains(line)
+     Loop Until "eElLrRuU".Contains(line)
      If line.ToUpper() = "R" then 
       rindex  = rindex  + 1
+     Elseif line.ToUpper() = "U" then 
+       Try
+         If Not IsNothing(url) Then
+           dim psi as new ProcessStartInfo(url)
+           psi.UseShellExecute = true
+           System.Diagnostics.Process.Start( psi )
+         End If
+       Catch ee As Exception
+         errorAbbruch( url  , ee )
+       End Try
      Else 
       lindex  = lindex  + 1
      End If
