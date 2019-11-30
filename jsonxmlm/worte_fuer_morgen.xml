@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0"?>
 <WorteForMorningP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <VersionOfStruct>1.0</VersionOfStruct>
-  <OftR>
+  <TodoPart2>
     <string xsi:nil="true" />
     <string>Glas Wasser trinken</string>
     <string>Winter: Heizung anmachen</string>
     <string>Kleidung für Indoor</string>
     <string>Warmes Getränk zubereiten</string>
     <string>Kalorien notieren</string>
-  </OftR>
+  </TodoPart2>
+  <URL_ofDay>
+    <string>https://twitter.com/v_language</string>
+    <string>https://merkurist.de</string>
+  </URL_ofDay>
 </WorteForMorningP>

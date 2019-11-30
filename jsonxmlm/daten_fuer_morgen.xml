@@ -9,10 +9,6 @@
     <LocationOfDayWork>Lernen</LocationOfDayWork>
     <LocationOfDayWork>EinkaufenUndHaushalt</LocationOfDayWork>
   </WhereSundayToSaturday>
-  <URL_ofDay>
-    <string>https://twitter.com/v_language</string>
-    <string>https://merkurist.de</string>
-  </URL_ofDay>
   <LowCarbTeil>
     <string>Erdnüsse geröstet</string>
     <string>Kartoffelchips ölreich</string>

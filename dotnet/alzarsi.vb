@@ -1,8 +1,8 @@
 Imports System
 Imports System.Xml.Serialization
 Imports System.IO
-Imports System.Text
 
+Imports System.Text
 Module Program
   Public todo1(20) As String
   Public filled1bis As Integer = 0
@@ -23,12 +23,12 @@ Module Program
       Planungsfragen
       Array.Resize( todo1,filled1bis+1 )
       left = todo1
-      r = wForM.OftR
+      r = wForM.TodoPart2
       If Not istHeizperiode() Then 
-          r = Array.FindAll( wForM.OftR, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
+          r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
       dozweispaltigchecklist( todayurl )
-      ' dozweispaltigchecklist( todo1, wForM.OftR )
+      ' dozweispaltigchecklist( todo1, wForM.TodoPart2 )
       Console.WriteLine("Please enter sth to end the program.")
       Console.ReadKey()
   End Sub
@@ -69,7 +69,7 @@ Module Program
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
       Console.WriteLine( "/jsonxmlm/*.xml" & " geladen" )
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden") 
-      If dataForM.URL_ofDay Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
+      If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
       If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
     Catch eee As Exception  
       errorAbbruch(fn & "   Error:", eee)
@@ -144,8 +144,8 @@ Module Program
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
     Console.WriteLine( "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
-    If dataForM.URL_ofDay.Length() > 0 Then
-      Dim url as String = dataForM.URL_ofDay( day146097 mod dataForM.URL_ofDay.Length() )
+    If wForM.URL_ofDay.Length() > 0 Then
+      Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
       filled1bis = filled1bis + 1
       todo1(filled1bis) = If( len(url)<27, url, "Bitte o.g. URL ansehen (U)")     
@@ -218,7 +218,9 @@ Module Program
     Do While lindex < left.Length OrElse rindex < r.Length
      Console.Write(vbcr &  spaceline )
      Do
-      If lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>36 then
+      If lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>73 then
+        Console.Write(vbcr &  "{0}, {1} ? ", left(lindex).SubString(0,Math.Max(3,73-len(r(rindex)))) ,r(rindex))
+      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>36 then
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
         Console.Write(vbcr &  "{0},    {1} ?   ", left(lindex),r(rindex))
@@ -284,7 +286,6 @@ Public Module Interf
 
   Public Structure DataForMorningP
     Public WhereSundayToSaturday() As LocationOfDayWork REM Anzahl 7 kann ich hier nicht festlegen.
-    Public URL_ofDay() As String
     Public LowCarbTeil()  As String
     Public ZeitknapperAbTag As Integer
     Public ZeitknapperBisTag As Integer
@@ -296,7 +297,8 @@ Public Module Interf
 
   Public Structure WorteForMorningP
     Public VersionOfStruct As Decimal
-    Public OftR() as String
+    Public TodoPart2() as String
+    Public URL_ofDay() As String
   End Structure
 End Module
 
