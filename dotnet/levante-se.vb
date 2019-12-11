@@ -12,11 +12,11 @@ Module Program
   Sub Main(args As String())
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
-          Dim stoerungen2 = janein1("Straße arg befahren")
+          Dim stoerungen2 = janein1("¿Tráfico pesado na estrada")
           If  stoerungen2 Then
-              todo3 = "Ursache fuer stark befahrene Straße rausfinden"
+              todo3 = "Descubra a causa da estrada transitada"
           Else
-              Console.WriteLine("nix")
+        Console.WriteLine("nada")
           End If
       End If
       Console.WriteLine(VbLf)
@@ -29,7 +29,7 @@ Module Program
       End If
       dozweispaltigchecklist( todayurl )
       ' dozweispaltigchecklist( todo1, wForM.TodoPart2 )
-      Console.WriteLine("Please enter sth to end the program.")
+      Console.WriteLine("Escribe algo para rematar o programa.")
       Console.ReadKey()
   End Sub
     
@@ -68,11 +68,11 @@ Module Program
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
       Console.WriteLine( "/jsonxmlm/*.xml" & " geladen" )
-      If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden") 
-      If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
-      If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Warnung:  ist in daten_fuer_morgen.xml nicht vorhanden")
+      If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso: Non está presente WhereSundayToSaturday en daten_fuer_morgen.xml?") 
+      If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Aviso: Non está presente URL_ofDay en daten_fuer_morgen.xml?")
+      If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente FruehsportModeArray en daten_fuer_morgen.xml?")
     Catch eee As Exception  
-      errorAbbruch(fn & "   Error:", eee)
+      errorAbbruch(fn & "   Erro:", eee)
     End Try 
   End Sub
 
@@ -101,7 +101,7 @@ Module Program
     Dim fs as FruehsportMode
     fs = BewegungsVorfestleg( day146097 , dataForM )
     ' FruehsportMode auf Keiner und FastImmer reduzieren
-    if FruehsportMode.Wetterfrage = fs AndAlso janein1("Regnet es oder ist es unter -5 Grad") then
+    if FruehsportMode.Wetterfrage = fs AndAlso janein1("¿Chove ou está baixo os -5 graos") then
       fs = FruehsportMode.Keiner
     Elseif FruehsportMode.Wetterfrage = fs then
       fs = FruehsportMode.FastImmer
@@ -109,13 +109,13 @@ Module Program
     Console.WriteLine(VbLf)
     If DateTime.Now.Hour >= 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = "ggf Spülmaschine ein"
+      todo1(filled1bis) = "Se é necesario, un lavaplatos"
     End If
     if fs = FruehsportMode.FastImmer Then
-      Console.WriteLine("-----> " & "Heute Frühsport, dann")  
+      Console.WriteLine("-----> " & "Hoxe mañá exercicio, logo")  
     Else
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = "Waschen"
+      todo1(filled1bis) = "Lavarse"
     End If
     If todo3 IsNot Nothing Then 
       filled1bis = filled1bis + 1
@@ -124,19 +124,19 @@ Module Program
     If dataForM.LowCarbTeil.Length() > 0 Then
       Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = If( len(ur)<23, "Ggf. " & ur, ur )     
+      todo1(filled1bis) = If( len(ur)<23, "se é necesario " & ur, ur )     
     End If
     If fs <> FruehsportMode.FastImmer Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
         filled1bis = filled1bis + 2
-        todo1(filled1bis-1) = "Warmes Frühstück zubereiten"
-        todo1(filled1bis) = "Kleidung auf Sauberkeit Prüfen"
+        todo1(filled1bis-1) = "Cociña o almorzo"
+        todo1(filled1bis) = "Comproba a limpeza da roupa"
       End If
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Haupt-Frühstück" , "Frühstück" )
+      todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Almorzo principal" , "Almorzo" )
     Else
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini Kuchen-Muschel" , "Milchbrötchen einstecken" )
+      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini cuncha de torta" , "Pon o bollo de leite no peto" )
       ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
     Dim work1 as LocationOfDayWork
@@ -148,20 +148,20 @@ Module Program
       Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = If( len(url)<27, url, "Bitte o.g. URL ansehen (U)")     
+      todo1(filled1bis) = If( len(url)<27, url, "Ver o URL anterior (U)")     
       todayurl = url
     End if  
     If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = "ggf Spülmaschine ein"
+      todo1(filled1bis) = "Acenda o lavaplatos se é necesario"
     End If
     if fs = FruehsportMode.FastImmer Then
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = "Sportkleidung für Outdoor"     
+      todo1(filled1bis) = "Poña roupa deportiva ao aire libre"     
     ElseIf work1 = LocationOfDayWork.EinkaufenUndHaushalt OrElse work1 = LocationOfDayWork.Externarbeit OrElse 
            work1=LocationOfDayWork.Fruehschicht OrElse work1=LocationOfDayWork.ExterneWeiterbildung Then
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = "Kleidung für Outdoor" 
+      todo1(filled1bis) = "Desgaste roupa para exteriores" 
     End If
   End Sub
  
@@ -208,12 +208,12 @@ Module Program
   ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
     Console.WriteLine( VbCrLf & "Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (e oder l / r)."& vbCrlf)
     If Not IsNothing(url) Then
-      Console.WriteLine( "Zwischendurch U eingebbar um die URL aufzurufen."& vbCrlf)
+      Console.WriteLine( "Entre U pode introducirse para chamar á URL."& vbCrlf)
     End If
     Dim lindex as Integer = 1
     Dim rindex as Integer = 1
     Dim line As String
-    Console.WriteLine("Es sind {0}+{1} Items abzuarbeiten." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
+    Console.WriteLine("Hai {0} + {1} elementos a procesar." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
     Dim spaceline = new String( " "c, 78)
     Do While lindex < left.Length OrElse rindex < r.Length
      Console.Write(vbcr &  spaceline )
@@ -227,9 +227,9 @@ Module Program
       Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
         Console.Write(vbcr &  "{0}, - ?  ", left(lindex))
       Elseif lindex < left.length then
-        Console.Write(vbcr &  "{0},  dann E=L drücken ? ", left(lindex))
+        Console.Write(vbcr &  "{0},  logo prema E = L ? ", left(lindex))
       Else
-        Console.Write(vbcr &  "R drücken nach:  {0} ? ",  r(rindex))
+        Console.Write(vbcr &  "Pulse R despois do {0} ? ",  r(rindex))
       End if
       line = Console.ReadKey(true).KeyChar 
      Loop Until "eElLrRuU".Contains(line)
