@@ -1,8 +1,9 @@
 Imports System
 Imports System.Xml.Serialization
 Imports System.IO
-
 Imports System.Text
+
+
 Module Program
   Public todo1(20) As String
   Public filled1bis As Integer = 0
@@ -10,6 +11,7 @@ Module Program
   Dim todayurl = Nothing
 
   Sub Main(args As String())
+      ' User language = Galician
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
           Dim stoerungen2 = janein1("¿Tráfico pesado na estrada")
@@ -29,7 +31,7 @@ Module Program
       End If
       dozweispaltigchecklist( todayurl )
       ' dozweispaltigchecklist( todo1, wForM.TodoPart2 )
-      Console.WriteLine("Escribe algo para rematar o programa.")
+      Console.WriteLine("Prema unha tecla para rematar o programa.")
       Console.ReadKey()
   End Sub
     
@@ -38,7 +40,7 @@ Module Program
 
 
   Private Sub LoadAData
-    Dim fn = "jsonxmlm/daten_fuer_morgen.xml"
+    Dim fn = "jsonxmlm/data1_for_morning_galician.xml"
     Try
       For Teste = 1 To 5
         If not File.Exists(fn) Then fn = "../" & fn
@@ -49,7 +51,7 @@ Module Program
       stm.Close()    ' Testprint waere:   Console.WriteLine(dataForM.DayOfLastWalkOrJogging)
       Dim cd = new StringBuilder( Directory.GetCurrentDirectory() )
       Console.Write( cd )
-      fn = "jsonxmlm/worte_fuer_morgen.xml"
+      fn = "jsonxmlm/words_for_morning_galician.xml"
       For Teste = 1 To 5
         If not File.Exists(fn) Then 
           fn = "../" & fn
@@ -67,10 +69,10 @@ Module Program
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
-      Console.WriteLine( "/jsonxmlm/*.xml" & " geladen" )
-      If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso: Non está presente WhereSundayToSaturday en daten_fuer_morgen.xml?") 
-      If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Aviso: Non está presente URL_ofDay en daten_fuer_morgen.xml?")
-      If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente FruehsportModeArray en daten_fuer_morgen.xml?")
+      Console.WriteLine( "/jsonxmlm/*.xml" & " cargado" )
+      If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso:Non está presente WhereSundayToSaturday en data1_for_morning_galician.xml") 
+      If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
+      If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente FruehsportModeArray en data1_for_morning_galician.xml?")
     Catch eee As Exception  
       errorAbbruch(fn & "   Erro:", eee)
     End Try 
@@ -124,13 +126,13 @@ Module Program
     If dataForM.LowCarbTeil.Length() > 0 Then
       Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = If( len(ur)<23, "se é necesario " & ur, ur )     
+      todo1(filled1bis) = If( len(ur)<23, "Se é necesario " & ur, ur )     
     End If
     If fs <> FruehsportMode.FastImmer Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
         filled1bis = filled1bis + 2
         todo1(filled1bis-1) = "Cociña o almorzo"
-        todo1(filled1bis) = "Comproba a limpeza da roupa"
+        todo1(filled1bis) = "Verifique a limpeza da roupa"
       End If
       filled1bis = filled1bis + 1
       todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Almorzo principal" , "Almorzo" )
@@ -191,22 +193,22 @@ Module Program
   Function janein1(text As String)
     Dim line As String
     Do
-      Console.Write("{0} ? (j/n) ", text)
+      Console.Write("{0} ? (s=y=j/n) ", text)
       line = Console.ReadKey(true).KeyChar 
-    Loop Until "jnJN".Contains(line)
-    If line.ToUpper() = "J" then 
-      Console.Write(" Ja ")
+    Loop Until "jnJNsSyY".Contains(line)
+    If line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
+      Console.Write(" Si ")
     Else 
-      Console.Write(" Nein ")
+      Console.Write(" Non ")
     End If
     Console.WriteLine(" ")
-    Return line.ToUpper() = "J"
+    Return ( line.ToUpper() = "J" OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y"  )
   End Function
   
   
   Private Sub dozweispaltigchecklist( url As String )
   ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
-    Console.WriteLine( VbCrLf & "Bitte antworten, welche Seite ( L oder R ) abgearbeitet ist (e oder l / r)."& vbCrlf)
+    Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R); e = l , d = r."& vbCrlf)
     If Not IsNothing(url) Then
       Console.WriteLine( "Entre U pode introducirse para chamar á URL."& vbCrlf)
     End If
@@ -220,20 +222,20 @@ Module Program
      Do
       If lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>73 then
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex).SubString(0,Math.Max(3,73-len(r(rindex)))) ,r(rindex))
-      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>36 then
+      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>31 then
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
-        Console.Write(vbcr &  "{0},    {1} ?   ", left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0},    {1} ?  (E/D) ", left(lindex),r(rindex))
       Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
-        Console.Write(vbcr &  "{0}, - ?  ", left(lindex))
+        Console.Write(vbcr &  "{0}, - ? (E) ", left(lindex))
       Elseif lindex < left.length then
         Console.Write(vbcr &  "{0},  logo prema E = L ? ", left(lindex))
       Else
-        Console.Write(vbcr &  "Pulse R despois do {0} ? ",  r(rindex))
+        Console.Write(vbcr &  "Pulse R ou D despois do {0} ? ",  r(rindex))
       End if
       line = Console.ReadKey(true).KeyChar 
-     Loop Until "eElLrRuU".Contains(line)
-     If line.ToUpper() = "R" then 
+     Loop Until "eEdDlLrRuU".Contains(line)
+     If line.ToUpper() = "R" OrElse line.ToUpper() = "D" then 
       rindex  = rindex  + 1
      Elseif line.ToUpper() = "U" then 
        Try
@@ -256,11 +258,12 @@ Module Program
   Sub errorAbbruch( text1 as String, text2 as Exception )
       Console.WriteLine(text1)    
       if text2 IsNot Nothing Then Console.WriteLine(text2)
-      Console.WriteLine("Please enter sth to end the program.")
+      Console.WriteLine("Prema unha tecla para rematar o programa.")
       Console.ReadKey()
       Environment.Exit(-1)
   End Sub
 End Module
+
 
 
 Public Module Interf
