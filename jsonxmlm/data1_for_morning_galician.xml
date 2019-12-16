@@ -1,31 +1,31 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DataForMorningP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <WhereSundayToSaturday>
-    <LocationOfDayWork>Frei</LocationOfDayWork>
-    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
-    <LocationOfDayWork>Heimarbeit</LocationOfDayWork>
-    <LocationOfDayWork>ExterneWeiterbildung</LocationOfDayWork>
-    <LocationOfDayWork>Lernen</LocationOfDayWork>
-    <LocationOfDayWork>Lernen</LocationOfDayWork>
-    <LocationOfDayWork>EinkaufenUndHaushalt</LocationOfDayWork>
+    <LocationOfDayWork>DayOff</LocationOfDayWork>
+    <LocationOfDayWork>HomeOffice</LocationOfDayWork>
+    <LocationOfDayWork>HomeOffice</LocationOfDayWork>
+    <LocationOfDayWork>ExternalTraining</LocationOfDayWork>
+    <LocationOfDayWork>Study</LocationOfDayWork>
+    <LocationOfDayWork>Study</LocationOfDayWork>
+    <LocationOfDayWork>ShoppingAndHousehold</LocationOfDayWork>
   </WhereSundayToSaturday>
   <LowCarbTeil>
-    <string>Erdnüsse geröstet</string>
-    <string>Kartoffelchips ölreich</string>
-    <string>Käsescheibe</string>
-    <string>Koch-Ei</string>
-    <string>Koch-Ei</string>
-    <string>Low Carb Schokolade</string>
-    <string>Kräuterbutter + 50% Tortilla-Chips</string>
+    <string>Cacahuete asado</string>
+    <string>Patacas fritas</string>
+    <string>Porción de queixo</string>
+    <string>Ovo fervido</string>
+    <string>Ovo fervido</string>
+    <string>De chocolate Low carb</string>
+    <string>Manteiga de herbas + 50% Tortilla-Chips</string>
   </LowCarbTeil>
   <ZeitknapperAbTag>1</ZeitknapperAbTag>
   <ZeitknapperBisTag>4</ZeitknapperBisTag>
   <DayOfLastWalkOrJogging>1</DayOfLastWalkOrJogging>
-  <FruehsportModeArray>
-    <FruehsportMode>Sommerhalbjahr</FruehsportMode>
-    <FruehsportMode>WetterAbApril</FruehsportMode>
-    <FruehsportMode>Keiner</FruehsportMode>
-  </FruehsportModeArray>
-  <WinterHeizAbMMDD>1119</WinterHeizAbMMDD>
-  <WinterHeizBisMDD>315</WinterHeizBisMDD>
+  <MorningExerciseModeArray>
+    <MorningExerciseMode>SummerHalfYear</MorningExerciseMode>
+    <MorningExerciseMode>WeatherFromApril</MorningExerciseMode>
+    <MorningExerciseMode>NoMorningExercise</MorningExerciseMode>
+  </MorningExerciseModeArray>
+  <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
+  <WinterHeatingBisMDD>315</WinterHeatingBisMDD>
 </DataForMorningP>

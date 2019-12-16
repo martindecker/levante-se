@@ -1,4 +1,4 @@
-Imports System
+﻿Imports System
 Imports System.Xml.Serialization
 Imports System.IO
 Imports System.Text
@@ -11,7 +11,7 @@ Module Program
   Dim todayurl = Nothing
 
   Sub Main(args As String())
-      ' User language = Galician
+      ' User language = Galician, Enums and the Winter Keyword = English
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
           Dim stoerungen2 = janein1("¿Tráfico pesado na estrada")
@@ -22,11 +22,11 @@ Module Program
           End If
       End If
       Console.WriteLine(VbLf)
-      Planungsfragen
+      PlanningQuestions
       Array.Resize( todo1,filled1bis+1 )
       left = todo1
       r = wForM.TodoPart2
-      If Not istHeizperiode() Then 
+      If Not isHeatingSeason() Then 
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
       dozweispaltigchecklist( todayurl )
@@ -72,48 +72,48 @@ Module Program
       Console.WriteLine( "/jsonxmlm/*.xml" & " cargado" )
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso:Non está presente WhereSundayToSaturday en data1_for_morning_galician.xml") 
       If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
-      If dataForM.FruehsportModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente FruehsportModeArray en data1_for_morning_galician.xml?")
+      If dataForM.MorningExerciseModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente MorningExerciseModeArray en data1_for_morning_galician.xml?")
     Catch eee As Exception  
-      errorAbbruch(fn & "   Erro:", eee)
+      errorExit(fn & "   Erro:", eee)
     End Try 
   End Sub
 
   
-  Function istHeizperiode()
+  Function isHeatingSeason()
     Dim mon = DateTime.Now.Month
     Dim day = DateTime.Now.Day
-    If dataForM.WinterHeizAbMMDD < dataForM.WinterHeizBisMDD Then
-      If dataForM.WinterHeizAbMMDD/100 < mon AndAlso mon < dataForM.WinterHeizBisMDD/100 Then Return true
-      If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
-      If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
+    If dataForM.WinterHeatingAbMMDD < dataForM.WinterHeatingBisMDD Then
+      If dataForM.WinterHeatingAbMMDD/100 < mon AndAlso mon < dataForM.WinterHeatingBisMDD/100 Then Return true
+      If dataForM.WinterHeatingAbMMDD/100 = mon Then Return day > dataForM.WinterHeatingAbMMDD mod 100
+      If dataForM.WinterHeatingBisMDD/100  = mon Then Return day < dataForM.WinterHeatingBisMDD mod 100
       Return False
     Else
-      If dataForM.WinterHeizAbMMDD/100 > mon OrElse mon < dataForM.WinterHeizBisMDD/100 Then Return true
-      If dataForM.WinterHeizAbMMDD/100 = mon Then Return day > dataForM.WinterHeizAbMMDD mod 100
-      If dataForM.WinterHeizBisMDD/100  = mon Then Return day < dataForM.WinterHeizBisMDD mod 100
+      If dataForM.WinterHeatingAbMMDD/100 > mon OrElse mon < dataForM.WinterHeatingBisMDD/100 Then Return true
+      If dataForM.WinterHeatingAbMMDD/100 = mon Then Return day > dataForM.WinterHeatingAbMMDD mod 100
+      If dataForM.WinterHeatingBisMDD/100  = mon Then Return day < dataForM.WinterHeatingBisMDD mod 100
       Return False
     End If
   End Function
   
   
-  Sub Planungsfragen
+  Sub PlanningQuestions
     ' Setzt todo1, filled1bis, todayurl
     Dim day146097 As Integer = DateDiff(DateInterval.Day, GlobalConstants.base_sunday , Date.Now)
     day146097 = day146097 mod 146097
-    Dim fs as FruehsportMode
-    fs = BewegungsVorfestleg( day146097 , dataForM )
-    ' FruehsportMode auf Keiner und FastImmer reduzieren
-    if FruehsportMode.Wetterfrage = fs AndAlso janein1("¿Chove ou está baixo os -5 graos") then
-      fs = FruehsportMode.Keiner
-    Elseif FruehsportMode.Wetterfrage = fs then
-      fs = FruehsportMode.FastImmer
+    Dim fs as MorningExerciseMode
+    fs = PhysicalActivityDays( day146097 , dataForM )
+    ' MorningExerciseMode auf NoMorningExercise und AlmostAlways reduzieren
+    if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("¿Chove ou está baixo os -5 graos") then
+      fs = MorningExerciseMode.NoMorningExercise
+    Elseif MorningExerciseMode.WeatherQuestion = fs then
+      fs = MorningExerciseMode.AlmostAlways
     End if
     Console.WriteLine(VbLf)
     If DateTime.Now.Hour >= 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
       filled1bis = filled1bis + 1
       todo1(filled1bis) = "Se é necesario, un lavaplatos"
     End If
-    if fs = FruehsportMode.FastImmer Then
+    if fs = MorningExerciseMode.AlmostAlways Then
       Console.WriteLine("-----> " & "Hoxe mañá exercicio, logo")  
     Else
       filled1bis = filled1bis + 1
@@ -128,7 +128,7 @@ Module Program
       filled1bis = filled1bis + 1
       todo1(filled1bis) = If( len(ur)<23, "Se é necesario " & ur, ur )     
     End If
-    If fs <> FruehsportMode.FastImmer Then
+    If fs <> MorningExerciseMode.AlmostAlways Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
         filled1bis = filled1bis + 2
         todo1(filled1bis-1) = "Cociña o almorzo"
@@ -142,7 +142,7 @@ Module Program
       ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
     Dim work1 as LocationOfDayWork
-    if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorAbbruch( "WhereSundayToSaturday.Length()", Nothing )
+    if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorExit( "WhereSundayToSaturday.Length()", Nothing )
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
     Console.WriteLine( "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
@@ -157,31 +157,31 @@ Module Program
       filled1bis = filled1bis + 1
       todo1(filled1bis) = "Acenda o lavaplatos se é necesario"
     End If
-    if fs = FruehsportMode.FastImmer Then
+    if fs = MorningExerciseMode.AlmostAlways Then
       filled1bis = filled1bis + 1
       todo1(filled1bis) = "Poña roupa deportiva ao aire libre"     
-    ElseIf work1 = LocationOfDayWork.EinkaufenUndHaushalt OrElse work1 = LocationOfDayWork.Externarbeit OrElse 
-           work1=LocationOfDayWork.Fruehschicht OrElse work1=LocationOfDayWork.ExterneWeiterbildung Then
+    ElseIf work1 = LocationOfDayWork.ShoppingAndHousehold OrElse work1 = LocationOfDayWork.Downtown OrElse 
+           work1=LocationOfDayWork.EarlyShift OrElse work1=LocationOfDayWork.ExternalTraining Then
       filled1bis = filled1bis + 1
       todo1(filled1bis) = "Desgaste roupa para exteriores" 
     End If
   End Sub
  
  
-  Function BewegungsVorfestleg( day146097 As Integer, regelstruct As DataForMorningP ) As FruehsportMode
-    Dim laenge = regelstruct.FruehsportModeArray.Length()
-    if 0=laenge Then Return FruehsportMode.FastImmer
-    Dim fs as FruehsportMode
-    fs = regelstruct.FruehsportModeArray( day146097 mod laenge )
-    ' FruehsportMode auf Keiner, Wetterfrage und FastImmer reduzieren
-    If FruehsportMode.Sommerhalbjahr = fs AndAlso DateTime.Today.Month >= 5 AndAlso DateTime.Today.Month <= 10 Then
-      fs = FruehsportMode.FastImmer
-    Elseif FruehsportMode.Sommerhalbjahr = fs then
-      fs = FruehsportMode.Keiner
-    Elseif FruehsportMode.WetterAbApril = fs AndAlso DateTime.Today.Month >= 4 then
-      fs = FruehsportMode.Wetterfrage
-    Elseif FruehsportMode.WetterAbApril = fs then
-      fs = FruehsportMode.Keiner
+  Function PhysicalActivityDays( day146097 As Integer, regelstruct As DataForMorningP ) As MorningExerciseMode
+    Dim laenge = regelstruct.MorningExerciseModeArray.Length()
+    if 0=laenge Then Return MorningExerciseMode.AlmostAlways
+    Dim fs as MorningExerciseMode
+    fs = regelstruct.MorningExerciseModeArray( day146097 mod laenge )
+    ' MorningExerciseMode auf NoMorningExercise, WeatherQuestion und AlmostAlways reduzieren
+    If MorningExerciseMode.SummerHalfYear = fs AndAlso DateTime.Today.Month >= 5 AndAlso DateTime.Today.Month <= 10 Then
+      fs = MorningExerciseMode.AlmostAlways
+    Elseif MorningExerciseMode.SummerHalfYear = fs then
+      fs = MorningExerciseMode.NoMorningExercise
+    Elseif MorningExerciseMode.WeatherFromApril = fs AndAlso DateTime.Today.Month >= 4 then
+      fs = MorningExerciseMode.WeatherQuestion
+    Elseif MorningExerciseMode.WeatherFromApril = fs then
+      fs = MorningExerciseMode.NoMorningExercise
     End If
     Return fs
   End Function
@@ -208,7 +208,7 @@ Module Program
   
   Private Sub dozweispaltigchecklist( url As String )
   ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
-    Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R); e = l , d = r."& vbCrlf)
+    Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R, E ou D)" & vbCrlf)
     If Not IsNothing(url) Then
       Console.WriteLine( "Entre U pode introducirse para chamar á URL."& vbCrlf)
     End If
@@ -224,8 +224,10 @@ Module Program
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex).SubString(0,Math.Max(3,73-len(r(rindex)))) ,r(rindex))
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>31 then
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex),r(rindex))
-      ElseIf lindex < left.length AndAlso rindex < r.length then
+      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>14 then
         Console.Write(vbcr &  "{0},    {1} ?  (E/D) ", left(lindex),r(rindex))
+      ElseIf lindex < left.length AndAlso rindex < r.length then
+        Console.Write(vbcr &  "{0}, {1} ? (Esquerda,Dereita) ", left(lindex),r(rindex))
       Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
         Console.Write(vbcr &  "{0}, - ? (E) ", left(lindex))
       Elseif lindex < left.length then
@@ -245,7 +247,7 @@ Module Program
            System.Diagnostics.Process.Start( psi )
          End If
        Catch ee As Exception
-         errorAbbruch( url  , ee )
+         errorExit( url  , ee )
        End Try
      Else 
       lindex  = lindex  + 1
@@ -255,7 +257,7 @@ Module Program
   End Sub
 
 
-  Sub errorAbbruch( text1 as String, text2 as Exception )
+  Sub errorExit( text1 as String, text2 as Exception )
       Console.WriteLine(text1)    
       if text2 IsNot Nothing Then Console.WriteLine(text2)
       Console.WriteLine("Prema unha tecla para rematar o programa.")
@@ -268,23 +270,23 @@ End Module
 
 Public Module Interf
   Public Enum LocationOfDayWork
-    Heimarbeit = 0            '
-    HaushaltUndHeimarbeit = 1 '
-    EinkaufenUndHaushalt = 2  '
-    Externarbeit = 3          '
-    Frei = 4                  '
-    Fruehschicht = 5          '
-    Lernen = 6                '
-    ExterneWeiterbildung = 7  '
+    HomeOffice = 0            '
+    HouseholdAndHomeOffice = 1'
+    ShoppingAndHousehold = 2  '
+    Downtown = 3              '
+    DayOff = 4                  '
+    EarlyShift = 5          '
+    Study = 6                '
+    ExternalTraining = 7  '
   End Enum
   
   
-  Public Enum FruehsportMode
-    Keiner
-    Sommerhalbjahr
-    Wetterfrage
-    WetterAbApril
-    FastImmer
+  Public Enum MorningExerciseMode
+    NoMorningExercise
+    SummerHalfYear
+    WeatherQuestion
+    WeatherFromApril
+    AlmostAlways
   End Enum
 
   Public Structure DataForMorningP
@@ -293,9 +295,9 @@ Public Module Interf
     Public ZeitknapperAbTag As Integer
     Public ZeitknapperBisTag As Integer
     Public DayOfLastWalkOrJogging As Integer
-    Public FruehsportModeArray() As FruehsportMode
-    Public WinterHeizAbMMDD  As Integer
-    Public WinterHeizBisMDD  As Integer
+    Public MorningExerciseModeArray() As MorningExerciseMode
+    Public WinterHeatingAbMMDD  As Integer
+    Public WinterHeatingBisMDD  As Integer
   End Structure
 
   Public Structure WorteForMorningP
