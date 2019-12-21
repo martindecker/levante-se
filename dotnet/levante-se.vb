@@ -18,7 +18,7 @@ Module Program
           If  stoerungen2 Then
               todo3 = "Descubra a causa da estrada transitada"
           Else
-        Console.WriteLine("nada")
+              Console.WriteLine("nada")
           End If
       End If
       Console.WriteLine(VbLf)
@@ -102,6 +102,7 @@ Module Program
     day146097 = day146097 mod 146097
     Dim fs as MorningExerciseMode
     fs = PhysicalActivityDays( day146097 , dataForM )
+    Console.Write("Bos días. ")
     ' MorningExerciseMode auf NoMorningExercise und AlmostAlways reduzieren
     if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("¿Chove ou está baixo os -5 graos") then
       fs = MorningExerciseMode.NoMorningExercise
