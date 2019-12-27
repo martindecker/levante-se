@@ -139,7 +139,7 @@ Module Program
       todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Almorzo principal" , "Almorzo" )
     Else
       filled1bis = filled1bis + 1
-      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini cuncha de torta" , "Pon o bollo de leite no peto" )
+      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini anaco de bolo" , "Pon o bollo de leite no peto" )
       ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
     Dim work1 as LocationOfDayWork
