@@ -13,7 +13,7 @@ Module Program
   Sub Main(args As String())
       ' User language = Galician, Enums and the Winter Keyword = English
       LoadAData
-      If DateTime.Today.DayOfWeek = DayOfWeek.Saturday Then
+      If DateTime.Today.DayOfWeek = DayOfWeek.Sunday Then
           Dim stoerungen2 = janein1("¿Tráfico pesado na estrada")
           If  stoerungen2 Then
               todo3 = "Descubra a causa da estrada transitada"
