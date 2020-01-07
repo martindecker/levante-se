@@ -3,6 +3,7 @@ Imports System.Xml.Serialization
 Imports System.IO
 Imports System.Text
 
+#Const SlovakVersion = False
 
 Module Program
   Public todo1(20) As String
@@ -11,15 +12,24 @@ Module Program
   Dim todayurl = Nothing
 
   Sub Main(args As String())
-      ' User language = Galician, Enums and the Winter Keyword = English
+      ' User language = Galician or Slowak, Enums and the Winter Keyword = English
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday Then
+#If SlovakVersion Then
+          Dim stoerungen2 = janein1("Bola cesta zle využitá")
+          If  stoerungen2 Then
+              todo3 = "Zistite príčinu rušnej ulice!"
+          Else
+              Console.WriteLine("nič")
+          End If
+#Else
           Dim stoerungen2 = janein1("¿Tráfico pesado na estrada")
           If  stoerungen2 Then
               todo3 = "Descubra a causa da estrada transitada"
           Else
               Console.WriteLine("nada")
           End If
+#End if
       End If
       Console.WriteLine(VbLf)
       PlanningQuestions
@@ -31,7 +41,11 @@ Module Program
       End If
       dozweispaltigchecklist( todayurl )
       ' dozweispaltigchecklist( todo1, wForM.TodoPart2 )
+#If SlovakVersion Then
+      Console.WriteLine("Zadajte niečo na ukončenie programu.")
+#Else
       Console.WriteLine("Prema unha tecla para rematar o programa.")
+#End If
       Console.ReadKey()
   End Sub
     
@@ -69,7 +83,11 @@ Module Program
       xmlSer = New XmlSerializer(GetType(WorteForMorningP))
       wForM = CType(xmlSer.Deserialize(stm), WorteForMorningP)
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
+#If SlovakVersion Then
+      Console.WriteLine( "/jsonxmlm/*.xml" & "  sa načítal" )
+#Else
       Console.WriteLine( "/jsonxmlm/*.xml" & " cargado" )
+#End if
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso:Non está presente WhereSundayToSaturday en data1_for_morning_galician.xml") 
       If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
       If dataForM.MorningExerciseModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente MorningExerciseModeArray en data1_for_morning_galician.xml?")
