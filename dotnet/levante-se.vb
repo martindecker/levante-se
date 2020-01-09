@@ -241,9 +241,9 @@ Module Program
      Do
       If lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>73 then
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex).SubString(0,Math.Max(3,73-len(r(rindex)))) ,r(rindex))
-      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>31 then
+      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>63 then
         Console.Write(vbcr &  "{0}, {1} ? ", left(lindex),r(rindex))
-      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))>14 then
+      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>44 then
         Console.Write(vbcr &  "{0},    {1} ?  (E/D) ", left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
         Console.Write(vbcr &  "{0}, {1} ? (Esquerda,Dereita) ", left(lindex),r(rindex))
