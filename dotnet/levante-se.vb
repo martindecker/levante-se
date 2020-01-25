@@ -327,5 +327,5 @@ Public Module Interf
 End Module
 
 Public Module GlobalConstants
-    Public ReadOnly base_sunday As Date = New Date(2018, 9, 2) ' Muss ein Sonntag sein = Tag 0. Die Zshl der Tage ab dem 31.12.1899 ist durch 63 teilbar.
+    Public ReadOnly base_sunday As Date = New Date(2018, 9, 2) ' Muss ein Sonntag sein =Tag 0. Die Zahl der Tage ab dem 31.12.1899 ist durch 63 teilbar.
 End Module
