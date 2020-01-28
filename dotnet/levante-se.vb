@@ -240,22 +240,23 @@ Module Program
      Console.Write(vbcr &  spaceline )
      Do
       If lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>73 then
-        Console.Write(vbcr &  "{0}, {1} ? ", left(lindex).SubString(0,Math.Max(3,73-len(r(rindex)))) ,r(rindex))
+        Console.Write(vbcr &  "{0}, {1} ?"& upr, left(lindex).SubString(0,Math.Max(3,73-len(r(rindex)))) ,r(rindex))
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>63 then
-        Console.Write(vbcr &  "{0}, {1} ? ", left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0}, {1} ?"& upr, left(lindex),r(rindex))
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>44 then
-        Console.Write(vbcr &  "{0},    {1} ?  (E/D) ", left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0},    {1} ?  (E/D)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
-        Console.Write(vbcr &  "{0}, {1} ? (Esquerda,Dereita) ", left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0}, {1} ? (Esquerda,Dereita)"& upr, left(lindex),r(rindex))
       Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
-        Console.Write(vbcr &  "{0}, - ? (E) ", left(lindex))
+        Console.Write(vbcr &  "{0}, - ? (E)"& upr, left(lindex))
       Elseif lindex < left.length then
-        Console.Write(vbcr &  "{0},  logo prema E = L ? ", left(lindex))
+        Console.Write(vbcr &  "{0},  logo prema E = L ?"& upr, left(lindex))
       Else
-        Console.Write(vbcr &  "Pulse R ou D despois do {0} ? ",  r(rindex))
+        Console.Write(vbcr &  "Pulse R ou D despois do {0} ?"& upr,  r(rindex))
       End if
       line = Console.ReadKey(true).KeyChar 
      Loop Until "eEdDlLrRuU".Contains(line)
+	 upr = " "
      If line.ToUpper() = "R" OrElse line.ToUpper() = "D" then 
       rindex  = rindex  + 1
      Elseif line.ToUpper() = "U" then 
@@ -263,6 +264,11 @@ Module Program
          If Not IsNothing(url) Then
            dim psi as new ProcessStartInfo(url)
            psi.UseShellExecute = true
+		   If  upr=" " Then
+		     Console.write( vbcr &  "...                                                                         ")
+			 ' ... will be overridden after Process.Start
+			 upr = "…" ' Unicode Character : horizontal ellipsis, appears after Process.Start
+		   End if
            System.Diagnostics.Process.Start( psi )
          End If
        Catch ee As Exception
@@ -274,6 +280,8 @@ Module Program
     Loop
     Console.WriteLine( VbCrLf & VbCrLf & "Fertig." & VbCrLf )
   End Sub
+  
+  Private upr as String = " " ' Space or one threedot character as indication to wait
 
 
   Sub errorExit( text1 as String, text2 as Exception )
