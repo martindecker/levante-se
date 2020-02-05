@@ -54,7 +54,11 @@ Module Program
 
 
   Private Sub LoadAData
+#If SlovakVersion Then
+    Dim fn = "jsonxmlm/data1_for_morning_slovak.xml"
+#Else
     Dim fn = "jsonxmlm/data1_for_morning_galician.xml"
+#End If
     Try
       For Teste = 1 To 5
         If not File.Exists(fn) Then fn = "../" & fn
