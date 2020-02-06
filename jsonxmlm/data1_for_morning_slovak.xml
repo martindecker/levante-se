@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<DataForMorningP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <WhereSundayToSaturday>
+    <LocationOfDayWork>DayOff</LocationOfDayWork>
+    <LocationOfDayWork>HomeOffice</LocationOfDayWork>
+    <LocationOfDayWork>HomeOffice</LocationOfDayWork>
+    <LocationOfDayWork>ExternalTraining</LocationOfDayWork>
+    <LocationOfDayWork>Study</LocationOfDayWork>
+    <LocationOfDayWork>Study</LocationOfDayWork>
+    <LocationOfDayWork>ShoppingAndHousehold</LocationOfDayWork>
+  </WhereSundayToSaturday>
+  <LowCarbTeil>
+    <string>Ca</string>
+    <string>Pa</string>
+    <string>P</string>
+    <string>Ov</string>
+    <string>Ovo</string>
+    <string>De</string>
+    <string>Ma</string>
+  </LowCarbTeil>
+  <ZeitknapperAbTag>1</ZeitknapperAbTag>
+  <ZeitknapperBisTag>4</ZeitknapperBisTag>
+  <DayOfLastWalkOrJogging>1</DayOfLastWalkOrJogging>
+  <MorningExerciseModeArray>
+    <MorningExerciseMode>SummerHalfYear</MorningExerciseMode>
+    <MorningExerciseMode>WeatherFromApril</MorningExerciseMode>
+    <MorningExerciseMode>NoMorningExercise</MorningExerciseMode>
+  </MorningExerciseModeArray>
+  <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
+  <WinterHeatingBisMDD>315</WinterHeatingBisMDD>
+</DataForMorningP>
