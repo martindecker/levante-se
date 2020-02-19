@@ -69,7 +69,11 @@ Module Program
       stm.Close()    ' Testprint waere:   Console.WriteLine(dataForM.DayOfLastWalkOrJogging)
       Dim cd = new StringBuilder( Directory.GetCurrentDirectory() )
       Console.Write( cd )
+#If SlovakVersion Then
+      fn = "jsonxmlm/words_for_morning_slovak.xml"
+#Else
       fn = "jsonxmlm/words_for_morning_galician.xml"
+#End If
       For Teste = 1 To 5
         If not File.Exists(fn) Then 
           fn = "../" & fn
