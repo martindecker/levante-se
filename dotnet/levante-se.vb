@@ -93,10 +93,11 @@ Module Program
       stm.Close()    ' Testprint waere:   Console.WriteLine(wForM.VersionOfStruct)
 #If SlovakVersion Then
       Console.WriteLine( "/jsonxmlm/*.xml" & "  sa načítal" )
+      If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso:Non está presente WhereSundayToSaturday en data1_for_morning_galician.xml") 
 #Else
       Console.WriteLine( "/jsonxmlm/*.xml" & " cargado" )
-#End if
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso:Non está presente WhereSundayToSaturday en data1_for_morning_galician.xml") 
+#End if
       If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
       If dataForM.MorningExerciseModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente MorningExerciseModeArray en data1_for_morning_galician.xml?")
     Catch eee As Exception  
