@@ -137,7 +137,11 @@ Module Program
     fs = PhysicalActivityDays( day146097 , dataForM )
     Console.Write("Bos días. ")
     ' MorningExerciseMode auf NoMorningExercise und AlmostAlways reduzieren
+#If SlovakVersion Then
+    if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("Prší alebo je to pod -5 stupňov?") then
+#Else
     if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("¿Chove ou está baixo os -5 graos") then
+#End if
       fs = MorningExerciseMode.NoMorningExercise
     Elseif MorningExerciseMode.WeatherQuestion = fs then
       fs = MorningExerciseMode.AlmostAlways
