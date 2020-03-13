@@ -156,7 +156,11 @@ Module Program
 #End if
     End If
     if fs = MorningExerciseMode.AlmostAlways Then
+#If SlovakVersion Then
+      Console.WriteLine("-----> " & "Ranné cvičenie dnes, potom")
+#Else
       Console.WriteLine("-----> " & "Hoxe mañá exercicio, logo")  
+#End if
     Else
       filled1bis = filled1bis + 1
       todo1(filled1bis) = "Lavarse"
