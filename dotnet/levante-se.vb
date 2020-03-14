@@ -163,7 +163,11 @@ Module Program
 #End if
     Else
       filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = "Umývanie"
+#Else
       todo1(filled1bis) = "Lavarse"
+#End if
     End If
     If todo3 IsNot Nothing Then 
       filled1bis = filled1bis + 1
