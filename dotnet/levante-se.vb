@@ -176,7 +176,11 @@ Module Program
     If dataForM.LowCarbTeil.Length() > 0 Then
       Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
       filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = If( len(ur)<23, "V prípade potreby " & ur, ur )     
+#Else
       todo1(filled1bis) = If( len(ur)<23, "Se é necesario " & ur, ur )     
+#End if
     End If
     If fs <> MorningExerciseMode.AlmostAlways Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
