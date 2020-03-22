@@ -185,8 +185,13 @@ Module Program
     If fs <> MorningExerciseMode.AlmostAlways Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
         filled1bis = filled1bis + 2
+#If SlovakVersion Then
+        todo1(filled1bis-1) = "Pripravte uvarené raňajky"
+        todo1(filled1bis) = "Skontrolujte čistotu odevov"
+#Else
         todo1(filled1bis-1) = "Cociña o almorzo"
         todo1(filled1bis) = "Verifique a limpeza da roupa"
+#End if
       End If
       filled1bis = filled1bis + 1
       todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Almorzo principal" , "Almorzo" )
