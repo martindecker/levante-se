@@ -194,7 +194,11 @@ Module Program
 #End if
       End If
       filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Hlavné raňajky" , "Raňajky" )
+#Else
       todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Almorzo principal" , "Almorzo" )
+#End if
     Else
       filled1bis = filled1bis + 1
       todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini anaco de bolo" , "Pon o bollo de leite no peto" )
