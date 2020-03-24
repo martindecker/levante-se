@@ -201,7 +201,11 @@ Module Program
 #End if
     Else
       filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini kúsok koláča" , "Dajte buchtu do vrecka" )
+#Else
       todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini anaco de bolo" , "Pon o bollo de leite no peto" )
+#End if
       ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
     Dim work1 as LocationOfDayWork
