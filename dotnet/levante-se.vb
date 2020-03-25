@@ -217,7 +217,11 @@ Module Program
       Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
       filled1bis = filled1bis + 1
+#If SlovakVersion Then
+	  todo1(filled1bis) = If( len(url)<27, url, "Pozrite si vyššie uvedenú URL (U)")
+#Else
       todo1(filled1bis) = If( len(url)<27, url, "Ver o URL anterior (U)")     
+#End if
       todayurl = url
     End if  
     If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
