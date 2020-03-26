@@ -226,7 +226,11 @@ Module Program
     End if  
     If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
       filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = "V prípade potreby zapnite umývačku riadu"
+#Else
       todo1(filled1bis) = "Acenda o lavaplatos se é necesario"
+#End if
     End If
     if fs = MorningExerciseMode.AlmostAlways Then
       filled1bis = filled1bis + 1
