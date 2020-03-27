@@ -234,7 +234,11 @@ Module Program
     End If
     if fs = MorningExerciseMode.AlmostAlways Then
       filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = "Outdoorové športové oblečenie"     
+#Else
       todo1(filled1bis) = "Poña roupa deportiva ao aire libre"     
+#End if
     ElseIf work1 = LocationOfDayWork.ShoppingAndHousehold OrElse work1 = LocationOfDayWork.Downtown OrElse 
            work1=LocationOfDayWork.EarlyShift OrElse work1=LocationOfDayWork.ExternalTraining Then
       filled1bis = filled1bis + 1
