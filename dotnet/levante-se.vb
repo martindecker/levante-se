@@ -276,9 +276,13 @@ Module Program
   Function janein1(text As String)
     Dim line As String
     Do
-      Console.Write("{0} ? (s=y=j/n) ", text)
-      line = Console.ReadKey(true).KeyChar 
-    Loop Until "jnJNsSyY".Contains(line)
+#If SlovakVersion Then
+      Console.Write("{0} ? (a=y/n) ", text)
+#Else
+      Console.Write("{0} ? (s=y/n) ", text)
+#End if
+     line = Console.ReadKey(true).KeyChar 
+    Loop Until "aáAÁjnJNsSyY".Contains(line) ' slovak umlauts are &#225; &#193; 
     If line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
       Console.Write(" Si ")
     Else 
