@@ -284,7 +284,11 @@ Module Program
      line = Console.ReadKey(true).KeyChar 
     Loop Until "aáAÁjnJNsSyY".Contains(line) ' slovak umlauts are &#225; &#193; 
     If line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
+#If SlovakVersion Then
+      Console.Write(" áno ")
+#Else
       Console.Write(" Si ")
+#End if
     Else 
       Console.Write(" Non ")
     End If
