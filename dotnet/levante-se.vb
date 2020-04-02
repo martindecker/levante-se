@@ -277,7 +277,7 @@ Module Program
     Dim line As String
     Do
 #If SlovakVersion Then
-      Console.Write("{0} ? (a=y/n) ", text)
+      Console.Write("{0} ? (a=y/ž=n) ", text)
 #Else
       Console.Write("{0} ? (s=y/n) ", text)
 #End if
@@ -290,7 +290,11 @@ Module Program
       Console.Write(" Si ")
 #End if
     Else 
+#If SlovakVersion Then
+      Console.Write(" žiadny ")
+#Else
       Console.Write(" Non ")
+#End if
     End If
     Console.WriteLine(" ")
     Return ( line.ToUpper() = "J" OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y"  )
