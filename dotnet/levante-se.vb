@@ -94,14 +94,20 @@ Module Program
 #If SlovakVersion Then
       Console.WriteLine( "/jsonxmlm/*.xml" & " cargado" )
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Varovanie: WhereSundayToSaturday nie je k dispozícii v daten_fuer_morgen.xml") 
-      If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Varovanie: URL_ofDay nie je k dispozícii v daten_fuer_morgen.xml")
       If dataForM.MorningExerciseModeArray Is Nothing Then Console.WriteLine("Varovanie: MorningExerciseModeArray nie je k dispozícii v daten_fuer_morgen.xml")
+      If wForM.URL_ofDay Is Nothing OrElse wForM.URL_ofDay.Length() = 0 Then 
+	    Console.WriteLine("Varovanie: URL_ofDay nie je k dispozícii v daten_fuer_morgen.xml")
 #Else
       Console.WriteLine( "/jsonxmlm/*.xml" & "  sa načítal" )
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso:Non está presente WhereSundayToSaturday en data1_for_morning_galician.xml") 
-      If wForM.URL_ofDay Is Nothing Then Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
       If dataForM.MorningExerciseModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente MorningExerciseModeArray en data1_for_morning_galician.xml?")
+      If wForM.URL_ofDay Is Nothing OrElse wForM.URL_ofDay.Length() = 0 Then 
+	    Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
 #End if
+	  Else If wForM.URL_ofDay.Length() Mod 7 = 0 Then
+		Array.Resize(wForM.URL_ofDay, wForM.URL_ofDay.Length + 1) ' Should not be the same URL for the same weekday
+        wForM.URL_ofDay(wForM.URL_ofDay.Length - 1) = wForM.URL_ofDay( 3 )
+	  End If
     Catch eee As Exception  
 #If SlovakVersion Then
       errorExit(fn & "   Chyba:", eee)
