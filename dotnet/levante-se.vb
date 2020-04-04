@@ -106,7 +106,7 @@ Module Program
 #End if
 	  Else If wForM.URL_ofDay.Length() Mod 7 = 0 Then
 		Array.Resize(wForM.URL_ofDay, wForM.URL_ofDay.Length + 1) ' Should not be the same URL for the same weekday
-        wForM.URL_ofDay(wForM.URL_ofDay.Length - 1) = wForM.URL_ofDay( 3 )
+        wForM.URL_ofDay(wForM.URL_ofDay.Length - 1) = wForM.URL_ofDay( DateTime.Today.DayOfWeek )
 	  End If
     Catch eee As Exception  
 #If SlovakVersion Then
