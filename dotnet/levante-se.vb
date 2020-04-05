@@ -121,15 +121,15 @@ Module Program
   Function isHeatingSeason()
     Dim mon = DateTime.Now.Month
     Dim day = DateTime.Now.Day
-    If dataForM.WinterHeatingAbMMDD < dataForM.WinterHeatingBisMDD Then
-      If dataForM.WinterHeatingAbMMDD/100 < mon AndAlso mon < dataForM.WinterHeatingBisMDD/100 Then Return true
-      If dataForM.WinterHeatingAbMMDD/100 = mon Then Return day > dataForM.WinterHeatingAbMMDD mod 100
-      If dataForM.WinterHeatingBisMDD/100  = mon Then Return day < dataForM.WinterHeatingBisMDD mod 100
+    If dataForM.WinterHeatingAbMMDD < dataForM.WinterHeatingBisMDD Then ' Suedhalbkugel
+      If dataForM.WinterHeatingAbMMDD\100 < mon AndAlso mon < dataForM.WinterHeatingBisMDD\100 Then Return true
+      If dataForM.WinterHeatingAbMMDD\100 = mon Then Return day >= dataForM.WinterHeatingAbMMDD mod 100
+      If dataForM.WinterHeatingBisMDD\100  = mon Then Return day <= dataForM.WinterHeatingBisMDD mod 100
       Return False
-    Else
-      If dataForM.WinterHeatingAbMMDD/100 > mon OrElse mon < dataForM.WinterHeatingBisMDD/100 Then Return true
-      If dataForM.WinterHeatingAbMMDD/100 = mon Then Return day > dataForM.WinterHeatingAbMMDD mod 100
-      If dataForM.WinterHeatingBisMDD/100  = mon Then Return day < dataForM.WinterHeatingBisMDD mod 100
+    Else ' Nordhalbkugel
+      If dataForM.WinterHeatingAbMMDD\100 < mon OrElse mon < dataForM.WinterHeatingBisMDD\100 Then Return true
+      If dataForM.WinterHeatingAbMMDD\100 = mon Then Return day >= dataForM.WinterHeatingAbMMDD mod 100
+      If dataForM.WinterHeatingBisMDD\100  = mon Then Return day <= dataForM.WinterHeatingBisMDD mod 100
       Return False
     End If
   End Function
