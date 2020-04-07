@@ -20,7 +20,7 @@ Module Program
           If  stoerungen2 Then
               todo3 = "Zistite príčinu rušnej ulice!"
           Else
-              Console.WriteLine("nič")
+              Console.WriteLine("ok")
           End If
 #Else
           Dim stoerungen2 = janein1("¿Tráfico pesado na estrada")
@@ -96,18 +96,18 @@ Module Program
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Varovanie: WhereSundayToSaturday nie je k dispozícii v daten_fuer_morgen.xml") 
       If dataForM.MorningExerciseModeArray Is Nothing Then Console.WriteLine("Varovanie: MorningExerciseModeArray nie je k dispozícii v daten_fuer_morgen.xml")
       If wForM.URL_ofDay Is Nothing OrElse wForM.URL_ofDay.Length() = 0 Then 
-	    Console.WriteLine("Varovanie: URL_ofDay nie je k dispozícii v daten_fuer_morgen.xml")
+        Console.WriteLine("Varovanie: URL_ofDay nie je k dispozícii v daten_fuer_morgen.xml")
 #Else
       Console.WriteLine( "/jsonxmlm/*.xml" & "  sa načítal" )
       If dataForM.WhereSundayToSaturday Is Nothing Then Console.WriteLine("Aviso:Non está presente WhereSundayToSaturday en data1_for_morning_galician.xml") 
       If dataForM.MorningExerciseModeArray Is Nothing Then Console.WriteLine("Aviso: Non está presente MorningExerciseModeArray en data1_for_morning_galician.xml?")
       If wForM.URL_ofDay Is Nothing OrElse wForM.URL_ofDay.Length() = 0 Then 
-	    Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
+        Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
 #End if
-	  Else If wForM.URL_ofDay.Length() Mod 7 = 0 Then
-		Array.Resize(wForM.URL_ofDay, wForM.URL_ofDay.Length + 1) ' Should not be the same URL for the same weekday
+      Else If wForM.URL_ofDay.Length() Mod 7 = 0 Then
+        Array.Resize(wForM.URL_ofDay, wForM.URL_ofDay.Length + 1) ' Should not be the same URL for the same weekday
         wForM.URL_ofDay(wForM.URL_ofDay.Length - 1) = wForM.URL_ofDay( DateTime.Today.DayOfWeek )
-	  End If
+      End If
     Catch eee As Exception  
 #If SlovakVersion Then
       errorExit(fn & "   Chyba:", eee)
@@ -224,7 +224,7 @@ Module Program
       Console.WriteLine( "-----> " & url ) 
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
-	  todo1(filled1bis) = If( len(url)<27, url, "Pozrite si vyššie uvedenú URL (U)")
+      todo1(filled1bis) = If( len(url)<27, url, "Pozrite si vyššie uvedenú URL (U)")
 #Else
       todo1(filled1bis) = If( len(url)<27, url, "Ver o URL anterior (U)")     
 #End if
@@ -283,27 +283,28 @@ Module Program
     Dim line As String
     Do
 #If SlovakVersion Then
-      Console.Write("{0} ? (a=y/ž=n) ", text)
+      Console.Write("{0} ? (á=y/ž=n) ", text)
 #Else
       Console.Write("{0} ? (s=y/n) ", text)
 #End if
-     line = Console.ReadKey(true).KeyChar 
-    Loop Until "aáAÁjnJNsSyY".Contains(line) ' slovak umlauts are &#225; &#193; 
-    If line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
+     line = Console.ReadKey(true).KeyChar
+    Loop Until "aáAÁzžZŽjnJNsSyY".Contains(line) ' slovak umlauts for á Á are &#225; &#193; 
+    If line = "ž" OrElse line="Ž" Then Line = "z" ' ToUpper does not work with Character number &#382; or &#381;
+    If line.ToUpper() = "A"  OrElse line.ToUpper() = "Á"  OrElse line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
 #If SlovakVersion Then
-      Console.Write(" áno ")
+      Console.WriteLine(" áno ")
 #Else
-      Console.Write(" Si ")
+      Console.WriteLine(" Si ")
 #End if
+      Return True
     Else 
 #If SlovakVersion Then
-      Console.Write(" žiadny ")
+      Console.WriteLine(" žiadny ")
 #Else
-      Console.Write(" Non ")
+      Console.WriteLine(" Non ")
 #End if
+      Return False
     End If
-    Console.WriteLine(" ")
-    Return ( line.ToUpper() = "J" OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y"  )
   End Function
   
   
@@ -338,7 +339,7 @@ Module Program
       End if
       line = Console.ReadKey(true).KeyChar 
      Loop Until "eEdDlLrRuU".Contains(line)
-	 upr = " "
+     upr = " "
      If line.ToUpper() = "R" OrElse line.ToUpper() = "D" then 
       rindex  = rindex  + 1
      Elseif line.ToUpper() = "U" then 
@@ -346,11 +347,11 @@ Module Program
          If Not IsNothing(url) Then
            dim psi as new ProcessStartInfo(url)
            psi.UseShellExecute = true
-		   If  upr=" " Then
-		     Console.write( vbcr &  "...                                                                         ")
-			 ' ... will be overridden after Process.Start
-			 upr = "…" ' Unicode Character : horizontal ellipsis, appears after Process.Start
-		   End if
+           If  upr=" " Then
+             Console.write( vbcr &  "...                                                                         ")
+             ' ... will be overridden after Process.Start
+             upr = "…" ' Unicode Character : horizontal ellipsis, appears after Process.Start
+           End if
            System.Diagnostics.Process.Start( psi )
          End If
        Catch ee As Exception
