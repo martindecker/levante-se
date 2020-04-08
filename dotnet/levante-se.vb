@@ -310,7 +310,11 @@ Module Program
   
   Private Sub dozweispaltigchecklist( url As String )
   ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
+#If SlovakVersion Then
+    Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R, Ľ ou P)" & vbCrlf) ' Ľ = LETTER L WITH CARON #317, ľ = #318
+#Else
     Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R, E ou D)" & vbCrlf)
+#End if
     If Not IsNothing(url) Then
       Console.WriteLine( "Entre U pode introducirse para chamar á URL."& vbCrlf)
     End If
@@ -338,9 +342,14 @@ Module Program
         Console.Write(vbcr &  "Pulse R ou D despois do {0} ?"& upr,  r(rindex))
       End if
       line = Console.ReadKey(true).KeyChar 
-     Loop Until "eEdDlLrRuU".Contains(line)
+#If SlovakVersion Then
+     Loop Until "lLľĽpPrRuU".Contains(line)
+#Else
+     Loop Until "lLeEdDrRuU".Contains(line)
+#End if
      upr = " "
-     If line.ToUpper() = "R" OrElse line.ToUpper() = "D" then 
+     If line = "ľ" OrElse line="Ľ" Then Line = "L" ' ToUpper does not work with Character number 318, 317
+     If line.ToUpper() = "R" OrElse line.ToUpper() = "P" OrElse line.ToUpper() = "D" then 
       rindex  = rindex  + 1
      Elseif line.ToUpper() = "U" then 
        Try
