@@ -311,7 +311,7 @@ Module Program
   Private Sub dozweispaltigchecklist( url As String )
   ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
 #If SlovakVersion Then
-    Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R, Ľ ou P)" & vbCrlf) ' Ľ = LETTER L WITH CARON #317, ľ = #318
+    Console.WriteLine( VbCrLf & " Odpovedzte, ktorá strana bola spracovaná (L ou R, Ľ ou P)" & vbCrlf) ' Ľ = LETTER L WITH CARON #317, ľ = #318
 #Else
     Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R, E ou D)" & vbCrlf)
 #End if
