@@ -316,7 +316,11 @@ Module Program
     Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R, E ou D)" & vbCrlf)
 #End if
     If Not IsNothing(url) Then
+#If SlovakVersion Then
+      Console.WriteLine( "Na vyvolanie URL je možné zadať U."& vbCrlf)
+#Else
       Console.WriteLine( "Entre U pode introducirse para chamar á URL."& vbCrlf)
+#End if
     End If
     Dim lindex as Integer = 1
     Dim rindex as Integer = 1
