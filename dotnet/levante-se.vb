@@ -325,7 +325,11 @@ Module Program
     Dim lindex as Integer = 1
     Dim rindex as Integer = 1
     Dim line As String
+#If SlovakVersion Then
+    Console.WriteLine("Spracovať je {0} + {1} položiek." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
+#Else
     Console.WriteLine("Hai {0} + {1} elementos a procesar." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
+#End if
     Dim spaceline = new String( " "c, 78)
     Do While lindex < left.Length OrElse rindex < r.Length
      Console.Write(vbcr &  spaceline )
