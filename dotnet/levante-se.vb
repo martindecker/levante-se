@@ -339,6 +339,17 @@ Module Program
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>63 then
         Console.Write(vbcr &  "{0}, {1} ?"& upr, left(lindex),r(rindex))
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>44 then
+#If SlovakVersion Then
+        Console.Write(vbcr &  "{0},    {1} ?  (L/P)"& upr, left(lindex),r(rindex))
+      ElseIf lindex < left.length AndAlso rindex < r.length then
+        Console.Write(vbcr &  "{0}, {1} ? (Ľavá,Pravá)"& upr, left(lindex),r(rindex))
+      Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
+        Console.Write(vbcr &  "{0}, - ? (P)"& upr, left(lindex))
+      Elseif lindex < left.length then
+        Console.Write(vbcr &  "{0},  a potom stlačte Ľ = ľ = L ."& upr, left(lindex))
+      Else
+        Console.Write(vbcr &  "%% Pulse R ou D despois do {0} ?"& upr,  r(rindex))
+#Else
         Console.Write(vbcr &  "{0},    {1} ?  (E/D)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
         Console.Write(vbcr &  "{0}, {1} ? (Esquerda,Dereita)"& upr, left(lindex),r(rindex))
@@ -348,6 +359,7 @@ Module Program
         Console.Write(vbcr &  "{0},  logo prema E = L ?"& upr, left(lindex))
       Else
         Console.Write(vbcr &  "Pulse R ou D despois do {0} ?"& upr,  r(rindex))
+#End if
       End if
       line = Console.ReadKey(true).KeyChar 
 #If SlovakVersion Then
