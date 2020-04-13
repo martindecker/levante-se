@@ -348,7 +348,7 @@ Module Program
       Elseif lindex < left.length then
         Console.Write(vbcr &  "{0},  a potom stlačte Ľ = ľ = L ."& upr, left(lindex))
       Else
-        Console.Write(vbcr &  "%% Pulse R ou D despois do {0} ?"& upr,  r(rindex))
+        Console.Write(vbcr &  "Po {0} stlačte R alebo P  ?"& upr,  r(rindex))
 #Else
         Console.Write(vbcr &  "{0},    {1} ?  (E/D)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
