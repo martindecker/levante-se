@@ -390,7 +390,11 @@ Module Program
       lindex  = lindex  + 1
      End If
     Loop
-    Console.WriteLine( VbCrLf & VbCrLf & "Fertig." & VbCrLf )
+#If SlovakVersion Then
+    Console.WriteLine( VbCrLf & VbCrLf & "Pripravený." & VbCrLf )
+#Else
+    Console.WriteLine( VbCrLf & VbCrLf & "Feito." & VbCrLf )
+#End if
   End Sub
   
   Private upr as String = " " ' Space or one threedot character as indication to wait
