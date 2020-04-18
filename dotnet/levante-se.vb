@@ -403,7 +403,11 @@ Module Program
   Sub errorExit( text1 as String, text2 as Exception )
       Console.WriteLine(text1)    
       if text2 IsNot Nothing Then Console.WriteLine(text2)
-      Console.WriteLine("Prema unha tecla para rematar o programa.")
+#If SlovakVersion Then
+      Console.WriteLine("Program ukončíte stlačením klávesu.")
+#Else
+      Console.WriteLine( "Prema unha tecla para rematar o programa." )
+#End if
       Console.ReadKey()
       Environment.Exit(-1)
   End Sub
