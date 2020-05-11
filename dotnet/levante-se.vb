@@ -141,7 +141,11 @@ Module Program
     day146097 = day146097 mod 146097
     Dim fs as MorningExerciseMode
     fs = PhysicalActivityDays( day146097 , dataForM )
+#If SlovakVersion Then
+    Console.Write("Dobré ráno. ")
+#Else
     Console.Write("Bos días. ")
+#End if
     ' MorningExerciseMode auf NoMorningExercise und AlmostAlways reduzieren
 #If SlovakVersion Then
     if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("Prší alebo je to pod -5 stupňov?") then
