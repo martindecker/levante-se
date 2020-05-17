@@ -195,7 +195,7 @@ Module Program
     If fs <> MorningExerciseMode.AlmostAlways Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
         filled1bis = filled1bis + 2
-		If day146097 mod 2 = 1 Then
+        If day146097 mod 2 = 1 Then
 #If SlovakVersion Then
           todo1(filled1bis-1) = "Pripravte uvarené raňajky"
           todo1(filled1bis) = "Skontrolujte čistotu odevov"
@@ -457,6 +457,10 @@ Public Module Interf
     Public ZeitknapperBisTag As Integer
     Public DayOfLastWalkOrJogging As Integer
     Public MorningExerciseModeArray() As MorningExerciseMode
+    Public SeldomCleanClothing As Boolean
+    Public SeldomMatTraining As Boolean
+    Public OftenCleanClothing As Boolean
+    Public OftenMatTraining As Boolean
     Public WinterHeatingAbMMDD  As Integer
     Public WinterHeatingBisMDD  As Integer
   End Structure
