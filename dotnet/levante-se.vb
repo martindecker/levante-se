@@ -194,21 +194,37 @@ Module Program
     End If
     If fs <> MorningExerciseMode.AlmostAlways Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
-        filled1bis = filled1bis + 2
-        If day146097 mod 2 = 1 Then
+        If dataForM.OftenCleanClothing OrElse dataForM.OftenMatTraining OrElse day146097 mod 4 > 1 Then
+          filled1bis = filled1bis + 2
+          If day146097 mod 2 = 1 AndAlso ( (dataForM.SeldomCleanClothing AndAlso day146097 mod 8 > 3 ) OrElse dataForM.OftenCleanClothing ) Then
 #If SlovakVersion Then
-          todo1(filled1bis-1) = "Pripravte uvarené raňajky"
-          todo1(filled1bis) = "Skontrolujte čistotu odevov"
+            todo1(filled1bis-1) = "Pripravte uvarené raňajky"
+            todo1(filled1bis) = "Skontrolujte čistotu odevov"
 #Else
-          todo1(filled1bis-1) = "Cociña o almorzo"
-          todo1(filled1bis) = "Verifique a limpeza da roupa"
+            todo1(filled1bis-1) = "Cociña o almorzo"
+            todo1(filled1bis) = "Verifique a limpeza da roupa"
 #End if
-        Else
+          Else If dataForM.SeldomMatTraining OrElse dataForM.OftenMatTraining Then
 #If SlovakVersion Then
-          todo1(filled1bis-1) = "Mat cvičenia"
+            todo1(filled1bis-1) = "Mat cvičenia"
+            todo1(filled1bis) = "Pripravte uvarené raňajky"
+#Else
+            todo1(filled1bis-1)  = "Exercicios de alfombra"
+            todo1(filled1bis) = "Cociña o almorzo"
+#End if
+          Else
+            filled1bis = filled1bis - 1
+#If SlovakVersion Then
+            todo1(filled1bis) = "Pripravte uvarené raňajky"
+#Else
+            todo1(filled1bis) = "Cociña o almorzo"
+#End if
+          End If
+        Else
+          filled1bis = filled1bis + 1
+#If SlovakVersion Then
           todo1(filled1bis) = "Pripravte uvarené raňajky"
 #Else
-          todo1(filled1bis-1)  = "Exercicios de alfombra"
           todo1(filled1bis) = "Cociña o almorzo"
 #End if
         End If
