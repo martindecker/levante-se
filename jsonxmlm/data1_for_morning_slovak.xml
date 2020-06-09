@@ -26,10 +26,13 @@
     <MorningExerciseMode>WeatherFromApril</MorningExerciseMode>
     <MorningExerciseMode>NoMorningExercise</MorningExerciseMode>
   </MorningExerciseModeArray>
-   <SeldomCleanClothing>true</SeldomCleanClothing>
+  <SeldomCleanClothing>true</SeldomCleanClothing>
   <SeldomMatTraining>true</SeldomMatTraining>
   <OftenCleanClothing>false</OftenCleanClothing>
   <OftenMatTraining>false</OftenMatTraining>
- <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
+  <WaterPlantsAfterDaysQ1Q4>1</WaterPlantsAfterDaysQ1Q4>
+  <WaterPlantsAfterDaysQ2Q3>1</WaterPlantsAfterDaysQ2Q3>
+  <WaterInHeatingSeason>1</WaterInHeatingSeason>
+  <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
   <WinterHeatingBisMDD>315</WinterHeatingBisMDD>
 </DataForMorningP>
