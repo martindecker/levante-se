@@ -149,7 +149,8 @@ Module Program
     ' MorningExerciseMode auf NoMorningExercise und AlmostAlways reduzieren
     Dim tempquest As String = ""
 #If SlovakVersion Then
-    if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("Prší alebo je to pod -5 stupňov?") then
+    If isHeatingSeason() Then tempquest = " alebo je to pod -5 stupňov"
+    if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("Prší" & tempquest) then
 #Else
     If isHeatingSeason() Then tempquest = " ou está baixo os -5 graos"
     if MorningExerciseMode.WeatherQuestion = fs AndAlso janein1("¿Chove" & tempquest) then
