@@ -3,7 +3,7 @@ Imports System.Xml.Serialization
 Imports System.IO
 Imports System.Text
 
-#Const SlovakVersion = False
+#Const SlovakVersion = True
 
 Module Program
   Public todo1(20) As String
@@ -287,6 +287,12 @@ Module Program
       todo1(filled1bis) = "Desgaste roupa para exteriores" 
 #End if
     End If
+      filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = "Zalievanie rastlín"
+#Else
+      todo1(filled1bis) = "??????????????" 
+#End if
   End Sub
  
  
