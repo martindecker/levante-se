@@ -3,7 +3,7 @@ Imports System.Xml.Serialization
 Imports System.IO
 Imports System.Text
 
-#Const SlovakVersion = True
+#Const SlovakVersion = False
 
 Module Program
   Public todo1(20) As String
@@ -291,7 +291,7 @@ Module Program
 #If SlovakVersion Then
       todo1(filled1bis) = "Zalievanie rastlín"
 #Else
-      todo1(filled1bis) = "??????????????" 
+      todo1(filled1bis) = "Plantas de rego" 
 #End if
   End Sub
  
@@ -486,8 +486,12 @@ Public Module Interf
     Public SeldomMatTraining As Boolean
     Public OftenCleanClothing As Boolean
     Public OftenMatTraining As Boolean
-    Public WinterHeatingAbMMDD  As Integer
-    Public WinterHeatingBisMDD  As Integer
+    Public WaterPlantsAfterDaysQ1Q4 As Integer
+    Public WaterPlantsAfterDaysQ2Q3 As Integer
+    Public WaterInHeatingSeason As Integer
+    Public WaterWhenTimeTight As Boolean
+    Public WinterHeatingAbMMDD As Integer
+    Public WinterHeatingBisMDD As Integer
   End Structure
 
   Public Structure WorteForMorningP
