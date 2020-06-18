@@ -30,9 +30,9 @@
   <SeldomMatTraining>true</SeldomMatTraining>
   <OftenCleanClothing>false</OftenCleanClothing>
   <OftenMatTraining>false</OftenMatTraining>
-  <WaterPlantsAfterDaysQ1Q4>1</WaterPlantsAfterDaysQ1Q4>
-  <WaterPlantsAfterDaysQ2Q3>1</WaterPlantsAfterDaysQ2Q3>
-  <WaterInHeatingSeason>1</WaterInHeatingSeason>
+  <WaterPlantsAfterDaysQ1Q4>3</WaterPlantsAfterDaysQ1Q4>
+  <WaterPlantsAfterDaysQ2Q3>2</WaterPlantsAfterDaysQ2Q3>
+  <WaterInHeatingSeason>4</WaterInHeatingSeason>
   <WaterWhenTimeTight>true</WaterWhenTimeTight>
   <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
   <WinterHeatingBisMDD>315</WinterHeatingBisMDD>

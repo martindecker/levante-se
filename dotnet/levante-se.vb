@@ -287,7 +287,9 @@ Module Program
       todo1(filled1bis) = "Desgaste roupa para exteriores" 
 #End if
     End If
-    Dim giessen As Boolean = (((day146097+17) mod 2)=0) ' Vorlaeufig alle 2 Tage, wird noch verbessert
+	Dim gt As Integer = dataForM.WaterPlantsAfterDaysQ2Q3
+	If gt <= 0 Then gt = 99999999
+    Dim giessen As Boolean = (((day146097+17) mod gt)=0) ' Alle gt Tage, wird prinzipiell gegossen aber es gibt Ausnahmen
     Console.WriteLine( giessen )
     Dim day_mod As Integer = day146097+17
     If dataForM.ZeitknapperBisTag >= dataForM.ZeitknapperAbTag Then ' Am Rande des Zeitraums
@@ -303,7 +305,7 @@ Module Program
          Console.WriteLine( "Heute Zeit Knapp Also Wirds False" )
          giessen = False ' Dafür an den Tagen drum rum zwei Varianten erhöhte Wahrscheinlichkeit:
       Else If (DateTime.Today.DayOfWeek+1 mod 7) = dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek = (dataForM.ZeitknapperBisTag+1)mod 7 Then
-         giessen = giessen OrElse ((day_mod mod 2)=0)
+         giessen = giessen OrElse ((day_mod mod gt)=0)
          Console.WriteLine( (day146097+17) )
          Console.WriteLine( day_mod )
       End If

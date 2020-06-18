@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DataForMorningP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <WhereSundayToSaturday>
     <LocationOfDayWork>DayOff</LocationOfDayWork>
@@ -30,9 +30,9 @@
   <SeldomMatTraining>true</SeldomMatTraining>
   <OftenCleanClothing>false</OftenCleanClothing>
   <OftenMatTraining>false</OftenMatTraining>
-  <WaterPlantsAfterDaysQ1Q4>1</WaterPlantsAfterDaysQ1Q4>
+  <WaterPlantsAfterDaysQ1Q4>3</WaterPlantsAfterDaysQ1Q4>
   <WaterPlantsAfterDaysQ2Q3>1</WaterPlantsAfterDaysQ2Q3>
-  <WaterInHeatingSeason>1</WaterInHeatingSeason>
+  <WaterInHeatingSeason>5</WaterInHeatingSeason>
   <WaterWhenTimeTight>true</WaterWhenTimeTight>
   <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
   <WinterHeatingBisMDD>315</WinterHeatingBisMDD>
