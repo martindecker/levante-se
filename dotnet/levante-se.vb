@@ -288,7 +288,10 @@ Module Program
 #End if
     End If
 	Dim gt As Integer = dataForM.WaterPlantsAfterDaysQ2Q3
+	If DateTime.Now.Month <= 3 OrElse DateTime.Now.Month > 9 Then gt = dataForM.WaterPlantsAfterDaysQ1Q4
+	If isHeatingSeason() Then gt = dataForM.WaterInHeatingSeason
 	If gt <= 0 Then gt = 99999999
+    Console.WriteLine( gt )
     Dim giessen As Boolean = (((day146097+17) mod gt)=0) ' Alle gt Tage, wird prinzipiell gegossen aber es gibt Ausnahmen
     Console.WriteLine( giessen )
     Dim day_mod As Integer = day146097+17
