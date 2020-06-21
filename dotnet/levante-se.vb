@@ -304,7 +304,7 @@ Module Program
         Console.WriteLine( "Gestern Zeit Knapp" )
         day_mod = day_mod - 1
       End If
-      If DateTime.Today.DayOfWeek = dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek = dataForM.ZeitknapperBisTag Then
+      If DateTime.Today.DayOfWeek = dataForM.ZeitknapperBisTag Then
          Console.WriteLine( "Heute Zeit Knapp Also Wirds False" )
          giessen = False ' Dafür an den Tagen drum rum zwei Varianten erhöhte Wahrscheinlichkeit:
       Else If (DateTime.Today.DayOfWeek+1 mod 7) = dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek = (dataForM.ZeitknapperBisTag+1)mod 7 Then
@@ -315,11 +315,15 @@ Module Program
     End If
     If giessen Then
       filled1bis = filled1bis + 1
+      If DateTime.Today.DayOfWeek >= dataForM.ZeitknapperAbTag AndAlso DateTime.Today.DayOfWeek <= dataForM.ZeitknapperBisTag Then
+        todo1(filled1bis) = "Giesskanne füllen" ' replace by 2 languages
+	  Else
 #If SlovakVersion Then
-      todo1(filled1bis) = "Zalievanie rastlín"
+        todo1(filled1bis) = "Zalievanie rastlín"
 #Else
-      todo1(filled1bis) = "Plantas de rego" 
+        todo1(filled1bis) = "Plantas de rego" 
 #End if
+      End If
     End If
   End Sub
  
