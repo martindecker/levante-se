@@ -316,7 +316,11 @@ Module Program
     If giessen Then
       filled1bis = filled1bis + 1
       If DateTime.Today.DayOfWeek >= dataForM.ZeitknapperAbTag AndAlso DateTime.Today.DayOfWeek <= dataForM.ZeitknapperBisTag Then
-        todo1(filled1bis) = "Giesskanne füllen" ' replace by 2 languages
+#If SlovakVersion Then
+        todo1(filled1bis) = "Zalievanie rastlín -> Poobede"
+#Else
+        todo1(filled1bis) = "Encha o rego" ' Fill the Watering can, to remind to water in the afternoon
+#End if
 	  Else
 #If SlovakVersion Then
         todo1(filled1bis) = "Zalievanie rastlín"
