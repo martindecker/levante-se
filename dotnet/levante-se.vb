@@ -291,26 +291,18 @@ Module Program
 	If DateTime.Now.Month <= 3 OrElse DateTime.Now.Month > 9 Then gt = dataForM.WaterPlantsAfterDaysQ1Q4
 	If isHeatingSeason() Then gt = dataForM.WaterInHeatingSeason
 	If gt <= 0 Then gt = 99999999
-    Console.WriteLine( gt )
     Dim giessen As Boolean = (((day146097+17) mod gt)=0) ' Alle gt Tage, wird prinzipiell gegossen aber es gibt Ausnahmen
-    Console.WriteLine( giessen )
     Dim day_mod As Integer = day146097+17
     If dataForM.ZeitknapperBisTag >= dataForM.ZeitknapperAbTag Then ' Am Rande des Zeitraums
-      Console.WriteLine( "Beachte" )
       If (DateTime.Today.DayOfWeek+1) mod 7 = dataForM.ZeitknapperAbTag Then ' giessen auf den Tag ausserhalb schieben
-        Console.WriteLine( "Morgen Zeit Knapp" )
         day_mod = day_mod + 1
       ElseIf DateTime.Today.DayOfWeek = (dataForM.ZeitknapperBisTag+1) mod 7 Then
-        Console.WriteLine( "Gestern Zeit Knapp" )
         day_mod = day_mod - 1
       End If
       If DateTime.Today.DayOfWeek = dataForM.ZeitknapperBisTag Then
-         Console.WriteLine( "Heute Zeit Knapp Also Wirds False" )
          giessen = False ' Dafür an den Tagen drum rum zwei Varianten erhöhte Wahrscheinlichkeit:
       Else If (DateTime.Today.DayOfWeek+1 mod 7) = dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek = (dataForM.ZeitknapperBisTag+1)mod 7 Then
          giessen = giessen OrElse ((day_mod mod gt)=0)
-         Console.WriteLine( (day146097+17) )
-         Console.WriteLine( day_mod )
       End If
     End If
     If giessen Then
