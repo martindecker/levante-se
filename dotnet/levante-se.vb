@@ -287,10 +287,10 @@ Module Program
       todo1(filled1bis) = "Desgaste roupa para exteriores" 
 #End if
     End If
-	Dim gt As Integer = dataForM.WaterPlantsAfterDaysQ2Q3
-	If DateTime.Now.Month <= 3 OrElse DateTime.Now.Month > 9 Then gt = dataForM.WaterPlantsAfterDaysQ1Q4
-	If isHeatingSeason() Then gt = dataForM.WaterInHeatingSeason
-	If gt <= 0 Then gt = 99999999
+    Dim gt As Integer = dataForM.WaterPlantsAfterDaysQ2Q3
+    If DateTime.Now.Month <= 3 OrElse DateTime.Now.Month > 9 Then gt = dataForM.WaterPlantsAfterDaysQ1Q4
+    If isHeatingSeason() Then gt = dataForM.WaterInHeatingSeason
+    If gt <= 0 Then gt = 99999999
     Dim giessen As Boolean = (((day146097+17) mod gt)=0) ' Alle gt Tage, wird prinzipiell gegossen aber es gibt Ausnahmen
     Dim day_mod As Integer = day146097+17
     If dataForM.ZeitknapperBisTag >= dataForM.ZeitknapperAbTag Then ' Am Rande des Zeitraums
@@ -313,7 +313,7 @@ Module Program
 #Else
         todo1(filled1bis) = "Encha o rego" ' Fill the Watering can, to remind to water in the afternoon
 #End if
-	  Else
+      Else
 #If SlovakVersion Then
         todo1(filled1bis) = "Zalievanie rastlín"
 #Else
