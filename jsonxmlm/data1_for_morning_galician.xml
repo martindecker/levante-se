@@ -36,4 +36,22 @@
   <WaterWhenTimeTight>true</WaterWhenTimeTight>
   <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
   <WinterHeatingBisMDD>315</WinterHeatingBisMDD>
+  <PublicHolidaysMDD>
+    <int>101</int>
+    <int>106</int>
+    <int>202</int>
+    <int>223</int>
+    <int>319</int>
+    <int>329</int>
+    <int>501</int>
+    <int>705</int>
+    <int>809</int>
+    <int>815</int>
+    <int>1012</int>
+    <int>1025</int>
+    <int>1101</int>
+    <int>1109</int>
+    <int>1206</int>
+    <int>1208</int>
+  </PublicHolidaysMDD>
 </DataForMorningP>
