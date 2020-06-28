@@ -54,4 +54,9 @@
     <int>1206</int>
     <int>1208</int>
   </PublicHolidaysMDD>
+  <PublicHolidayGoodFriday>true</PublicHolidayGoodFriday>
+  <PublicHolidayEasterMonday>true</PublicHolidayEasterMonday>
+  <PublicHolidayAscension>false</PublicHolidayAscension>
+  <PublicHolidayWhitMonday>false</PublicHolidayWhitMonday>
+  <PublicHolidayCorpusChristi>false</PublicHolidayCorpusChristi>
 </DataForMorningP>

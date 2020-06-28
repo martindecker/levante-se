@@ -139,7 +139,7 @@ Module Program
     If dataForM.PublicHolidaysMDD.Length()=0 Then Return False
     Dim mon = DateTime.Now.Month
     Dim day = DateTime.Now.Day
-	Dim index as Integer = 0
+    Dim index as Integer = 0
       If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return DateTime.Today.DayOfWeek<>0
     Return False
   End Function
@@ -262,10 +262,10 @@ Module Program
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
     Console.WriteLine(   "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
-	If isPublicHoliday() Then
+    If isPublicHoliday() Then
       Console.WriteLine( "=====> " & "Public Holiday" ) 
       Console.WriteLine(VbLf)
-	End If
+    End If
     If wForM.URL_ofDay.Length() > 0 Then
       Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
@@ -535,6 +535,11 @@ Public Module Interf
     Public WinterHeatingAbMMDD As Integer
     Public WinterHeatingBisMDD As Integer
     Public PublicHolidaysMDD() As Integer
+    Public PublicHolidayGoodFriday As Boolean
+    Public PublicHolidayEasterMonday As Boolean
+    Public PublicHolidayAscension As Boolean
+    Public PublicHolidayWhitMonday As Boolean
+    Public PublicHolidayCorpusChristi As Boolean
   End Structure
 
   Public Structure WorteForMorningP

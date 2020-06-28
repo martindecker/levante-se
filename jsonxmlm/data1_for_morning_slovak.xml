@@ -39,4 +39,9 @@
   <PublicHolidaysMDD>
     <int>101</int>
   </PublicHolidaysMDD>
+  <PublicHolidayGoodFriday>true</PublicHolidayGoodFriday>
+  <PublicHolidayEasterMonday>true</PublicHolidayEasterMonday>
+  <PublicHolidayAscension>false</PublicHolidayAscension>
+  <PublicHolidayWhitMonday>false</PublicHolidayWhitMonday>
+  <PublicHolidayCorpusChristi>false</PublicHolidayCorpusChristi>
 </DataForMorningP>
