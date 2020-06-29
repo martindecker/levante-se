@@ -33,6 +33,7 @@
   <WaterPlantsAfterDaysQ1Q4>3</WaterPlantsAfterDaysQ1Q4>
   <WaterPlantsAfterDaysQ2Q3>1</WaterPlantsAfterDaysQ2Q3>
   <WaterInHeatingSeason>5</WaterInHeatingSeason>
+  <Water4SeedingInDay4to14>1</Water4SeedingInDay4to14>
   <WaterWhenTimeTight>true</WaterWhenTimeTight>
   <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
   <WinterHeatingBisMDD>315</WinterHeatingBisMDD>

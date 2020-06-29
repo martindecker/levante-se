@@ -531,6 +531,7 @@ Public Module Interf
     Public WaterPlantsAfterDaysQ1Q4 As Integer
     Public WaterPlantsAfterDaysQ2Q3 As Integer
     Public WaterInHeatingSeason As Integer
+    Public Water4SeedingInDay4to14 As Integer
     Public WaterWhenTimeTight As Boolean
     Public WinterHeatingAbMMDD As Integer
     Public WinterHeatingBisMDD As Integer
