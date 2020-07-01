@@ -139,8 +139,9 @@ Module Program
     If dataForM.PublicHolidaysMDD.Length()=0 Then Return False
     Dim mon = DateTime.Now.Month
     Dim day = DateTime.Now.Day
-    Dim index as Integer = 0
+    For index as Integer = 0 to dataForM.PublicHolidaysMDD.Length()-1
       If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return DateTime.Today.DayOfWeek<>0
+	Next
     Return False
   End Function
   
@@ -262,9 +263,12 @@ Module Program
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
     Console.WriteLine(   "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
+	Dim PublicHoliday = False
     If isPublicHoliday() Then
       Console.WriteLine( "=====> " & "Public Holiday" ) 
       Console.WriteLine(VbLf)
+	  PublicHoliday =  True
+	  filled1bis = 0
     End If
     If wForM.URL_ofDay.Length() > 0 Then
       Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
@@ -277,7 +281,7 @@ Module Program
 #End if
       todayurl = url
     End if  
-    If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
+    If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday AndAlso Not PublicHoliday Then
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
       todo1(filled1bis) = "V prípade potreby zapnite umývačku riadu"
@@ -292,8 +296,9 @@ Module Program
 #Else
       todo1(filled1bis) = "Poña roupa deportiva ao aire libre"     
 #End if
-    ElseIf work1 = LocationOfDayWork.ShoppingAndHousehold OrElse work1 = LocationOfDayWork.Downtown OrElse 
-           work1=LocationOfDayWork.EarlyShift OrElse work1=LocationOfDayWork.ExternalTraining Then
+    ElseIf (work1 = LocationOfDayWork.ShoppingAndHousehold OrElse work1 = LocationOfDayWork.Downtown OrElse 
+           work1=LocationOfDayWork.EarlyShift OrElse work1=LocationOfDayWork.ExternalTraining) AndAlso 
+            Not PublicHoliday Then
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
       todo1(filled1bis) = "Outdoorové oblečenie" 
