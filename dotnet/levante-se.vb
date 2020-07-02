@@ -3,6 +3,7 @@ Imports System.Xml.Serialization
 Imports System.IO
 Imports System.Text
 
+' User language = Galician or Slowak, Enums and the Winter Keyword = English
 #Const SlovakVersion = False
 
 Module Program
@@ -12,7 +13,7 @@ Module Program
   Dim todayurl = Nothing
 
   Sub Main(args As String())
-      ' User language = Galician or Slowak, Enums and the Winter Keyword = English
+      ' Console.WriteLine( CalcGoodFriday(2021) ) ' testprint
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday Then
 #If SlovakVersion Then
@@ -141,7 +142,7 @@ Module Program
     Dim day = DateTime.Now.Day
     For index as Integer = 0 to dataForM.PublicHolidaysMDD.Length()-1
       If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return DateTime.Today.DayOfWeek<>0
-	Next
+    Next
     Return False
   End Function
   
@@ -263,12 +264,12 @@ Module Program
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
     Console.WriteLine(   "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
-	Dim PublicHoliday = False
+    Dim PublicHoliday = False
     If isPublicHoliday() Then
       Console.WriteLine( "=====> " & "Public Holiday" ) 
       Console.WriteLine(VbLf)
-	  PublicHoliday =  True
-	  filled1bis = 0
+      PublicHoliday =  True
+      filled1bis = 0
     End If
     If wForM.URL_ofDay.Length() > 0 Then
       Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
@@ -309,10 +310,10 @@ Module Program
     Dim gt As Integer = dataForM.WaterPlantsAfterDaysQ2Q3
     If DateTime.Now.Month <= 3 OrElse DateTime.Now.Month > 9 Then gt = dataForM.WaterPlantsAfterDaysQ1Q4
     If isHeatingSeason() Then 
-	  gt = dataForM.WaterInHeatingSeason
-	ElseIf 4 <= DateTime.Today.Day AndAlso DateTime.Today.Day <= 14 Then
-	  gt = dataForM.Water4SeedingInDay4to14
-	End If
+      gt = dataForM.WaterInHeatingSeason
+    ElseIf 4 <= DateTime.Today.Day AndAlso DateTime.Today.Day <= 14 Then
+      gt = dataForM.Water4SeedingInDay4to14
+    End If
     If gt <= 0 Then gt = 99999999
     Dim giessen As Boolean = (((day146097+17) mod gt)=0) ' Alle gt Tage, wird prinzipiell gegossen aber es gibt Ausnahmen
     Dim day_mod As Integer = day146097+17
@@ -488,6 +489,26 @@ Module Program
   End Sub
   
   Private upr as String = " " ' Space or one threedot character as indication to wait
+
+
+  Function CalcGoodFriday(ByVal year As Integer) As DateTime
+        Dim a = year Mod 19
+        Dim b = year \ 100
+        Dim c = year Mod 100
+        Dim d = b \ 4
+        Dim e = b Mod 4
+        Dim f = (b + 8) \ 25
+        Dim g = (b - f + 1) \ 3
+        Dim h = (19 * a + b - d - g + 15) Mod 30
+        Dim i = c \ 4
+        Dim k = c Mod 4
+        Dim l = (32 + 2 * e + 2 * i - h - k) Mod 7
+        Dim m = (a + 11 * h + 22 * l) \ 451
+        Dim gregor = h + l - 7 * m + 112
+        Dim month = gregor \ 31
+        Dim day = (gregor Mod 31) + 1
+        Return New DateTime(year, month, day)
+  End Function
 
 
   Sub errorExit( text1 as String, text2 as Exception )
