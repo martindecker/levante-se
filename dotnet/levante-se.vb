@@ -136,17 +136,6 @@ Module Program
   End Function
 
 
-  Function isPublicHoliday()
-    If dataForM.PublicHolidaysMDD.Length()=0 Then Return False
-    Dim mon = DateTime.Now.Month
-    Dim day = DateTime.Now.Day
-    For index as Integer = 0 to dataForM.PublicHolidaysMDD.Length()-1
-      If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return DateTime.Today.DayOfWeek<>0
-    Next
-    Return False
-  End Function
-  
-  
   Sub PlanningQuestions
     ' Setzt todo1, filled1bis, todayurl
     Dim day146097 As Integer = DateDiff(DateInterval.Day, GlobalConstants.base_sunday , Date.Now)
@@ -491,6 +480,19 @@ Module Program
   Private upr as String = " " ' Space or one threedot character as indication to wait
 
 
+  Function isPublicHoliday()
+    If dataForM.PublicHolidaysMDD.Length()=0 Then Return False
+    Dim td = DateTime.Today
+    Dim mon = td.Month
+    Dim day = td.Day
+    For index as Integer = 0 to dataForM.PublicHolidaysMDD.Length()-1
+      If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return DateTime.Today.DayOfWeek<>0
+    Next
+    If td.DayOfWeek = 5 AndAlso CalcGoodFriday( td.Year ) = td Then Return dataForM.PublicHolidayGoodFriday 
+    Return False
+  End Function
+  
+  
   Function CalcGoodFriday(ByVal year As Integer) As DateTime
         Dim a = year Mod 19
         Dim b = year \ 100
