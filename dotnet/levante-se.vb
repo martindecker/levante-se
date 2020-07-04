@@ -489,6 +489,10 @@ Module Program
       If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return DateTime.Today.DayOfWeek<>0
     Next
     If td.DayOfWeek = 5 AndAlso CalcGoodFriday( td.Year ) = td Then Return dataForM.PublicHolidayGoodFriday 
+    If td.DayOfWeek = 1 Then
+      If CalcGoodFriday( td.Year ).AddDays(3) = td Then Return dataForM.PublicHolidayEasterMonday
+      If CalcGoodFriday( td.Year ).AddDays(52) = td Then Return dataForM.PublicHolidayWhitMonday
+    End If    
     Return False
   End Function
   
