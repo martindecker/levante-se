@@ -493,6 +493,10 @@ Module Program
       If CalcGoodFriday( td.Year ).AddDays(3) = td Then Return dataForM.PublicHolidayEasterMonday
       If CalcGoodFriday( td.Year ).AddDays(52) = td Then Return dataForM.PublicHolidayWhitMonday
     End If    
+    If td.DayOfWeek = 4 Then
+      If CalcGoodFriday( td.Year ).AddDays(41) = td Then Return dataForM.PublicHolidayAscension
+      If CalcGoodFriday( td.Year ).AddDays(62) = td Then Return dataForM.PublicHolidayCorpusChristi
+    End If    
     Return False
   End Function
   
