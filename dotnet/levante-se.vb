@@ -11,6 +11,8 @@ Module Program
   Public filled1bis As Integer = 0
   Public todo3 As String = Nothing
   Dim todayurl = Nothing
+  Dim timestamp1,timestamp2,timestamp3,timestamp4 As DateTime ' used time = t2-t1 + t4-t3
+  Dim nsteps as Integer = 0 ' how many steps in that time ?
 
   Sub Main(args As String())
       ' Console.WriteLine( CalcGoodFriday(2021) ) ' testprint
@@ -40,8 +42,10 @@ Module Program
       If Not isHeatingSeason() Then 
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
+      timestamp1 = DateTime.Now
       dozweispaltigchecklist( todayurl )
       ' dozweispaltigchecklist( todo1, wForM.TodoPart2 )
+      If timestamp2 <> Nothing Then Console.WriteLine( timestamp2 - timestamp1 )
 #If SlovakVersion Then
       Console.WriteLine("Zadajte niečo na ukončenie programu.")
 #Else
@@ -291,9 +295,9 @@ Module Program
             Not PublicHoliday Then
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
-      todo1(filled1bis) = "Outdoorové oblečenie" 
+      todo1(filled1bis) = "Outdoorové oblečenie"
 #Else
-      todo1(filled1bis) = "Desgaste roupa para exteriores" 
+      todo1(filled1bis) = "Desgaste roupa para exteriores"
 #End if
     End If
     Dim gt As Integer = dataForM.WaterPlantsAfterDaysQ2Q3
@@ -330,7 +334,7 @@ Module Program
 #If SlovakVersion Then
         todo1(filled1bis) = "Zalievanie rastlín"
 #Else
-        todo1(filled1bis) = "Plantas de rego" 
+        todo1(filled1bis) = "Plantas de rego"
 #End if
       End If
     End If
@@ -389,7 +393,8 @@ Module Program
   
   
   Private Sub dozweispaltigchecklist( url As String )
-  ' Private Sub dozweispaltigchecklist(left() As String,r() As String)
+  ' Uses Arrays left() As String,r() As String
+  ' fills in timestep2, timestep3 because this is website reading time and can vary.
 #If SlovakVersion Then
     Console.WriteLine( VbCrLf & " Odpovedzte, ktorá strana bola spracovaná (L ou R, Ľ ou P)" & vbCrlf) ' Ľ = LETTER L WITH CARON #317, ľ = #318
 #Else
@@ -450,8 +455,11 @@ Module Program
      upr = " "
      If line = "ľ" OrElse line="Ľ" Then Line = "L" ' ToUpper does not work with Character number 318, 317
      If line.ToUpper() = "R" OrElse line.ToUpper() = "P" OrElse line.ToUpper() = "D" then 
-      rindex  = rindex  + 1
+      rindex = rindex  + 1
+      nsteps = nsteps + 1
      Elseif line.ToUpper() = "U" then 
+       nsteps = nsteps - 1
+       timestamp2 = DateTime.Now
        Try
          If Not IsNothing(url) Then
            dim psi as new ProcessStartInfo(url)
@@ -468,6 +476,7 @@ Module Program
        End Try
      Else 
       lindex  = lindex  + 1
+      nsteps = nsteps + 1
      End If
     Loop
 #If SlovakVersion Then
