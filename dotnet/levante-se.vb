@@ -43,9 +43,11 @@ Module Program
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
       timestamp1 = DateTime.Now
-      dozweispaltigchecklist( todayurl )
-      ' dozweispaltigchecklist( todo1, wForM.TodoPart2 )
+      dozweispaltigchecklist( todayurl ) 
+	  timestamp4 = DateTime.Now
       If timestamp2 <> Nothing Then Console.WriteLine( timestamp2 - timestamp1 )
+	  Console.WriteLine( timestamp4 - timestamp1 )
+	  Console.WriteLine( nsteps ) ' these 3 WriteLine-Commands up to here are Testprints
 #If SlovakVersion Then
       Console.WriteLine("Zadajte niečo na ukončenie programu.")
 #Else
@@ -478,6 +480,7 @@ Module Program
       lindex  = lindex  + 1
       nsteps = nsteps + 1
      End If
+	 If line.ToUpper() <> "U" And timestamp2 <> Nothing And timestamp3 = Nothing Then timestamp3 = DateTime.Now
     Loop
 #If SlovakVersion Then
     Console.WriteLine( VbCrLf & VbCrLf & "Pripravený." & VbCrLf )
