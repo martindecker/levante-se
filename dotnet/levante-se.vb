@@ -44,13 +44,21 @@ Module Program
       End If
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( todayurl ) 
-	  timestamp4 = DateTime.Now
+      timestamp4 = DateTime.Now
       If timestamp2 <> Nothing Then Console.WriteLine( timestamp2 - timestamp1 )
-	  Console.WriteLine( timestamp4 - timestamp1 )
-	  Console.WriteLine( nsteps ) ' these 3 WriteLine-Commands up to here are Testprints
+      If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then Console.WriteLine( (timestamp2 - timestamp1)+(timestamp4 - timestamp3) )
+      Console.WriteLine( timestamp4 - timestamp1 )
+      Console.WriteLine( nsteps ) ' these 4 WriteLine-Commands up to here are Testprints
+      Dim interval As TimeSpan
+      If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then
+        interval = (timestamp2 - timestamp1)+(timestamp4 - timestamp3)
+      End If
 #If SlovakVersion Then
       Console.WriteLine("Zadajte niečo na ukončenie programu.")
 #Else
+      If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then
+        Console.WriteLine("Potrebovali ste {0} minút na {1} krokov", interval.Hours * 60 + interval.Minutes, nsteps )
+      End If
       Console.WriteLine("Prema unha tecla para rematar o programa.")
 #End If
       Console.ReadKey()
@@ -457,8 +465,8 @@ Module Program
      upr = " "
      If line = "ľ" OrElse line="Ľ" Then Line = "L" ' ToUpper does not work with Character number 318, 317
      If line.ToUpper() = "R" OrElse line.ToUpper() = "P" OrElse line.ToUpper() = "D" then 
+      If rindex < r.Length Then nsteps = nsteps + 1
       rindex = rindex  + 1
-      nsteps = nsteps + 1
      Elseif line.ToUpper() = "U" then 
        nsteps = nsteps - 1
        timestamp2 = DateTime.Now
@@ -477,10 +485,10 @@ Module Program
          errorExit( url  , ee )
        End Try
      Else 
+      If lindex < left.length Then nsteps = nsteps + 1
       lindex  = lindex  + 1
-      nsteps = nsteps + 1
      End If
-	 If line.ToUpper() <> "U" And timestamp2 <> Nothing And timestamp3 = Nothing Then timestamp3 = DateTime.Now
+     If line.ToUpper() <> "U" And timestamp2 <> Nothing And timestamp3 = Nothing Then timestamp3 = DateTime.Now
     Loop
 #If SlovakVersion Then
     Console.WriteLine( VbCrLf & VbCrLf & "Pripravený." & VbCrLf )
