@@ -52,13 +52,14 @@ Module Program
       Dim interval As TimeSpan
       If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then
         interval = (timestamp2 - timestamp1)+(timestamp4 - timestamp3)
+      Else
+        interval = timestamp4 - timestamp1
+Console.WriteLine("Kein U gedrückt (Testprint)")
       End If
 #If SlovakVersion Then
       Console.WriteLine("Zadajte niečo na ukončenie programu.")
 #Else
-      If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then
-        Console.WriteLine("Potrebovali ste {0} minút na {1} krokov", interval.Hours * 60 + interval.Minutes, nsteps )
-      End If
+      Console.WriteLine("Potrebovali ste {0} minút na {1} krokov", interval.Hours * 60 + interval.Minutes, nsteps )
       Console.WriteLine("Prema unha tecla para rematar o programa.")
 #End If
       Console.ReadKey()
