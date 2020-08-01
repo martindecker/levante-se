@@ -15,7 +15,6 @@ Module Program
   Dim nsteps as Integer = 0 ' how many steps in that time ?
 
   Sub Main(args As String())
-      ' Console.WriteLine( CalcGoodFriday(2021) ) ' testprint
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday Then
 #If SlovakVersion Then
@@ -59,7 +58,8 @@ Console.WriteLine("Kein U gedrückt (Testprint)")
 #If SlovakVersion Then
       Console.WriteLine("Zadajte niečo na ukončenie programu.")
 #Else
-      Console.WriteLine("Potrebovali ste {0} minút na {1} krokov", interval.Hours * 60 + interval.Minutes, nsteps )
+      Console.Write("Potrebovali ste {0} minút na {1} krokov ", interval.Hours * 60 + interval.Minutes, nsteps )
+      If nsteps > 0 Then Console.WriteLine("= {0:N2} minút na krok. ", interval.TotalMinutes/nsteps )
       Console.WriteLine("Prema unha tecla para rematar o programa.")
 #End If
       Console.ReadKey()
