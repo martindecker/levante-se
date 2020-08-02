@@ -56,10 +56,12 @@ Module Program
 Console.WriteLine("Kein U gedrückt (Testprint)")
       End If
 #If SlovakVersion Then
-      Console.WriteLine("Zadajte niečo na ukončenie programu.")
-#Else
       Console.Write("Potrebovali ste {0} minút na {1} krokov ", interval.Hours * 60 + interval.Minutes, nsteps )
       If nsteps > 0 Then Console.WriteLine("= {0:N2} minút na krok. ", interval.TotalMinutes/nsteps )
+      Console.WriteLine("Zadajte niečo na ukončenie programu.")
+#Else
+      Console.Write("Tardaron {0} minutos en {1} pasos ", interval.Hours * 60 + interval.Minutes, nsteps )
+      If nsteps > 0 Then Console.WriteLine("= {0:N2} minutos por paso. ", interval.TotalMinutes/nsteps )
       Console.WriteLine("Prema unha tecla para rematar o programa.")
 #End If
       Console.ReadKey()
