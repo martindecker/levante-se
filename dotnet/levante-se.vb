@@ -57,11 +57,11 @@ Console.WriteLine("Kein U gedrückt (Testprint)")
       End If
 #If SlovakVersion Then
       Console.Write("Potrebovali ste {0} minút na {1} krokov ", interval.Hours * 60 + interval.Minutes, nsteps )
-      If nsteps > 0 Then Console.WriteLine("= {0:N2} minút na krok. ", interval.TotalMinutes/nsteps )
+      If nsteps > 0 Then Console.WriteLine("= {0:N1} minút na krok. ", interval.TotalMinutes/nsteps )
       Console.WriteLine("Zadajte niečo na ukončenie programu.")
 #Else
       Console.Write("Tardaron {0} minutos en {1} pasos ", interval.Hours * 60 + interval.Minutes, nsteps )
-      If nsteps > 0 Then Console.WriteLine("= {0:N2} minutos por paso. ", interval.TotalMinutes/nsteps )
+      If nsteps > 0 Then Console.WriteLine("= {0:N1} minutos por paso. ", interval.TotalMinutes/nsteps )
       Console.WriteLine("Prema unha tecla para rematar o programa.")
 #End If
       Console.ReadKey()
@@ -471,8 +471,10 @@ Console.WriteLine("Kein U gedrückt (Testprint)")
       If rindex < r.Length Then nsteps = nsteps + 1
       rindex = rindex  + 1
      Elseif line.ToUpper() = "U" then 
-       nsteps = nsteps - 1
-       timestamp2 = DateTime.Now
+       If timestamp2 = Nothing Then 
+         timestamp2 = DateTime.Now
+         nsteps = nsteps - 1
+       End If
        Try
          If Not IsNothing(url) Then
            dim psi as new ProcessStartInfo(url)
