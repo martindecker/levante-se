@@ -44,16 +44,11 @@ Module Program
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( todayurl ) 
       timestamp4 = DateTime.Now
-      If timestamp2 <> Nothing Then Console.WriteLine( timestamp2 - timestamp1 )
-      If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then Console.WriteLine( (timestamp2 - timestamp1)+(timestamp4 - timestamp3) )
-      Console.WriteLine( timestamp4 - timestamp1 )
-      Console.WriteLine( nsteps ) ' these 4 WriteLine-Commands up to here are Testprints
       Dim interval As TimeSpan
       If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then
         interval = (timestamp2 - timestamp1)+(timestamp4 - timestamp3)
       Else
         interval = timestamp4 - timestamp1
-Console.WriteLine("Kein U gedrückt (Testprint)")
       End If
 #If SlovakVersion Then
       Console.Write("Potrebovali ste {0} minút na {1} krokov ", interval.Hours * 60 + interval.Minutes, nsteps )
