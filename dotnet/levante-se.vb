@@ -424,6 +424,7 @@ Module Program
     Console.WriteLine("Hai {0} + {1} elementos a procesar." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
 #End if
     Dim spaceline = new String( " "c, 78)
+	Dim oneStepAdded = False
     Do While lindex < left.Length OrElse rindex < r.Length
      Console.Write(vbcr &  spaceline )
      Do
@@ -456,18 +457,23 @@ Module Program
       End if
       line = Console.ReadKey(true).KeyChar 
 #If SlovakVersion Then
-     Loop Until "lLľĽpPrRusUS".Contains(line)
+     Loop Until "lLľĽpPrRustUST".Contains(line)
 #Else
-     Loop Until "lLeEdDrRusUS".Contains(line)
+     Loop Until "lLeEdDrRustUST".Contains(line)
 #End if
      upr = " "
      If line = "ľ" OrElse line="Ľ" Then Line = "L" ' ToUpper does not work with Character number 318, 317
      If line.ToUpper() = "R" OrElse line.ToUpper() = "P" OrElse line.ToUpper() = "D" then 
       If rindex < r.Length Then nsteps = nsteps + 1
       rindex = rindex  + 1
-     Elseif line.ToUpper() = "S" then ' For skipping a Step: Pressing S neutralises Time Measurement of the step.
+     Elseif line.ToUpper() = "S" then ' For skipping a Step: Pressing S neutralises Time Measurement of a step.
        If nsteps > 2 OrElse (nsteps > 0 AndAlso lindex < left.length-2) Then 
          nsteps = nsteps - 1
+       End If
+     Elseif line.ToUpper() = "T" then ' One additional step which was not planned.
+       If oneStepAdded = False Then 
+         nsteps = nsteps + 1
+		 oneStepAdded = True
        End If
      Elseif line.ToUpper() = "U" then 
        If timestamp2 = Nothing Then 
