@@ -424,7 +424,7 @@ Module Program
     Console.WriteLine("Hai {0} + {1} elementos a procesar." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
 #End if
     Dim spaceline = new String( " "c, 78)
-	Dim oneStepAdded = False
+    Dim oneStepAdded = False
     Do While lindex < left.Length OrElse rindex < r.Length
      Console.Write(vbcr &  spaceline )
      Do
@@ -434,9 +434,9 @@ Module Program
         Console.Write(vbcr &  "{0}, {1} ?"& upr, left(lindex),r(rindex))
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>44 then
 #If SlovakVersion Then
-        Console.Write(vbcr &  "{0},    {1} ?  (L/P)"& upr, left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0}. {1} ?  (L/P)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
-        Console.Write(vbcr &  "{0}, {1} ? (Ľavá,Pravá)"& upr, left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0}.: {1}, {2} ? (Ľavá,Pravá)" & upr, nsteps+1, left(lindex),r(rindex))
       Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
         Console.Write(vbcr &  "{0}, - ? (P)"& upr, left(lindex))
       Elseif lindex < left.length then
@@ -446,7 +446,7 @@ Module Program
 #Else
         Console.Write(vbcr &  "{0},    {1} ?  (E/D)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
-        Console.Write(vbcr &  "{0}, {1} ? (Esquerda,Dereita)"& upr, left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0}.: {1}, {2} ? (Esquerda,Dereita)"& upr, nsteps+1, left(lindex),r(rindex))
       Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
         Console.Write(vbcr &  "{0}, - ? (E)"& upr, left(lindex))
       Elseif lindex < left.length then
@@ -473,7 +473,7 @@ Module Program
      Elseif line.ToUpper() = "T" then ' One additional step which was not planned.
        If oneStepAdded = False Then 
          nsteps = nsteps + 1
-		 oneStepAdded = True
+         oneStepAdded = True
        End If
      Elseif line.ToUpper() = "U" then 
        If timestamp2 = Nothing Then 
