@@ -53,13 +53,16 @@ Module Program
 #If SlovakVersion Then
       Console.Write("Potrebovali ste {0} minút na {1} krokov ", interval.Hours * 60 + interval.Minutes, nsteps )
       If nsteps > 0 Then Console.WriteLine("= {0:N1} minút na krok. ", interval.TotalMinutes/nsteps )
-      Console.WriteLine("Zadajte niečo na ukončenie programu.")
+      Console.WriteLine("Program ukončíte stlačením iného tlačidla.")
 #Else
       Console.Write("Tardaron {0} minutos en {1} pasos ", interval.Hours * 60 + interval.Minutes, nsteps )
       If nsteps > 0 Then Console.WriteLine("= {0:N1} minutos por paso. ", interval.TotalMinutes/nsteps )
-      Console.WriteLine("Prema unha tecla para rematar o programa.")
+      Console.WriteLine("Prema outra tecla para finalizar o programa.")
 #End If
-      Console.ReadKey()
+      Dim ee AS String
+      Do
+        ee = Console.ReadKey(true).KeyChar
+      Loop Until Not "lLeEdDrRustUSTpP".Contains(ee)
   End Sub
     
   Dim dataForM as DataForMorningP
@@ -432,8 +435,8 @@ Module Program
         Console.Write(vbcr &  "{0}, {1} ?"& upr, left(lindex).SubString(0,Math.Max(3,73-len(r(rindex)))) ,r(rindex))
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>63 then
         Console.Write(vbcr &  "{0}, {1} ?"& upr, left(lindex),r(rindex))
-      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>44 then
 #If SlovakVersion Then
+      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>44 then
         Console.Write(vbcr &  "{0}. {1} ?  (L/P)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
         Console.Write(vbcr &  "{0}.: {1}, {2} ? (Ľavá,Pravá)" & upr, nsteps+1, left(lindex),r(rindex))
@@ -444,6 +447,7 @@ Module Program
       Else
         Console.Write(vbcr &  "Po {0} stlačte R alebo P  ?"& upr,  r(rindex))
 #Else
+      Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>41 then
         Console.Write(vbcr &  "{0},    {1} ?  (E/D)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
         Console.Write(vbcr &  "{0}.: {1}, {2} ? (Esquerda,Dereita)"& upr, nsteps+1, left(lindex),r(rindex))
