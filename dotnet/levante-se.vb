@@ -622,7 +622,14 @@ Public Module Interf
     Public TodoPart2() as String
     Public URL_ofDay() As String
   End Structure
+  
+  Public Structure VTupel
+    Public D As Decimal 
+    Public V As Boolean
+  End Structure
 End Module
+
+
 
 Public Module GlobalConstants
     Public ReadOnly base_sunday As Date = New Date(2018, 9, 2) ' Muss ein Sonntag sein =Tag 0. Die Zahl der Tage ab dem 31.12.1899 ist durch 63 teilbar.
