@@ -627,6 +627,11 @@ Public Module Interf
     Public D As Decimal 
     Public V As Boolean
   End Structure
+  
+  Public Structure StreetStatist
+    Public C As Decimal
+    Public MuchTraffic() as VTupel
+  End Structure
 End Module
 
 
