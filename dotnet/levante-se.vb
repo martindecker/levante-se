@@ -1,7 +1,9 @@
-﻿Imports System
-Imports System.Xml.Serialization
+Imports System
 Imports System.IO
 Imports System.Text
+Imports System.Text.Json
+Imports System.Text.Json.Serialization
+Imports System.Xml.Serialization
 
 ' User language = Galician or Slowak, Enums and the Winter Keyword = English
 #Const SlovakVersion = False
@@ -18,14 +20,14 @@ Module Program
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday Then
 #If SlovakVersion Then
-          Dim stoerungen2 = janein1("Bola cesta zle využitá")
+          stoerungen2 = janein1("Bola cesta zle využitá")
           If  stoerungen2 Then
               todo3 = "Zistite príčinu rušnej ulice!"
           Else
               Console.WriteLine("ok")
           End If
 #Else
-          Dim stoerungen2 = janein1("¿Tráfico pesado na estrada")
+          stoerungen2 = janein1("¿Tráfico pesado na estrada")
           If  stoerungen2 Then
               todo3 = "Descubra a causa da estrada transitada"
           Else
@@ -44,6 +46,7 @@ Module Program
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( todayurl ) 
       timestamp4 = DateTime.Now
+      SaveJsonT
       Dim interval As TimeSpan
       If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then
         interval = (timestamp2 - timestamp1)+(timestamp4 - timestamp3)
@@ -63,12 +66,16 @@ Module Program
       Do
         ee = Console.ReadKey(true).KeyChar
       Loop Until Not "lLeEdDrRustUSTpP".Contains(ee)
+      If DateTime.Today.DayOfWeek >= DayOfWeek.Sunday Then
+      End If
   End Sub
     
   Dim dataForM as DataForMorningP
   Dim wForM    as WorteForMorningP
-
-
+  Dim dirForJS = "jsonxmlm/"
+  Dim stoerungen2 As Boolean
+  
+ 
   Private Sub LoadAData
 #If SlovakVersion Then
     Dim fn = "jsonxmlm/data1_for_morning_slovak.xml"
@@ -77,7 +84,10 @@ Module Program
 #End If
     Try
       For Teste = 1 To 5
-        If not File.Exists(fn) Then fn = "../" & fn
+        If not File.Exists(fn) Then 
+          fn = "../" & fn
+          dirForJS = "../" & dirForJS
+        End If
       Next
       Dim stm As FileStream = New FileStream(fn, FileMode.Open)
       Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DataForMorningP))
@@ -134,6 +144,38 @@ Module Program
   End Sub
 
   
+  Private Sub SaveJsonT
+    Dim fn As String
+    Try
+      fn = dirForJS & "trafficstat.json"
+      Console.Write(fn & "  ")
+      Dim ts = new StreetStatist()
+      ts.C = DateTime.Today.Year
+      ts.C = ts.C + 0.080D * (DateTime.Today.Month-1)  + 0.002D * DateTime.Today.Day  + 0.002D * ( DateTime.Today.Day \ 4 )  + 0.002D
+      Dim vvv = New List(Of VTupel)()
+      Dim s1 = New VTupel()
+      s1.D = ts.C
+      s1.V = 127
+      vvv.Add(s1)
+      ts.MuchTraffic = vvv
+      If File.Exists(fn) Then File.Delete(fn)
+      Using fs As FileStream = File.Create(fn)
+        Dim dw As New StreamWriter(fs)
+        Dim jsonString =JsonSerializer.Serialize(ts,GetType(StreetStatist) )
+        dw.WriteLine( jsonString )
+        dw.Close()
+        Console.WriteLine( " WRITTEN." )
+      End Using
+    Catch eee As Exception  
+#If SlovakVersion Then
+      errorExit(fn & "   Chyba:", eee)
+#Else
+      errorExit(fn & "   Erro:", eee)
+#End if
+    End Try 
+  End Sub
+
+
   Function isHeatingSeason()
     Dim mon = DateTime.Now.Month
     Dim day = DateTime.Now.Day
@@ -624,13 +666,13 @@ Public Module Interf
   End Structure
   
   Public Structure VTupel
-    Public D As Decimal 
-    Public V As Boolean
+    Public Property  D As Decimal 
+    Public Property  V As Integer
   End Structure
   
   Public Structure StreetStatist
-    Public C As Decimal
-    Public MuchTraffic() as VTupel
+    Public Property  C As Decimal
+    Public Property  MuchTraffic As List(Of VTupel)
   End Structure
 End Module
 
