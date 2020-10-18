@@ -46,7 +46,9 @@ Module Program
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( todayurl ) 
       timestamp4 = DateTime.Now
-      SaveJsonT
+      If DateTime.Today.DayOfWeek = DayOfWeek.Sunday AndAlso DateTime.Now.Hour >= 4  Then
+        UpdateJsonStatist
+      End If
       Dim interval As TimeSpan
       If timestamp2 <> Nothing AndAlso timestamp3 <> Nothing Then
         interval = (timestamp2 - timestamp1)+(timestamp4 - timestamp3)
@@ -66,14 +68,14 @@ Module Program
       Do
         ee = Console.ReadKey(true).KeyChar
       Loop Until Not "lLeEdDrRustUSTpP".Contains(ee)
-      If DateTime.Today.DayOfWeek >= DayOfWeek.Sunday Then
-      End If
   End Sub
+
+
     
   Dim dataForM as DataForMorningP
   Dim wForM    as WorteForMorningP
   Dim dirForJS = "jsonxmlm/"
-  Dim stoerungen2 As Boolean
+  Dim stoerungen2 As Boolean = false
   
  
   Private Sub LoadAData
@@ -143,25 +145,35 @@ Module Program
     End Try 
   End Sub
 
+
+
   
-  Private Sub SaveJsonT
-    Dim fn As String
+  Private Sub UpdateJsonStatist
+    Dim fn As String = dirForJS & "trafficstat.json"
     Try
-      fn = dirForJS & "trafficstat.json"
       Console.Write(fn & "  ")
       Dim ts = new StreetStatist()
       ts.C = DateTime.Today.Year
-      ts.C = ts.C + 0.080D * (DateTime.Today.Month-1)  + 0.002D * DateTime.Today.Day  + 0.002D * ( DateTime.Today.Day \ 4 )  + 0.002D
+	  If DateTime.ToDay.Month < 10 Then
+	    ts.C = ts.C + 0.100D * DateTime.Today.Month
+	  Else If DateTime.ToDay.Month < 12 Then
+	    ts.C = ts.C + 0.930D + 0.035D * (DateTime.Today.Month-10)
+	  Else
+	    ts.C = ts.C + 1.000D
+	  End If
+      ts.C = ts.C + 0.001D * DateTime.Today.Day
       Dim vvv = New List(Of VTupel)()
       Dim s1 = New VTupel()
       s1.D = ts.C
-      s1.V = 127
+      s1.V = 0
+      If stoerungen2 Then s1.V = 111
       vvv.Add(s1)
       ts.MuchTraffic = vvv
       If File.Exists(fn) Then File.Delete(fn)
       Using fs As FileStream = File.Create(fn)
         Dim dw As New StreamWriter(fs)
         Dim jsonString =JsonSerializer.Serialize(ts,GetType(StreetStatist) )
+		jsonString = jsonString.Replace( "}", "}" & VbCrLf ) ' Instead Formatting inserting some LF´s
         dw.WriteLine( jsonString )
         dw.Close()
         Console.WriteLine( " WRITTEN." )
@@ -174,6 +186,7 @@ Module Program
 #End if
     End Try 
   End Sub
+
 
 
   Function isHeatingSeason()
@@ -666,7 +679,7 @@ Public Module Interf
   End Structure
   
   Public Structure VTupel
-    Public Property  D As Decimal 
+    Public Property  D As Decimal ' JsonSerializer works best with Properties
     Public Property  V As Integer
   End Structure
   
