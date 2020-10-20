@@ -152,28 +152,37 @@ Module Program
     Dim fn As String = dirForJS & "trafficstat.json"
     Try
       Console.Write(fn & "  ")
-      Dim ts = new StreetStatist()
+      Dim ts As StreetStatist
+      If File.Exists(fn) = False Then
+        ts = new StreetStatist()
+        ts.C = DateTime.Today.Year
+        Dim vvv = New List(Of VTupel)()
+        ts.MuchTraffic = vvv
+      Else
+        Dim readText As String = File.ReadAllText(fn)
+        ts = JsonSerializer.Deserialize(Of StreetStatist)(readText)
+      End If
       ts.C = DateTime.Today.Year
-	  If DateTime.ToDay.Month < 10 Then
-	    ts.C = ts.C + 0.100D * DateTime.Today.Month
-	  Else If DateTime.ToDay.Month < 12 Then
-	    ts.C = ts.C + 0.930D + 0.035D * (DateTime.Today.Month-10)
-	  Else
-	    ts.C = ts.C + 1.000D
-	  End If
+      If DateTime.ToDay.Month < 10 Then
+        ts.C = ts.C + 0.100D * DateTime.Today.Month
+      Else If DateTime.ToDay.Month < 12 Then
+        ts.C = ts.C + 0.930D + 0.035D * (DateTime.Today.Month-10)
+      Else
+        ts.C = ts.C + 1.000D
+      End If
       ts.C = ts.C + 0.001D * DateTime.Today.Day
-      Dim vvv = New List(Of VTupel)()
+      
       Dim s1 = New VTupel()
       s1.D = ts.C
       s1.V = 0
       If stoerungen2 Then s1.V = 111
-      vvv.Add(s1)
-      ts.MuchTraffic = vvv
+      ts.MuchTraffic.Add(s1)
+      
       If File.Exists(fn) Then File.Delete(fn)
       Using fs As FileStream = File.Create(fn)
         Dim dw As New StreamWriter(fs)
         Dim jsonString =JsonSerializer.Serialize(ts,GetType(StreetStatist) )
-		jsonString = jsonString.Replace( "}", "}" & VbCrLf ) ' Instead Formatting inserting some LF´s
+        jsonString = jsonString.Replace( "}", "}" & VbCrLf ) ' Instead Formatting inserting some LF´s
         dw.WriteLine( jsonString )
         dw.Close()
         Console.WriteLine( " WRITTEN." )
@@ -674,7 +683,7 @@ Public Module Interf
 
   Public Structure WorteForMorningP
     Public VersionOfStruct As Decimal
-    Public TodoPart2() as String
+    Public TodoPart2() As String
     Public URL_ofDay() As String
   End Structure
   
