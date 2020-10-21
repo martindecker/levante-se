@@ -1,3 +1,4 @@
+
 *.swp
 *.*~
 project.lock.json
@@ -30,3 +31,8 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+
+# Data files the program creates
+*.json
+*.mtxt
+

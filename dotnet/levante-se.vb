@@ -684,6 +684,7 @@ Public Module Interf
   Public Structure WorteForMorningP
     Public VersionOfStruct As Decimal
     Public TodoPart2() As String
+    Public SaveAStringPrompt As String
     Public URL_ofDay() As String
   End Structure
   

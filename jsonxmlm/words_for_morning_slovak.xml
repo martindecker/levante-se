@@ -9,6 +9,7 @@
     <string>Pripravte si horúci nápoj</string>
     <string>Zapíšte kalórie</string>
   </TodoPart2>
+  <SaveAStringPrompt></SaveAStringPrompt>
   <URL_ofDay>
     <string>https://twitter.com/v_language</string>
     <string>https://merkurist.de</string>

@@ -9,6 +9,7 @@
     <string>Prepare uma bebida quente</string>
     <string>Anote calorias</string>
   </TodoPart2>
+  <SaveAStringPrompt></SaveAStringPrompt>
   <URL_ofDay>
     <string>https://twitter.com/v_language</string>
     <string>https://merkurist.de</string>
