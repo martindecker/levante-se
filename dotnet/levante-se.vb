@@ -45,6 +45,9 @@ Module Program
       End If
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( todayurl ) 
+      If wForM.SaveAStringPrompt.Length() >= 2 AndAlso Not Char.IsWhiteSpace(wForM.SaveAStringPrompt(1)) Then
+        EnterAndSaveString
+      End If
       timestamp4 = DateTime.Now
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday AndAlso DateTime.Now.Hour >= 4  Then
         UpdateJsonStatist
@@ -186,6 +189,32 @@ Module Program
         dw.WriteLine( jsonString )
         dw.Close()
         Console.WriteLine( " WRITTEN." )
+      End Using
+    Catch eee As Exception  
+#If SlovakVersion Then
+      errorExit(fn & "   Chyba:", eee)
+#Else
+      errorExit(fn & "   Erro:", eee)
+#End if
+    End Try 
+  End Sub
+
+
+
+  Private Sub EnterAndSaveString
+    Dim fn As String = dirForJS & "zstring.mtxt"
+    Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
+    If Not "!?:".Contains( wForM.SaveAStringPrompt(wForM.SaveAStringPrompt.Length()-1)) Then Console.Write( ":" )
+    Console.Write( " " )
+    Dim input As String
+    Try
+      input = Console.ReadLine()
+      If File.Exists(fn) Then File.Delete(fn)
+      Using fs As FileStream = File.Create(fn)
+        Dim dw = New StreamWriter(fs)
+        dw.Write( input )
+        dw.Close()
+        Console.WriteLine(  VbCrLf & fn & " WRITTEN." )
       End Using
     Catch eee As Exception  
 #If SlovakVersion Then
