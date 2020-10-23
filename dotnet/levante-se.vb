@@ -426,6 +426,14 @@ Module Program
          giessen = giessen OrElse ((day_mod mod gt)=0)
       End If
     End If
+    If fs <> MorningExerciseMode.AlmostAlways Then
+      filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = "Čistite si zuby"
+#Else
+      todo1(filled1bis) = "Cepillo de dentes"
+#End if
+	End If
     If giessen Then
       filled1bis = filled1bis + 1
       If DateTime.Today.DayOfWeek >= dataForM.ZeitknapperAbTag AndAlso DateTime.Today.DayOfWeek <= dataForM.ZeitknapperBisTag Then
