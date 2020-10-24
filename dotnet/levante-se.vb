@@ -188,7 +188,11 @@ Module Program
         jsonString = jsonString.Replace( "}", "}" & VbCrLf ) ' Instead Formatting inserting some LF´s
         dw.WriteLine( jsonString )
         dw.Close()
-        Console.WriteLine( " WRITTEN." )
+#If SlovakVersion Then
+        Console.WriteLine( "   uložené.")
+#Else
+        Console.WriteLine( "   gardado.")
+#End if
       End Using
     Catch eee As Exception  
 #If SlovakVersion Then
