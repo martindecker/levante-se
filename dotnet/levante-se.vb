@@ -231,6 +231,42 @@ Module Program
 
 
 
+  Function LoadOrSaveVitamin(savenumber As Integer)
+    Dim fn As String = dirForJS & "vitamintaken.mtxt"
+    Console.Write( VbCrLf & VbCrLf & "vitamintaken.mtxt" )
+    Console.Write( " " )
+    Dim numstring As String
+    Try
+      If savenumber >= 0 Then
+        ' numstring = Console.ReadLine()
+        If File.Exists(fn) Then File.Delete(fn)
+        ' Using fs As FileStream = File.Create(fn)
+        '   Dim dw = New StreamWriter(fs)
+        '   dw.Write( numstring )
+        '   dw.Close()
+        '   Console.WriteLine(  VbCrLf & fn & " WRITTEN." )
+        ' End Using
+        Return 555555
+      Else 
+        If Not File.Exists(fn) Then Return -9
+        numstring = File.ReadAllText( fn )
+        If numstring.Length() < 4 Then  Return -9
+        Dim u As Integer
+        u = Integer.Parse( numstring.Substring(4) )
+        Return u
+      End If        
+    Catch eee As Exception  
+#If SlovakVersion Then
+      errorExit(fn & "   Chyba:", eee)
+#Else
+      errorExit(fn & "   Erro:", eee)
+#End if
+      Return -9
+    End Try 
+  End Function
+
+
+
   Function isHeatingSeason()
     Dim mon = DateTime.Now.Month
     Dim day = DateTime.Now.Day
@@ -360,6 +396,7 @@ Module Program
 #End if
       ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
+    Console.WriteLine( LoadOrSaveVitamin(-1)-day146097 )
     Dim work1 as LocationOfDayWork
     if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorExit( "WhereSundayToSaturday.Length()", Nothing )
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
@@ -437,7 +474,7 @@ Module Program
 #Else
       todo1(filled1bis) = "Cepillo de dentes"
 #End if
-	End If
+    End If
     If giessen Then
       filled1bis = filled1bis + 1
       If DateTime.Today.DayOfWeek >= dataForM.ZeitknapperAbTag AndAlso DateTime.Today.DayOfWeek <= dataForM.ZeitknapperBisTag Then
