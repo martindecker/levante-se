@@ -218,7 +218,12 @@ Module Program
         Dim dw = New StreamWriter(fs)
         dw.Write( input )
         dw.Close()
-        Console.WriteLine(  VbCrLf & fn & " WRITTEN." )
+        Console.Write(  VbCrLf & fn )
+#If SlovakVersion Then
+        Console.WriteLine( "   uložené.")
+#Else
+        Console.WriteLine( "   gardado.")
+#End if
       End Using
     Catch eee As Exception  
 #If SlovakVersion Then
