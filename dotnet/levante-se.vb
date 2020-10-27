@@ -236,21 +236,18 @@ Module Program
 
 
 
-  Function LoadOrSaveVitamin(savenumber As Integer)
+  Function LoadOrSaveVitamin(savenumber As Integer) ' if > -1 then save
     Dim fn As String = dirForJS & "vitamintaken.mtxt"
-    Console.Write( VbCrLf & VbCrLf & "vitamintaken.mtxt" )
-    Console.Write( " " )
     Dim numstring As String
     Try
       If savenumber >= 0 Then
-        ' numstring = Console.ReadLine()
+        numstring = ",,Z," & savenumber.ToString() 
         If File.Exists(fn) Then File.Delete(fn)
-        ' Using fs As FileStream = File.Create(fn)
-        '   Dim dw = New StreamWriter(fs)
-        '   dw.Write( numstring )
-        '   dw.Close()
-        '   Console.WriteLine(  VbCrLf & fn & " WRITTEN." )
-        ' End Using
+        Using fs As FileStream = File.Create(fn)
+          Dim dw = New StreamWriter(fs)
+          dw.Write( numstring )
+          dw.Close()
+        End Using
         Return 555555
       Else 
         If Not File.Exists(fn) Then Return -9
@@ -340,7 +337,23 @@ Module Program
       filled1bis = filled1bis + 1
       todo1(filled1bis) = todo3
     End If
+    Dim tookvit As Integer = LoadOrSaveVitamin(-1) - day146097
+    If day146097 < = 44444 AndAlso tookvit > 77777 Then
+      tookvit = tookvit - 146097
+    Else If day146097 >= 77777 AndAlso tookvit < 44444 Then
+      tookvit = tookvit + 146097
+    End If
+    Dim takevit As Boolean = tookvit  < -1 
+    If tookvit <> -1 Then Console.WriteLine( "-----> vitamintaken.mtxt " & tookvit.ToString() )
     If dataForM.LowCarbTeil.Length() > 0 Then
+      If takevit AndAlso fs = MorningExerciseMode.AlmostAlways Then
+        filled1bis = filled1bis + 1
+#If SlovakVersion Then
+        todo1(filled1bis) = "TAKE VITAMINS%%%"
+#Else
+        todo1(filled1bis) = "Tomar vitamina"
+#End if
+      End If
       Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
@@ -386,6 +399,14 @@ Module Program
 #End if
         End If
       End If
+      If takevit Then
+        filled1bis = filled1bis + 1
+#If SlovakVersion Then
+        todo1(filled1bis) = "TAKE VITAMINS%%%%"
+#Else
+        todo1(filled1bis) = "Tomar vitamina"
+      End If
+#End if
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
       todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Hlavné raňajky" , "Raňajky" )
@@ -395,13 +416,12 @@ Module Program
     Else
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
-      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini kúsok koláča" , "Dajte buchtu do vrecka" )
+      todo1(filled1bis) = If( (day146097 And 1) > 0 , "Mini kúsok koláča" , "Dajte buchtu do vrecka" )
 #Else
-      todo1(filled1bis) = If( day146097 And 1 > 0 , "Mini anaco de bolo" , "Pon o bollo de leite no peto" )
+      todo1(filled1bis) = If( (day146097 And 1) > 0 , "Mini anaco de bolo" , "Pon o bollo de leite no peto" )
 #End if
       ' Wenn man vor dem Frühstück Sport macht, sollte man trotzdem minimal Kohlenhydrate essen, da der Körper sonst Eiweiss verbrennt
     End If
-    Console.WriteLine( LoadOrSaveVitamin(-1)-day146097 )
     Dim work1 as LocationOfDayWork
     if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorExit( "WhereSundayToSaturday.Length()", Nothing )
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
@@ -495,6 +515,14 @@ Module Program
         todo1(filled1bis) = "Plantas de rego"
 #End if
       End If
+    End If
+    If dataForM.LowCarbTeil.Length() = 0 AndAlso fs = MorningExerciseMode.AlmostAlways  AndAlso  takevit Then
+        filled1bis = filled1bis + 1
+#If SlovakVersion Then
+        todo1(filled1bis) = "TAKE VITAMINS%%%%%"
+#Else
+        todo1(filled1bis) = "Tomar vitamina"
+#End if
     End If
   End Sub
  
