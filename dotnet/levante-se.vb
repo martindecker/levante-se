@@ -8,6 +8,7 @@ Imports System.Xml.Serialization
 ' User language = Galician or Slowak, Enums and the Winter Keyword = English
 #Const SlovakVersion = False
 
+
 Module Program
   Public todo1(20) As String
   Public filled1bis As Integer = 0
@@ -48,6 +49,7 @@ Module Program
       If wForM.SaveAStringPrompt.Length() >= 2 AndAlso Not Char.IsWhiteSpace(wForM.SaveAStringPrompt(1)) Then
         EnterAndSaveString
       End If
+      If justTookV > -2 Then LoadOrSaveVitamin( justTookV )
       timestamp4 = DateTime.Now
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday AndAlso DateTime.Now.Hour >= 4  Then
         UpdateJsonStatist
@@ -79,6 +81,7 @@ Module Program
   Dim wForM    as WorteForMorningP
   Dim dirForJS = "jsonxmlm/"
   Dim stoerungen2 As Boolean = false
+  Dim justTookV As Integer = -2
   
  
   Private Sub LoadAData
@@ -236,11 +239,11 @@ Module Program
 
 
 
-  Function LoadOrSaveVitamin(savenumber As Integer) ' if > -1 then save
+  Function LoadOrSaveVitamin(savenumber As Integer) ' if > -2 then save
     Dim fn As String = dirForJS & "vitamintaken.mtxt"
     Dim numstring As String
     Try
-      If savenumber >= 0 Then
+      If savenumber >= -1 Then
         numstring = ",,Z," & savenumber.ToString() 
         If File.Exists(fn) Then File.Delete(fn)
         Using fs As FileStream = File.Create(fn)
@@ -248,7 +251,13 @@ Module Program
           dw.Write( numstring )
           dw.Close()
         End Using
-        Return 555555
+        Console.Write(  VbCrLf & fn )
+#If SlovakVersion Then
+        Console.WriteLine( "   uložené.")
+#Else
+        Console.WriteLine( "   gardado.")
+#End if
+        Return 7777777
       Else 
         If Not File.Exists(fn) Then Return -9
         numstring = File.ReadAllText( fn )
@@ -286,6 +295,7 @@ Module Program
   End Function
 
 
+
   Sub PlanningQuestions
     ' Setzt todo1, filled1bis, todayurl
     Dim day146097 As Integer = DateDiff(DateInterval.Day, GlobalConstants.base_sunday , Date.Now)
@@ -319,6 +329,18 @@ Module Program
       todo1(filled1bis) = "Se é necesario, un lavaplatos"
 #End if
     End If
+    Dim tookVit As Integer = LoadOrSaveVitamin(-2) - day146097
+    If day146097 < = 44444 AndAlso tookVit > 77777 Then
+      tookVit = tookVit - 146097
+    Else If day146097 >= 77777 AndAlso tookVit < 44444 Then
+      tookVit = tookVit + 146097
+    End If
+    Dim takeVit As Boolean = tookVit  < -1 
+#If SlovakVersion Then
+    If tookVit <> -1 Then Console.WriteLine( "       Vitamín prijatý: " & tookVit.ToString() & " deň" & VbCrLf )
+#Else
+    If tookVit <> -1 Then Console.WriteLine( "       Vitamina tomada o día: " & tookVit.ToString() & VbCrLf )
+#End if
     if fs = MorningExerciseMode.AlmostAlways Then
 #If SlovakVersion Then
       Console.WriteLine("-----> " & "Ranné cvičenie dnes, potom")
@@ -337,22 +359,15 @@ Module Program
       filled1bis = filled1bis + 1
       todo1(filled1bis) = todo3
     End If
-    Dim tookvit As Integer = LoadOrSaveVitamin(-1) - day146097
-    If day146097 < = 44444 AndAlso tookvit > 77777 Then
-      tookvit = tookvit - 146097
-    Else If day146097 >= 77777 AndAlso tookvit < 44444 Then
-      tookvit = tookvit + 146097
-    End If
-    Dim takevit As Boolean = tookvit  < -1 
-    If tookvit <> -1 Then Console.WriteLine( "-----> vitamintaken.mtxt " & tookvit.ToString() )
     If dataForM.LowCarbTeil.Length() > 0 Then
-      If takevit AndAlso fs = MorningExerciseMode.AlmostAlways Then
+      If takeVit AndAlso fs = MorningExerciseMode.AlmostAlways Then
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
-        todo1(filled1bis) = "TAKE VITAMINS%%%"
+        todo1(filled1bis) = "Vezmite si včerajšie vitamíny"
 #Else
-        todo1(filled1bis) = "Tomar vitamina"
+        todo1(filled1bis) = "Toma as vitaminas de onte"
 #End if
+        justTookV = day146097-1
       End If
       Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
       filled1bis = filled1bis + 1
@@ -399,14 +414,15 @@ Module Program
 #End if
         End If
       End If
-      If takevit Then
+      If takeVit Then
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
-        todo1(filled1bis) = "TAKE VITAMINS%%%%"
+        todo1(filled1bis) = "Vezmite si včerajšie vitamíny"
 #Else
-        todo1(filled1bis) = "Tomar vitamina"
-      End If
+        todo1(filled1bis) = "Toma as vitaminas de onte"
 #End if
+        justTookV = day146097-1
+      End If
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
       todo1(filled1bis) = If( dataForM.LowCarbTeil.Length() > 0 , "Hlavné raňajky" , "Raňajky" )
@@ -516,13 +532,14 @@ Module Program
 #End if
       End If
     End If
-    If dataForM.LowCarbTeil.Length() = 0 AndAlso fs = MorningExerciseMode.AlmostAlways  AndAlso  takevit Then
+    If dataForM.LowCarbTeil.Length() = 0 AndAlso fs = MorningExerciseMode.AlmostAlways  AndAlso  takeVit Then
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
-        todo1(filled1bis) = "TAKE VITAMINS%%%%%"
+        todo1(filled1bis) = "Vezmite si včerajšie vitamíny"
 #Else
-        todo1(filled1bis) = "Tomar vitamina"
+        todo1(filled1bis) = "Toma as vitaminas de onte"
 #End if
+        justTookV = day146097-1
     End If
   End Sub
  
@@ -742,6 +759,11 @@ Module Program
       Environment.Exit(-1)
   End Sub
 End Module
+
+
+' Unfortionately I can not provide documentation of levante-se.vb
+' except if someone pays me to document this program (whats not its purpose)
+
 
 
 
