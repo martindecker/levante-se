@@ -82,7 +82,7 @@ Module Program
   Dim dirForJS = "jsonxmlm/"
   Dim stoerungen2 As Boolean = false
   Dim justTookV As Integer = -2
-  
+
  
   Private Sub LoadAData
 #If SlovakVersion Then
@@ -508,7 +508,7 @@ Module Program
          giessen = giessen OrElse ((day_mod mod gt)=0)
       End If
     End If
-    If fs <> MorningExerciseMode.AlmostAlways Then
+    If fs <> MorningExerciseMode.AlmostAlways AndAlso dataForM.Brush Then
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
       todo1(filled1bis) = "Čistite si zuby"
@@ -806,6 +806,7 @@ Public Module Interf
     Public WaterWhenTimeTight As Boolean
     Public WinterHeatingAbMMDD As Integer
     Public WinterHeatingBisMDD As Integer
+    Public Brush As Boolean
     Public PublicHolidaysMDD() As Integer
     Public PublicHolidayGoodFriday As Boolean
     Public PublicHolidayEasterMonday As Boolean
