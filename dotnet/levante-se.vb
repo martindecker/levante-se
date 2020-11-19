@@ -441,6 +441,27 @@ Module Program
     Dim work1 as LocationOfDayWork
     if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorExit( "WhereSundayToSaturday.Length()", Nothing )
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
+    if LocationOfDayWork.Question = work1 Then
+      Console.WriteLine("    HomeOffice = 0
+    HouseholdAndHomeOffice = 1
+    ShoppingAndHousehold = 2
+    Downtown = 3
+    DayOff = 4
+    EarlyShift = 5
+    Study = 6
+    ExternalTraining = 7" & VbCrLF)
+      Dim line As String
+      Do
+#If SlovakVersion Then
+        Console.Write("Please choose 0-7: ")
+#Else
+        Console.Write("Please choose 0-7: ")
+#End if
+        line = Console.ReadKey(true).KeyChar
+      Loop Until "01234567".Contains(line) 
+      work1 = cint(line)
+      Console.WriteLine( line )
+    End If
     Console.WriteLine(   "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
     Dim PublicHoliday = False
@@ -769,14 +790,15 @@ End Module
 
 Public Module Interf
   Public Enum LocationOfDayWork
-    HomeOffice = 0            '
-    HouseholdAndHomeOffice = 1'
-    ShoppingAndHousehold = 2  '
-    Downtown = 3              '
-    DayOff = 4                  '
-    EarlyShift = 5          '
-    Study = 6                '
-    ExternalTraining = 7  '
+    HomeOffice = 0
+    HouseholdAndHomeOffice = 1
+    ShoppingAndHousehold = 2
+    Downtown = 3
+    DayOff = 4
+    EarlyShift = 5
+    Study = 6
+    ExternalTraining = 7
+    Question = 8
   End Enum
   
   
