@@ -442,20 +442,20 @@ Module Program
     if dataForM.WhereSundayToSaturday.Length() <> 7 Then errorExit( "WhereSundayToSaturday.Length()", Nothing )
     work1 = dataForM.WhereSundayToSaturday( day146097 mod 7 )
     if LocationOfDayWork.Question = work1 Then
-      Console.WriteLine("    HomeOffice = 0
-    HouseholdAndHomeOffice = 1
-    ShoppingAndHousehold = 2
-    Downtown = 3
-    DayOff = 4
-    EarlyShift = 5
-    Study = 6
-    ExternalTraining = 7" & VbCrLF)
+      Console.WriteLine("      HomeOffice = 0
+      HouseholdAndHomeOffice = 1
+      ShoppingAndHousehold = 2
+      Downtown = 3
+      DayOff = 4
+      EarlyShift = 5
+      Study = 6
+      ExternalTraining = 7" & VbCrLF)
       Dim line As String
       Do
 #If SlovakVersion Then
-        Console.Write("Please choose 0-7: ")
+        Console.Write("Vyberte prosím 0-7: ")
 #Else
-        Console.Write("Please choose 0-7: ")
+        Console.Write("Escolla 0-7: ")
 #End if
         line = Console.ReadKey(true).KeyChar
       Loop Until "01234567".Contains(line) 
