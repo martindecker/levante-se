@@ -38,7 +38,8 @@
   <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
   <WinterHeatingBisMDD>315</WinterHeatingBisMDD>
   <Brush>true</Brush>
- <PublicHolidaysMDD>
+  <TkWeight>true</TkWeight>
+  <PublicHolidaysMDD>
     <int>101</int>
   </PublicHolidaysMDD>
   <PublicHolidayGoodFriday>true</PublicHolidayGoodFriday>
