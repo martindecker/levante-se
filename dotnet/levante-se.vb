@@ -27,6 +27,8 @@ Module Program
           Else
               Console.WriteLine("ok")
           End If
+          If dataForM.TkWeight Then
+          End If
 #Else
           stoerungen2 = janein1("¿Tráfico pesado na estrada")
           If  stoerungen2 Then
@@ -81,6 +83,7 @@ Module Program
   Dim wForM    as WorteForMorningP
   Dim dirForJS = "jsonxmlm/"
   Dim stoerungen2 As Boolean = false
+  Dim theWeight As Integer = -2
   Dim justTookV As Integer = -2
 
  
@@ -829,6 +832,7 @@ Public Module Interf
     Public WinterHeatingAbMMDD As Integer
     Public WinterHeatingBisMDD As Integer
     Public Brush As Boolean
+    Public TkWeight As Boolean
     Public PublicHolidaysMDD() As Integer
     Public PublicHolidayGoodFriday As Boolean
     Public PublicHolidayEasterMonday As Boolean
