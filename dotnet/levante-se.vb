@@ -4,6 +4,7 @@ Imports System.Text
 Imports System.Text.Json
 Imports System.Text.Json.Serialization
 Imports System.Xml.Serialization
+Imports System.Globalization
 
 ' User language = Galician or Slowak, Enums and the Winter Keyword = English
 #Const SlovakVersion = False
@@ -20,6 +21,7 @@ Module Program
   Sub Main(args As String())
       LoadAData
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday Then
+        Dim inpu As String = "abc"
 #If SlovakVersion Then
           stoerungen2 = janein1("Bola cesta zle využitá")
           If  stoerungen2 Then
@@ -28,6 +30,8 @@ Module Program
               Console.WriteLine("ok")
           End If
           If dataForM.TkWeight Then
+            Console.Write("Weight: ")
+            inpu = Console.ReadLine()
           End If
 #Else
           stoerungen2 = janein1("¿Tráfico pesado na estrada")
@@ -36,7 +40,18 @@ Module Program
           Else
               Console.WriteLine("nada")
           End If
+          If dataForM.TkWeight Then
+            Console.Write("Weight: ")
+            inpu = Console.ReadLine()
+          End If
 #End if
+        If dataForM.TkWeight Then
+          Dim style As NumberStyles
+          Dim provider As CultureInfo
+          style = NumberStyles.AllowDecimalPoint Or NumberStyles.AllowThousands
+          provider = New CultureInfo("en-US")
+          theWeight =  Decimal.Parse(inpu.Replace(",","."),style,provider) ' Cint(inpu)
+        End If
       End If
       Console.WriteLine(VbLf)
       PlanningQuestions
@@ -83,7 +98,7 @@ Module Program
   Dim wForM    as WorteForMorningP
   Dim dirForJS = "jsonxmlm/"
   Dim stoerungen2 As Boolean = false
-  Dim theWeight As Integer = -2
+  Dim theWeight As Decimal = -2
   Dim justTookV As Integer = -2
 
  
@@ -202,9 +217,9 @@ Module Program
       End Using
     Catch eee As Exception  
 #If SlovakVersion Then
-      errorExit(fn & "   Chyba:", eee)
+      errorExit(fn & " UpdateJsonStatist  Chyba:", eee)
 #Else
-      errorExit(fn & "   Erro:", eee)
+      errorExit(fn & " UpdateJsonStatist  Erro:", eee)
 #End if
     End Try 
   End Sub
