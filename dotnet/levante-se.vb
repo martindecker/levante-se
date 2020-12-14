@@ -23,26 +23,26 @@ Module Program
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday Then
         Dim inpu As String = "abc"
 #If SlovakVersion Then
+          If dataForM.TkWeight Then
+            Console.Write("Weight (kg) : ")
+            inpu = Console.ReadLine()
+          End If
           stoerungen2 = janein1("Bola cesta zle využitá")
           If  stoerungen2 Then
               todo3 = "Zistite príčinu rušnej ulice!"
           Else
               Console.WriteLine("ok")
           End If
+#Else
           If dataForM.TkWeight Then
-            Console.Write("Weight: ")
+            Console.Write("Weight (kg) : ")
             inpu = Console.ReadLine()
           End If
-#Else
           stoerungen2 = janein1("¿Tráfico pesado na estrada")
           If  stoerungen2 Then
               todo3 = "Descubra a causa da estrada transitada"
           Else
               Console.WriteLine("nada")
-          End If
-          If dataForM.TkWeight Then
-            Console.Write("Weight: ")
-            inpu = Console.ReadLine()
           End If
 #End if
         If dataForM.TkWeight Then
@@ -174,6 +174,7 @@ Module Program
   
   Private Sub UpdateJsonStatist
     Dim fn As String = dirForJS & "trafficstat.json"
+    Dim fnw As String = dirForJS & "wstat.json"
     Try
       Console.Write(fn & "  ")
       Dim ts As StreetStatist
@@ -215,6 +216,22 @@ Module Program
         Console.WriteLine( "   gardado.")
 #End if
       End Using
+      If dataForM.TkWeight Then
+        Console.Write(fnw & "  ")
+        Dim tsw As String
+        tsw=""
+        tsw = tsw & " " & theWeight.ToString()
+        Using fsw As FileStream = File.Create(fnw)
+          Dim dww As New StreamWriter(fsw)
+          dww.WriteLine( tsw )
+          dww.Close()
+#If SlovakVersion Then
+        Console.WriteLine( "   uložené.")
+#Else
+        Console.WriteLine( "   gardado.")
+#End if
+        End Using       
+      End If
     Catch eee As Exception  
 #If SlovakVersion Then
       errorExit(fn & " UpdateJsonStatist  Chyba:", eee)
