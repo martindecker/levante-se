@@ -50,7 +50,7 @@ Module Program
           Dim provider As CultureInfo
           style = NumberStyles.AllowDecimalPoint Or NumberStyles.AllowThousands
           provider = New CultureInfo("en-US")
-          theWeight =  Decimal.Parse(inpu.Replace(",","."),style,provider) ' Cint(inpu)
+          If Not Decimal.TryParse(inpu.Replace(",","."),style,provider,theWeight) Then  errorExit(inpu,new FormatException)
         End If
       End If
       Console.WriteLine(VbLf)
