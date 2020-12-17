@@ -24,7 +24,7 @@ Module Program
         Dim inpu As String = "abc"
 #If SlovakVersion Then
           If dataForM.TkWeight Then
-            Console.Write("Weight (kg) : ")
+            Console.Write("Hmotnosť v kg : ")
             inpu = Console.ReadLine()
           End If
           stoerungen2 = janein1("Bola cesta zle využitá")
