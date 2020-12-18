@@ -35,7 +35,7 @@ Module Program
           End If
 #Else
           If dataForM.TkWeight Then
-            Console.Write("Weight (kg) : ")
+            Console.Write("Peso en kg : ")
             inpu = Console.ReadLine()
           End If
           stoerungen2 = janein1("¿Tráfico pesado na estrada")
