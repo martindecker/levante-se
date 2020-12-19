@@ -220,7 +220,10 @@ Module Program
         Console.Write(fnw & "  ")
         Dim tsw As String
         tsw=""
-        tsw = tsw & " " & theWeight.ToString()
+		If ""=tsw OrElse tsw(0)<>"{"c Then tsw = "{Q:20204,W:[" & VbCrLf & "[" & tsw
+		Dim lentsw = tsw.Length()
+		If lentsw>7 AndAlso tsw(lentsw-1)="}"c Then tsw = tsw.SubString(0,lentsw-3) & ","
+        tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
         Using fsw As FileStream = File.Create(fnw)
           Dim dww As New StreamWriter(fsw)
           dww.WriteLine( tsw )
