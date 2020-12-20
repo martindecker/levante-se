@@ -220,9 +220,12 @@ Module Program
         Console.Write(fnw & "  ")
         Dim tsw As String
         tsw=""
-		If ""=tsw OrElse tsw(0)<>"{"c Then tsw = "{Q:20204,W:[" & VbCrLf & "[" & tsw
-		Dim lentsw = tsw.Length()
-		If lentsw>7 AndAlso tsw(lentsw-1)="}"c Then tsw = tsw.SubString(0,lentsw-3) & ","
+
+        tsw = tsw.Trim()
+        If ""=tsw OrElse tsw(0)<>"{"c Then tsw = "{""Y"":2020,""W"":[" & VbCrLf & "[" & tsw
+        Dim lentsw = tsw.Length()
+        If lentsw>7 AndAlso tsw(lentsw-1)="}"c Then tsw = tsw.SubString(0,lentsw-3) 
+        If lentsw>7 AndAlso tsw(tsw.Length()-1)<>"["c Then tsw = tsw & ","
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
         Using fsw As FileStream = File.Create(fnw)
           Dim dww As New StreamWriter(fsw)
