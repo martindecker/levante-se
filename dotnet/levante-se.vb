@@ -175,6 +175,7 @@ Module Program
   Private Sub UpdateJsonStatist
     Dim fn As String = dirForJS & "trafficstat.json"
     Dim fnw As String = dirForJS & "wstat.json"
+    Dim trafficFileDate As Decimal = 0.0
     Try
       Console.Write(fn & "  ")
       Dim ts As StreetStatist
@@ -186,6 +187,7 @@ Module Program
       Else
         Dim readText As String = File.ReadAllText(fn)
         ts = JsonSerializer.Deserialize(Of StreetStatist)(readText)
+        trafficFileDate = ts.C
       End If
       ts.C = DateTime.Today.Year
       If DateTime.ToDay.Month < 10 Then
@@ -196,13 +198,13 @@ Module Program
         ts.C = ts.C + 1.000D
       End If
       ts.C = ts.C + 0.001D * DateTime.Today.Day
-      
-      Dim s1 = New VTupel()
-      s1.D = ts.C
-      s1.V = 0
-      If stoerungen2 Then s1.V = 111
-      ts.MuchTraffic.Add(s1)
-      
+      If ts.C <> trafficFileDate Then
+        Dim s1 = New VTupel()
+        s1.D = ts.C
+        s1.V = 0
+        If stoerungen2 Then s1.V = 111
+        ts.MuchTraffic.Add(s1)
+      End If
       If File.Exists(fn) Then File.Delete(fn)
       Using fs As FileStream = File.Create(fn)
         Dim dw As New StreamWriter(fs)
@@ -220,7 +222,7 @@ Module Program
         Console.Write(fnw & "  ")
         Dim tsw As String
         tsw=""
-
+ 
         tsw = tsw.Trim()
         If ""=tsw OrElse tsw(0)<>"{"c Then tsw = "{""Y"":2020,""W"":[" & VbCrLf & "[" & tsw
         Dim lentsw = tsw.Length()
