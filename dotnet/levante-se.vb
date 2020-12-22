@@ -224,10 +224,23 @@ Module Program
         tsw=""
  
         tsw = tsw.Trim()
-        If ""=tsw OrElse tsw(0)<>"{"c Then tsw = "{""Y"":2020,""W"":[" & VbCrLf & "[" & tsw
-        Dim lentsw = tsw.Length()
-        If lentsw>7 AndAlso tsw(lentsw-1)="}"c Then tsw = tsw.SubString(0,lentsw-3) 
-        If lentsw>7 AndAlso tsw(tsw.Length()-1)<>"["c Then tsw = tsw & ","
+        If ""=tsw OrElse tsw(0)<>"{"c Then 
+          tsw = "{""Y"":2020,""W"":[" & VbCrLf & "[" & tsw
+        Else
+          Dim lentsw = tsw.Length()
+          Dim wFileYear As Integer = 0
+          If lentsw>10 Then 
+            If Not Integer.TryParse( tsw.SubString(5,4) , wFileYear) Then
+              Console.WriteLine( tsw.SubString(5,4) & " - " )
+              If 5000 > lentsw Then Console.WriteLine(tsw)
+              Console.WriteLine(" - warning regarding wstat.json: the year is corrupted, contents will be deleted - ")
+              tsw = ""
+              lentsw = 0
+            End If
+          End If
+          If lentsw>7 AndAlso tsw(lentsw-1)="}"c Then tsw = tsw.SubString(0,lentsw-3) 
+        End If
+        If tsw<>"" AndAlso tsw(tsw.Length()-1)<>"["c Then tsw = tsw & ","
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
         Using fsw As FileStream = File.Create(fnw)
           Dim dww As New StreamWriter(fsw)
