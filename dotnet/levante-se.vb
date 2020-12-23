@@ -222,10 +222,10 @@ Module Program
         Console.Write(fnw & "  ")
         Dim tsw As String
         tsw=""
- 
+
         tsw = tsw.Trim()
         If ""=tsw OrElse tsw(0)<>"{"c Then 
-          tsw = "{""Y"":2020,""W"":[" & VbCrLf & "[" & tsw
+          tsw = "{""Y"":" & DateTime.ToDay.Year.ToString() &",""W"":[" & VbCrLf & "[" & tsw
         Else
           Dim lentsw = tsw.Length()
           Dim wFileYear As Integer = 0
@@ -239,6 +239,7 @@ Module Program
             End If
           End If
           If lentsw>7 AndAlso tsw(lentsw-1)="}"c Then tsw = tsw.SubString(0,lentsw-3) 
+          If lentsw>20 AndAlso wFileYear<>DateTime.ToDay.Year Then tsw = tsw.SubString(0,5) & DateTime.ToDay.Year.ToString() & tsw.SubString(5+4) & "]," & VbCrLf & "[" 
         End If
         If tsw<>"" AndAlso tsw(tsw.Length()-1)<>"["c Then tsw = tsw & ","
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
