@@ -222,7 +222,7 @@ Module Program
         Console.Write(fnw & "  ")
         Dim tsw As String
         tsw=""
-
+ 
         tsw = tsw.Trim()
         If ""=tsw OrElse tsw(0)<>"{"c Then 
           tsw = "{""Y"":" & DateTime.ToDay.Year.ToString() &",""W"":[" & VbCrLf & "[" & tsw
@@ -233,7 +233,7 @@ Module Program
             If Not Integer.TryParse( tsw.SubString(5,4) , wFileYear) Then
               Console.WriteLine( tsw.SubString(5,4) & " - " )
               If 5000 > lentsw Then Console.WriteLine(tsw)
-              Console.WriteLine(" - warning regarding wstat.json: the year is corrupted, contents will be deleted - ")
+              Console.WriteLine(" - warning regarding " & fnw & ": the year is corrupted, contents will be deleted - ")
               tsw = ""
               lentsw = 0
             End If
@@ -242,6 +242,9 @@ Module Program
           If lentsw>20 AndAlso wFileYear<>DateTime.ToDay.Year Then tsw = tsw.SubString(0,5) & DateTime.ToDay.Year.ToString() & tsw.SubString(5+4) & "]," & VbCrLf & "[" 
         End If
         If tsw<>"" AndAlso tsw(tsw.Length()-1)<>"["c Then tsw = tsw & ","
+		Dim lio As Integer = tsw.LastIndexOf( VbLf )
+		If lio < 0 Then lio = 0
+		If 20*(tsw.Length()-lio)-333 > (theWeight-60)*(theWeight-60) Then tsw = tsw & VbCrLf
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
         Using fsw As FileStream = File.Create(fnw)
           Dim dww As New StreamWriter(fsw)
