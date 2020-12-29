@@ -222,7 +222,7 @@ Module Program
         Console.Write(fnw & "  ")
         Dim tsw As String
         tsw=""
- 
+        If File.Exists(fnw) Then tsw = File.ReadAllText(fnw) 
         tsw = tsw.Trim()
         If ""=tsw OrElse tsw(0)<>"{"c Then 
           tsw = "{""Y"":" & DateTime.ToDay.Year.ToString() &",""W"":[" & VbCrLf & "[" & tsw
