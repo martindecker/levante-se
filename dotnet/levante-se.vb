@@ -246,11 +246,21 @@ Module Program
           If lentsw>7 AndAlso tsw(lentsw-1)="}"c Then tsw = tsw.SubString(0,lentsw-3) 
           If lentsw>20 AndAlso wFileYear<>DateTime.ToDay.Year Then tsw = tsw.SubString(0,5) & DateTime.ToDay.Year.ToString() & tsw.SubString(5+4) & "]," & VbCrLf & "[" 
         End If
+        Dim begyindex = tsw.LastIndexOf( "["c )
+        Dim cnt=1
+        If begyindex > 7 Then
+         For Each c As Char In tsw.SubString( begyindex )
+          If c = ","c Then 
+            cnt += 1
+          End If
+         Next
+        End If
         If tsw<>"" AndAlso tsw(tsw.Length()-1)<>"["c Then tsw = tsw & ","
         Dim lio As Integer = tsw.LastIndexOf( VbLf )
         If lio < 0 Then lio = 0
         If 20*(tsw.Length()-lio)-333 > (theWeight-60)*(theWeight-60) Then tsw = tsw & VbCrLf
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
+        Console.Write( "(#" & cnt & ")" )
         Using fsw As FileStream = File.Create(fnw)
           Dim dww As New StreamWriter(fsw)
           dww.WriteLine( tsw )
