@@ -213,9 +213,9 @@ Module Program
         dw.WriteLine( jsonString )
         dw.Close()
 #If SlovakVersion Then
-        Console.WriteLine( "   uložené.")
+        Console.WriteLine( " uložené.")
 #Else
-        Console.WriteLine( "   gardado.")
+        Console.WriteLine( " gardado.")
 #End if
       End Using
       If dataForM.TkWeight Then
@@ -247,20 +247,23 @@ Module Program
           If lentsw>20 AndAlso wFileYear<>DateTime.ToDay.Year Then tsw = tsw.SubString(0,5) & DateTime.ToDay.Year.ToString() & tsw.SubString(5+4) & "]," & VbCrLf & "[" 
         End If
         Dim begyindex = tsw.LastIndexOf( "["c )
-        Dim cnt=1
+        Dim countInYear=1
         If begyindex > 7 Then
-         For Each c As Char In tsw.SubString( begyindex )
-          If c = ","c Then 
-            cnt += 1
-          End If
-         Next
+          For Each c As Char In tsw.SubString( begyindex )
+            If c = ","c Then 
+              countInYear += 1
+            End If
+          Next
         End If
-        If tsw<>"" AndAlso tsw(tsw.Length()-1)<>"["c Then tsw = tsw & ","
+        If tsw<>"" AndAlso tsw(tsw.Length()-1)<>"["c Then 
+          tsw = tsw & ","
+          countInYear = countInYear + 1
+        End If
         Dim lio As Integer = tsw.LastIndexOf( VbLf )
         If lio < 0 Then lio = 0
         If 20*(tsw.Length()-lio)-333 > (theWeight-60)*(theWeight-60) Then tsw = tsw & VbCrLf
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
-        Console.Write( "(#" & cnt & ")" )
+        Console.Write( "(#" & countInYear & ")" )
         Using fsw As FileStream = File.Create(fnw)
           Dim dww As New StreamWriter(fsw)
           dww.WriteLine( tsw )
