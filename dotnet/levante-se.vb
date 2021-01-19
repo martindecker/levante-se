@@ -259,11 +259,13 @@ Module Program
           tsw = tsw & ","
           countInYear = countInYear + 1
         End If
+        Dim cal As Calendar = new GregorianCalendar()
+        Dim weekOfYear = cal.GetWeekOfYear(DateTime.ToDay,CalendarWeekRule.FirstDay,DayOfWeek.Monday)
         Dim lio As Integer = tsw.LastIndexOf( VbLf )
         If lio < 0 Then lio = 0
         If 20*(tsw.Length()-lio)-333 > (theWeight-60)*(theWeight-60) Then tsw = tsw & VbCrLf
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
-        Console.Write( "(#" & countInYear & ")" )
+        Console.Write( "(#" & countInYear & " / " & weekOfYear & ")" )
         Using fsw As FileStream = File.Create(fnw)
           Dim dww As New StreamWriter(fsw)
           dww.WriteLine( tsw )
