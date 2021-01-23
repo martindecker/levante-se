@@ -266,16 +266,18 @@ Module Program
         If 20*(tsw.Length()-lio)-333 > (theWeight-60)*(theWeight-60) Then tsw = tsw & VbCrLf
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
         Console.Write( "(#" & countInYear & " / " & weekOfYear & ")" )
-        Using fsw As FileStream = File.Create(fnw)
-          Dim dww As New StreamWriter(fsw)
-          dww.WriteLine( tsw )
-          dww.Close()
+        If countInYear <= weekOfYear Then 
+          Using fsw As FileStream = File.Create(fnw)
+            Dim dww As New StreamWriter(fsw)
+            dww.WriteLine( tsw )
+            dww.Close()
 #If SlovakVersion Then
-        Console.WriteLine( "   uložené.")
+            Console.WriteLine( "   uložené.")
 #Else
-        Console.WriteLine( "   gardado.")
+            Console.WriteLine( "   gardado.")
 #End if
-        End Using       
+          End Using       
+        End If
       End If
     Catch eee As Exception  
 #If SlovakVersion Then
