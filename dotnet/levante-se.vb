@@ -277,6 +277,8 @@ Module Program
             Console.WriteLine( "   gardado.")
 #End if
           End Using       
+        Else
+          Console.WriteLine( " - countInYear > weekOfYear.")
         End If
       End If
     Catch eee As Exception  
