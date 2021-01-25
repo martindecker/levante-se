@@ -698,8 +698,35 @@ Module Program
       Return False
     End If
   End Function
-  
-  
+
+
+
+  Private Sub ShowURL
+    Dim day146097 As Integer = DateDiff(DateInterval.Day, GlobalConstants.base_sunday, Date.Now )
+    day146097 = day146097 mod 146097
+#If SlovakVersion Then
+    If wForM.URL_ofDay Is Nothing OrElse wForM.URL_ofDay.Length() = 0 Then 
+      Console.WriteLine("Varovanie: URL_ofDay nie je k dispozícii v daten_fuer_morgen.xml")
+#Else
+    If wForM.URL_ofDay Is Nothing OrElse wForM.URL_ofDay.Length() = 0 Then 
+      Console.WriteLine("Aviso: Non está presente URL_ofDay en data1_for_morning_galician.xml?")
+#End if
+    Else 
+      Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
+      Try
+        If Not IsNothing( url ) Then
+          dim psi as new ProcessStartInfo( url )
+          psi.UseShellExecute = true
+          System.Diagnostics.Process.Start( psi )
+        End if  
+      Catch ee As Exception
+        errorExit( url  , ee )
+      End Try
+    End If
+  End Sub
+
+
+
   Private Sub dozweispaltigchecklist( url As String )
   ' Uses Arrays left() As String,r() As String
   ' fills in timestep2, timestep3 because this is website reading time and can vary.
@@ -781,20 +808,12 @@ Module Program
          timestamp2 = DateTime.Now
          nsteps = nsteps - 1
        End If
-       Try
-         If Not IsNothing(url) Then
-           dim psi as new ProcessStartInfo(url)
-           psi.UseShellExecute = true
-           If  upr=" " Then
-             Console.write( vbcr &  "...                                                                         ")
-             ' ... will be overridden after Process.Start
-             upr = "…" ' Unicode Character : horizontal ellipsis, appears after Process.Start
-           End if
-           System.Diagnostics.Process.Start( psi )
-         End If
-       Catch ee As Exception
-         errorExit( url  , ee )
-       End Try
+       If  upr=" " Then
+         Console.write( vbcr &  "...                                                                         ")
+         ' ... will be overridden after Process.Start
+         upr = "…" ' Unicode Character : horizontal ellipsis, appears after Process.Start
+       End if
+       ShowURL
      Else 
       If lindex < left.length Then nsteps = nsteps + 1
       lindex  = lindex  + 1
