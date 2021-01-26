@@ -680,6 +680,10 @@ Module Program
       Console.Write("{0} ? (s=y/n) ", text)
 #End if
      line = Console.ReadKey(true).KeyChar
+     If line.ToUpper() = "U" OrElse line.ToUpper() = "V" then 
+       Console.write( VbCrLf &  "-URL-" & VbCrLf )
+       ShowURL
+     End if
     Loop Until "aáAÁzžZŽjnJNsSyY".Contains(line) ' slovak umlauts for á Á are &#225; &#193; 
     If line = "ž" OrElse line="Ž" Then Line = "z" ' ToUpper does not work with Character number &#382; or &#381;
     If line.ToUpper() = "A"  OrElse line.ToUpper() = "Á"  OrElse line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
