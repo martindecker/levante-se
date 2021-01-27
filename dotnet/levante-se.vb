@@ -684,6 +684,17 @@ Module Program
        Console.write( VbCrLf &  "-URL-" & VbCrLf )
        ShowURL
      End if
+     If line.ToUpper() = "V" then 
+#If SlovakVersion Then
+      Console.WriteLine("V also means premature Exit")    
+      Console.WriteLine("Program ukončíte stlačením klávesu.")
+#Else
+      Console.WriteLine("V also means premature Exit")    
+      Console.WriteLine( "Prema unha tecla para rematar o programa." )
+#End if
+      Console.ReadKey()
+      Environment.Exit(-1)
+    End if
     Loop Until "aáAÁzžZŽjnJNsSyY".Contains(line) ' slovak umlauts for á Á are &#225; &#193; 
     If line = "ž" OrElse line="Ž" Then Line = "z" ' ToUpper does not work with Character number &#382; or &#381;
     If line.ToUpper() = "A"  OrElse line.ToUpper() = "Á"  OrElse line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
