@@ -799,6 +799,19 @@ Module Program
 #End if
       End if
       line = Console.ReadKey(true).KeyChar 
+      If lindex = 1 AndAlso Rindex=1 AndAlso  line.ToUpper() = "V" Then 
+       Console.write( VbCrLf &  "-URL-" & VbCrLf )
+       ShowURL
+#If SlovakVersion Then
+       Console.WriteLine("V also means premature Exit")    
+       Console.WriteLine("Program ukončíte stlačením klávesu.")
+#Else
+       Console.WriteLine("V also means premature Exit")    
+       Console.WriteLine( "Prema unha tecla para rematar o programa." )
+#End if
+       Console.ReadKey()
+       Environment.Exit(-1)
+      End if
 #If SlovakVersion Then
      Loop Until "lLľĽpPrRustUST".Contains(line)
 #Else
