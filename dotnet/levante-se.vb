@@ -235,10 +235,11 @@ Module Program
               If 5000 > lentsw Then Console.WriteLine(tsw)
 #If SlovakVersion Then
               Console.Write( " - Varovanie týkajúce sa ")
+              Console.WriteLine( fnw & ": Leto je napačno oblikovano, contents will be deleted - ")
 #Else
               Console.Write( " - Aviso sobre ")
+              Console.WriteLine( fnw & ": O ano ten un formato incorrecto, contents will be deleted - ")
 #End if
-              Console.WriteLine( fnw & ": the year is corrupted, contents will be deleted - ")
               tsw = ""
               lentsw = 0
             End If
