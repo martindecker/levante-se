@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Text
 Imports System.Text.Json
 Imports System.Text.Json.Serialization
+Imports System.Xml
 Imports System.Xml.Serialization
 Imports System.Globalization
 
@@ -96,6 +97,7 @@ Module Program
     
   Dim dataForM as DataForMorningP
   Dim wForM    as WorteForMorningP
+  Dim deferred as DeferredFor
   Dim dirForJS = "jsonxmlm/"
   Dim stoerungen2 As Boolean = false
   Dim theWeight As Decimal = -2
@@ -287,6 +289,21 @@ Module Program
       errorExit(fn & " UpdateJsonStatist  Chyba:", eee)
 #Else
       errorExit(fn & " UpdateJsonStatist  Erro:", eee)
+#End if
+    End Try 
+  End Sub
+
+
+
+  Private Sub SaveMorningXml
+    Dim fn As String = dirForJS & "deferredmoring.xml"
+    Try
+      Dim serializer As New XmlSerializer(GetType(DeferredFor))
+    Catch eee As Exception  
+#If SlovakVersion Then
+      errorExit(fn & "   Chyba:", eee)
+#Else
+      errorExit(fn & "   Erro:", eee)
 #End if
     End Try 
   End Sub
@@ -985,6 +1002,10 @@ Public Module Interf
   Public Structure StreetStatist
     Public Property  C As Decimal
     Public Property  MuchTraffic As List(Of VTupel)
+  End Structure
+
+  Public Structure DeferredFor
+    Public WaterPlants1 As Boolean
   End Structure
 End Module
 
