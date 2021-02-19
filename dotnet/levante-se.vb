@@ -67,6 +67,7 @@ Module Program
       If wForM.SaveAStringPrompt.Length() >= 2 AndAlso Not Char.IsWhiteSpace(wForM.SaveAStringPrompt(1)) Then
         EnterAndSaveString
       End If
+      deferred.WaterPlants1 = False
       If justTookV > -2 Then LoadOrSaveVitamin( justTookV )
       timestamp4 = DateTime.Now
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday AndAlso DateTime.Now.Hour >= 4  Then
@@ -296,9 +297,19 @@ Module Program
 
 
   Private Sub SaveMorningXml
-    Dim fn As String = dirForJS & "deferredmoring.xml"
+    Dim fn As String = dirForJS & "deferredmorning.mxml"
     Try
       Dim serializer As New XmlSerializer(GetType(DeferredFor))
+      Dim fs As New FileStream(fn, FileMode.Create)
+      Dim writer As New XmlTextWriter(fs, Encoding.Unicode)
+      serializer.Serialize(writer, deferred)
+      writer.Close()
+      Console.Write(  VbCrLf & fn )
+#If SlovakVersion Then
+        Console.WriteLine( "   uložené." & VbCrLf )
+#Else
+        Console.WriteLine( "   gardado." & VbCrLf )
+#End if
     Catch eee As Exception  
 #If SlovakVersion Then
       errorExit(fn & "   Chyba:", eee)
@@ -640,6 +651,7 @@ Module Program
 #End if
     End If
     If giessen Then
+      deferred.WaterPlants1 = True
       filled1bis = filled1bis + 1
       If DateTime.Today.DayOfWeek >= dataForM.ZeitknapperAbTag AndAlso DateTime.Today.DayOfWeek <= dataForM.ZeitknapperBisTag Then
 #If SlovakVersion Then

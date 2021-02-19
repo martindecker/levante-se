@@ -34,5 +34,5 @@ msbuild.wrn
 
 # Data files the program creates
 *.json
-*.mtxt
+*.m???
 
