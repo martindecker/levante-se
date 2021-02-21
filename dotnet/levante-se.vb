@@ -55,6 +55,8 @@ Module Program
         End If
       End If
       Console.WriteLine(VbLf)
+      deferred.WaterPlants1 = False
+      LoadMorningXmlIfExists
       PlanningQuestions
       Array.Resize( todo1,filled1bis+1 )
       left = todo1
@@ -318,6 +320,28 @@ Module Program
 #End if
     End Try 
   End Sub
+
+
+
+
+  Private Sub LoadMorningXmlIfExists
+    Dim fn As String = dirForJS & "deferredmorning.mxml"
+    If Not File.Exists( fn ) Then Return
+    Try
+      Dim stm As FileStream = New FileStream(fn, FileMode.Open)
+      Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DeferredFor))
+      deferred = CType(xmlSer.Deserialize(stm), DeferredFor)
+      stm.Close()
+      Console.Write( " ~ " )
+    Catch eee As Exception  
+#If SlovakVersion Then
+      errorExit(fn & "  TryMorningXml Chyba:", eee)
+#Else
+      errorExit(fn & "  TryMorningXml Erro:", eee)
+#End if
+    End Try 
+  End Sub
+
 
 
 
