@@ -303,7 +303,7 @@ Module Program
     Try
       Dim serializer As New XmlSerializer(GetType(DeferredFor))
       Dim fs As New FileStream(fn, FileMode.Create)
-      Dim writer As New XmlTextWriter(fs, Encoding.Unicode)
+      Dim writer As New XmlTextWriter(fs, Encoding.UTF8)
       serializer.Serialize(writer, deferred)
       writer.Close()
       Console.Write(  VbCrLf & fn )
@@ -1041,7 +1041,18 @@ Public Module Interf
   End Structure
 
   Public Structure DeferredFor
+    Public Vers As Integer ' currently always zero
     Public WaterPlants1 As Boolean
+    Public WL As Integer ' currently not used
+    Public Sport1 As Boolean ' currently not used
+    Public Train1 As Boolean ' currently not used
+    Public I1 As Integer ' currently not used
+    Public I2 As Integer ' currently not used
+    Public Z AS String ' currently not used
+    Public T3 AS String ' currently not used
+    Public T4 AS String ' currently not used
+    Public Ov AS String ' currently not used
+    Public M() As String ' currently not used
   End Structure
 End Module
 
