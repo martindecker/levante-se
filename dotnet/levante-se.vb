@@ -58,6 +58,7 @@ Module Program
       deferred.WaterPlants1 = False
       LoadMorningXmlIfExists
       PlanningQuestions
+      SaveMorningXml
       Array.Resize( todo1,filled1bis+1 )
       left = todo1
       r = wForM.TodoPart2
@@ -70,6 +71,7 @@ Module Program
         EnterAndSaveString
       End If
       deferred.WaterPlants1 = False
+      SaveMorningXml
       If justTookV > -2 Then LoadOrSaveVitamin( justTookV )
       timestamp4 = DateTime.Now
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday AndAlso DateTime.Now.Hour >= 4  Then
@@ -1043,17 +1045,14 @@ Public Module Interf
   Public Structure DeferredFor
     Public Vers As Integer ' currently always zero
     Public WaterPlants1 As Boolean
-    Public WL As Integer ' currently not used
-    Public Sport1 As Boolean ' currently not used
-    Public Train1 As Boolean ' currently not used
+    Public SeedingDay As Integer ' currently not used
+    Public SportLater As Boolean ' currently not used
+    Public WL As Integer ' Water Later currently not used
+    Public LastSport As Boolean ' currently not used
+    Public LastTrain As Boolean ' currently not used
     Public I1 As Integer ' currently not used
     Public I2 As Integer ' currently not used
-    Public Z AS String ' currently not used
-    Public T3 AS String ' currently not used
-    Public T4 AS String ' currently not used
-    Public Ov AS String ' currently not used
-    Public M() As String ' currently not used
-  End Structure
+ End Structure
 End Module
 
 
