@@ -329,18 +329,23 @@ Module Program
   Private Sub LoadMorningXmlIfExists
     Dim fn As String = dirForJS & "deferredmorning.mxml"
     If Not File.Exists( fn ) Then Return
+    Dim stm As FileStream = Nothing
     Try
-      Dim stm As FileStream = New FileStream(fn, FileMode.Open)
+      stm  = New FileStream(fn, FileMode.Open)
       Dim xmlSer As XmlSerializer = New XmlSerializer(GetType(DeferredFor))
       deferred = CType(xmlSer.Deserialize(stm), DeferredFor)
       stm.Close()
       Console.Write( " ~ " )
     Catch eee As Exception  
+      Dim text1 as String
 #If SlovakVersion Then
-      errorExit(fn & "  TryMorningXml Chyba:", eee)
+      text1 = fn & "  TryMorningXml Chyba:"
 #Else
-      errorExit(fn & "  TryMorningXml Erro:", eee)
+      text1 = fn  & "  TryMorningXml Erro:"
 #End if
+      Console.WriteLine(text1)    
+      if eee IsNot Nothing Then Console.WriteLine(eee)
+      If stm IsNot Nothing Then stm.Close() 
     End Try 
   End Sub
 
@@ -1048,8 +1053,8 @@ Public Module Interf
     Public SeedingDay As Integer ' currently not used
     Public SportLater As Boolean ' currently not used
     Public WL As Integer ' Water Later currently not used
-    Public LastSport As Boolean ' currently not used
-    Public LastTrain As Boolean ' currently not used
+    Public LastSport As Integer ' currently not used
+    Public LastTrain As Integer ' currently not used
     Public I1 As Integer ' currently not used
     Public I2 As Integer ' currently not used
  End Structure
