@@ -346,6 +346,11 @@ Module Program
       Console.WriteLine(text1)    
       if eee IsNot Nothing Then Console.WriteLine(eee)
       If stm IsNot Nothing Then stm.Close() 
+#If SlovakVersion Then
+      Console.WriteLine("Ale pokračujte ďalej")
+#Else
+      Console.WriteLine("Pero segue adiante")
+#End if
     End Try 
   End Sub
 
@@ -1051,8 +1056,8 @@ Public Module Interf
     Public Vers As Integer ' currently always zero
     Public WaterPlants1 As Boolean
     Public SeedingDay As Integer ' currently not used
+    Public WaterLater As Boolean ' currently not used
     Public SportLater As Boolean ' currently not used
-    Public WL As Integer ' Water Later currently not used
     Public LastSport As Integer ' currently not used
     Public LastTrain As Integer ' currently not used
     Public I1 As Integer ' currently not used
