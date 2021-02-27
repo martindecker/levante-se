@@ -677,6 +677,7 @@ Module Program
       Else If (DateTime.Today.DayOfWeek+1 mod 7) = dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek = (dataForM.ZeitknapperBisTag+1)mod 7 Then
          giessen = giessen OrElse ((day_mod mod gt)=0)
       End If
+      If deferred.WaterPlants1 Then giessen = True
     End If
     If fs <> MorningExerciseMode.AlmostAlways AndAlso dataForM.Brush Then
       filled1bis = filled1bis + 1
@@ -687,7 +688,6 @@ Module Program
 #End if
     End If
     If giessen Then
-      deferred.WaterPlants1 = True
       filled1bis = filled1bis + 1
       If DateTime.Today.DayOfWeek >= dataForM.ZeitknapperAbTag AndAlso DateTime.Today.DayOfWeek <= dataForM.ZeitknapperBisTag Then
 #If SlovakVersion Then
@@ -695,12 +695,14 @@ Module Program
 #Else
         todo1(filled1bis) = "Encha o rego" ' Fill the Watering can, to remind to water in the afternoon
 #End if
+        deferred.WaterLater = True
       Else
 #If SlovakVersion Then
         todo1(filled1bis) = "Zalievanie rastlín"
 #Else
         todo1(filled1bis) = "Plantas de rego"
 #End if
+        deferred.WaterPlants1 = True
       End If
     End If
     If dataForM.LowCarbTeil.Length() = 0 AndAlso fs = MorningExerciseMode.AlmostAlways  AndAlso  takeVit Then
