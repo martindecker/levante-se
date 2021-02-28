@@ -18,6 +18,7 @@ Module Program
   Dim todayurl = Nothing
   Dim timestamp1,timestamp2,timestamp3,timestamp4 As DateTime ' used time = t2-t1 + t4-t3
   Dim nsteps as Integer = 0 ' how many steps in that time ?
+  Dim newseeding As Boolean = False
 
   Sub Main(args As String())
       LoadAData
@@ -34,6 +35,7 @@ Module Program
           Else
               Console.WriteLine("ok")
           End If
+          newseeding = janein1("Nový výsev")
 #Else
           If dataForM.TkWeight Then
             Console.Write("Peso en kg : ")
@@ -45,6 +47,7 @@ Module Program
           Else
               Console.WriteLine("nada")
           End If
+          newseeding = janein1("Nova sementeira")
 #End if
         If dataForM.TkWeight Then
           Dim style As NumberStyles
@@ -57,6 +60,7 @@ Module Program
       Console.WriteLine(VbLf)
       deferred.WaterPlants1 = False
       LoadMorningXmlIfExists
+      If newseeding Then deferred.SeedingDay = DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) 
       PlanningQuestions
       SaveMorningXml
       Array.Resize( todo1,filled1bis+1 )
@@ -693,7 +697,7 @@ Module Program
 #If SlovakVersion Then
         todo1(filled1bis) = "Zalievanie rastlín -> Poobede"
 #Else
-        todo1(filled1bis) = "Encha o rego" ' Fill the Watering can, to remind to water in the afternoon
+        todo1(filled1bis) = "Encha o Regadeira" ' Fill the Watering can, to remind to water in the afternoon
 #End if
         deferred.WaterLater = True
       Else
@@ -1057,7 +1061,7 @@ Public Module Interf
   Public Structure DeferredFor
     Public Vers As Integer ' currently always zero
     Public WaterPlants1 As Boolean
-    Public SeedingDay As Integer ' currently not used
+    Public SeedingDay As Single ' DayOf 4 Years = Day of Quadrennial
     Public WaterLater As Boolean ' currently not used
     Public SportLater As Boolean ' currently not used
     Public LastSport As Integer ' currently not used
