@@ -664,7 +664,10 @@ Module Program
     If DateTime.Now.Month <= 3 OrElse DateTime.Now.Month > 9 Then gt = dataForM.WaterPlantsAfterDaysQ1Q4
     If isHeatingSeason() Then 
       gt = dataForM.WaterInHeatingSeason
-    ElseIf 4 <= DateTime.Today.Day AndAlso DateTime.Today.Day <= 14 Then
+    End If
+    If deferred.SeedingDay    <= DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) AndAlso 
+       deferred.SeedingDay+14 >= DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) AndAlso 
+       dataForM.Water4SeedingInDay4to14 >= 1 Then
       gt = dataForM.Water4SeedingInDay4to14
     End If
     If gt <= 0 Then gt = 99999999
