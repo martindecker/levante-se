@@ -694,6 +694,7 @@ Module Program
       todo1(filled1bis) = "Cepillo de dentes"
 #End if
     End If
+    deferred.WaterLater = False
     If giessen Then
       filled1bis = filled1bis + 1
       If DateTime.Today.DayOfWeek >= dataForM.ZeitknapperAbTag AndAlso DateTime.Today.DayOfWeek <= dataForM.ZeitknapperBisTag Then
@@ -1065,7 +1066,7 @@ Public Module Interf
     Public Vers As Integer ' currently always zero
     Public WaterPlants1 As Boolean
     Public SeedingDay As Single ' DayOf 4 Years = Day of Quadrennial
-    Public WaterLater As Boolean ' currently not used
+    Public WaterLater As Boolean
     Public SportLater As Boolean ' currently not used
     Public LastSport As Integer ' currently not used
     Public LastTrain As Integer ' currently not used
