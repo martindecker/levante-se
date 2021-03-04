@@ -19,7 +19,7 @@
     <string>Manteiga de herbas + 50% Tortilla-Chips</string>
   </LowCarbTeil>
   <ZeitknapperAbTag>1</ZeitknapperAbTag>
-  <ZeitknapperBisTag>4</ZeitknapperBisTag>
+  <ZeitknapperBisTag>0</ZeitknapperBisTag>
   <DayOfLastWalkOrJogging>1</DayOfLastWalkOrJogging>
   <MorningExerciseModeArray>
     <MorningExerciseMode>SummerHalfYear</MorningExerciseMode>

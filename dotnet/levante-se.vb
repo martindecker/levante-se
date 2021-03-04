@@ -712,6 +712,11 @@ Module Program
 #End if
         deferred.WaterPlants1 = True
       End If
+#If SlovakVersion Then
+      Console.WriteLine("-> " & "Zalievanie rastlín (dnešok)")
+#Else
+      Console.WriteLine("-> " & "Plantas de rego (hoxe)")  
+#End if
     End If
     If dataForM.LowCarbTeil.Length() = 0 AndAlso fs = MorningExerciseMode.AlmostAlways  AndAlso  takeVit Then
         filled1bis = filled1bis + 1
