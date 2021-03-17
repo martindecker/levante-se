@@ -59,7 +59,7 @@ Module Program
       End If
       Console.WriteLine(VbLf)
       deferred.WaterPlants1 = False
-      LoadMorningXmlIfExists
+      ' LoadMorningXmlIfExists
       If newseeding Then deferred.SeedingDay = DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) 
       PlanningQuestions
       SaveMorningXml
@@ -619,7 +619,11 @@ Module Program
     Console.WriteLine(VbLf)
     Dim PublicHoliday = False
     If isPublicHoliday() Then
-      Console.WriteLine( "=====> " & "Public Holiday" ) 
+#If SlovakVersion Then
+      Console.WriteLine( "=====> " & "Verejne prazdniny ( Public Holiday )" ) 
+#Else
+      Console.WriteLine( "=====> " & "Día festivo  ( Public Holiday )" ) 
+#End if
       Console.WriteLine(VbLf)
       PublicHoliday =  True
       filled1bis = 0
@@ -1072,11 +1076,9 @@ Public Module Interf
     Public WaterPlants1 As Boolean
     Public SeedingDay As Single ' DayOf 4 Years = Day of Quadrennial
     Public WaterLater As Boolean
-    Public SportLater As Boolean ' currently not used
+    Public HolidayTomorrow As Boolean ' currently not used
+    Public SportToday As Boolean
     Public LastSport As Integer ' currently not used
-    Public LastTrain As Integer ' currently not used
-    Public I1 As Integer ' currently not used
-    Public I2 As Integer ' currently not used
  End Structure
 End Module
 
