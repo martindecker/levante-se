@@ -494,7 +494,9 @@ Module Program
 #Else
     If tookVit <> -1 Then Console.WriteLine( "       Vitamina tomada o día: " & tookVit.ToString() & VbCrLf )
 #End if
+    deferred.SportToday = False
     if fs = MorningExerciseMode.AlmostAlways Then
+      deferred.SportToday = True
 #If SlovakVersion Then
       Console.WriteLine("-----> " & "Ranné cvičenie dnes, potom")
 #Else
@@ -1076,6 +1078,7 @@ Public Module Interf
     Public WaterPlants1 As Boolean
     Public SeedingDay As Single ' DayOf 4 Years = Day of Quadrennial
     Public WaterLater As Boolean
+    Public HolidayToday As Boolean
     Public HolidayTomorrow As Boolean ' currently not used
     Public SportToday As Boolean
     Public LastSport As Integer ' currently not used
