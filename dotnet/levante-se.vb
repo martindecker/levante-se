@@ -620,7 +620,8 @@ Module Program
     Console.WriteLine(   "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
     Dim PublicHoliday = False
-    If isPublicHoliday() Then
+    deferred.HolidayToday = False
+    If isPublicHoliday(0) Then
 #If SlovakVersion Then
       Console.WriteLine( "=====> " & "Verejne prazdniny ( Public Holiday )" ) 
 #Else
@@ -628,7 +629,18 @@ Module Program
 #End if
       Console.WriteLine(VbLf)
       PublicHoliday =  True
+      deferred.HolidayToday = True
       filled1bis = 0
+    End If
+    deferred.HolidayTomorrow = False
+    If isPublicHoliday(1) Then
+#If SlovakVersion Then
+      Console.WriteLine( "Verejne prazdniny Zajtra  ( Public Holiday tomorrow )" & " <=====") 
+#Else
+      Console.WriteLine( "Día festivo Mañá  ( Public Holiday tomorrow )" & " <====="  ) 
+#End if
+      Console.WriteLine(VbLf)
+      deferred.HolidayTomorrow = True
     End If
     If wForM.URL_ofDay.Length() > 0 Then
       Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
@@ -945,13 +957,14 @@ Module Program
   Private upr as String = " " ' Space or one threedot character as indication to wait
 
 
-  Function isPublicHoliday()
+  Function isPublicHoliday(ByVal tomorrow As Integer)
     If dataForM.PublicHolidaysMDD.Length()=0 Then Return False
     Dim td = DateTime.Today
+    If tomorrow Then td = td.AddDays(1)
     Dim mon = td.Month
     Dim day = td.Day
     For index as Integer = 0 to dataForM.PublicHolidaysMDD.Length()-1
-      If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return DateTime.Today.DayOfWeek<>0
+      If dataForM.PublicHolidaysMDD(index)\100 = mon AndAlso day = dataForM.PublicHolidaysMDD(index) mod 100  Then Return td.DayOfWeek<>0
     Next
     If td.DayOfWeek = 5 AndAlso CalcGoodFriday( td.Year ) = td Then Return dataForM.PublicHolidayGoodFriday 
     If td.DayOfWeek = 1 Then
