@@ -59,7 +59,7 @@ Module Program
       End If
       Console.WriteLine(VbLf)
       deferred.WaterPlants1 = False
-      ' LoadMorningXmlIfExists
+      LoadMorningXmlIfExists
       If newseeding Then deferred.SeedingDay = DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) 
       PlanningQuestions
       SaveMorningXml
@@ -1087,14 +1087,13 @@ Public Module Interf
   End Structure
 
   Public Structure DeferredFor
-    Public Vers As Integer ' currently always zero
-    Public WaterPlants1 As Boolean
-    Public SeedingDay As Single ' DayOf 4 Years = Day of Quadrennial
     Public WaterLater As Boolean
-    Public HolidayToday As Boolean
-    Public HolidayTomorrow As Boolean ' currently not used
+    Public WaterPlants1 As Boolean
     Public SportToday As Boolean
+    Public SeedingDay As Single ' DayOf 4 Years = Day of Quadrennial
     Public LastSport As Integer ' currently not used
+    Public HolidayToday As Boolean
+    Public HolidayTomorrow As Boolean
  End Structure
 End Module
 
