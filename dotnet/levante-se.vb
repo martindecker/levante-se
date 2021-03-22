@@ -70,7 +70,7 @@ Module Program
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
       timestamp1 = DateTime.Now
-      dozweispaltigchecklist( todayurl ) 
+      dozweispaltigchecklist( left, r, todayurl ) 
       If wForM.SaveAStringPrompt.Length() >= 2 AndAlso Not Char.IsWhiteSpace(wForM.SaveAStringPrompt(1)) Then
         EnterAndSaveString
       End If
@@ -841,9 +841,8 @@ Module Program
 
 
 
-  Private Sub dozweispaltigchecklist( url As String )
-  ' Uses Arrays left() As String,r() As String
-  ' fills in timestep2, timestep3 because this is website reading time and can vary.
+  Private Sub dozweispaltigchecklist( ByVal left() As String, ByVal r() As String, url As String )
+  ' fills in timestep2, timestep3 because this is website reading. website reading time and can vary.
 #If SlovakVersion Then
     Console.WriteLine( VbCrLf & " Odpovedzte, ktorá strana bola spracovaná (L ou R, Ľ ou P)" & vbCrlf) ' Ľ = LETTER L WITH CARON #317, ľ = #318
 #Else
