@@ -369,10 +369,14 @@ Module Program
     Dim input As String
     Try
       input = Console.ReadLine()
-      If File.Exists(fn) Then File.Delete(fn)
+      Dim old As String = ""
+      If File.Exists(fn) Then
+        If DateTime.ToDay.DayOfWeek = 2 Then old =  File.ReadAllText(fn) & VbCrLF & (DateTime.ToDay.Year*12+DateTime.ToDay.Month).ToString() & " : "
+        File.Delete(fn)
+      End If
       Using fs As FileStream = File.Create(fn)
         Dim dw = New StreamWriter(fs)
-        dw.Write( input )
+        dw.Write( old & input )
         dw.Close()
         Console.Write(  VbCrLf & fn )
 #If SlovakVersion Then
