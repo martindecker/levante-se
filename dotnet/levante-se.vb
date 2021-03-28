@@ -363,7 +363,13 @@ Module Program
 
   Private Sub EnterAndSaveString
     Dim fn As String = dirForJS & "zstring.mtxt"
-    Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
+    If DateTime.ToDay.DayOfWeek = 2 Then 
+      fn = dirForJS & "hdtws.mtxt"
+      Console.Write( VbCrLf & VbCrLf & "How did the week start? " )
+    Else
+      Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
+    End If
+    If DateTime.ToDay.DayOfWeek = 2-1 Then Console.Write( " (two days) " )
     If Not "!?:".Contains( wForM.SaveAStringPrompt(wForM.SaveAStringPrompt.Length()-1)) Then Console.Write( ":" )
     Console.Write( " " )
     Dim input As String
@@ -371,7 +377,11 @@ Module Program
       input = Console.ReadLine()
       Dim old As String = ""
       If File.Exists(fn) Then
-        If DateTime.ToDay.DayOfWeek = 2 Then old =  File.ReadAllText(fn) & VbCrLF & (DateTime.ToDay.Year*12+DateTime.ToDay.Month).ToString() & " : "
+        If DateTime.ToDay.DayOfWeek = 2 Then
+          Dim hinducalday =  (DateTime.ToDay.Year-2021)*366+DateTime.ToDay.DayOfYear-14
+          ' Number the days as Hindu season which begin approximately Mid-Jan/Mar/May...
+          old =  File.ReadAllText(fn) & VbCrLF & (hinducalday\61).ToString() & "." & (1+hinducalday mod 61).ToString().PadLeft(2,"0"c) & " : "
+        End If
         File.Delete(fn)
       End If
       Using fs As FileStream = File.Create(fn)
