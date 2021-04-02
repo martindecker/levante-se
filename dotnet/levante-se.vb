@@ -648,11 +648,13 @@ Module Program
     End If
     deferred.HolidayTomorrow = False
     If isPublicHoliday(1) Then
+      For iholiday = 1 To 3
 #If SlovakVersion Then
-      Console.WriteLine( "Verejne prazdniny Zajtra  ( Public Holiday tomorrow )" & " <=====") 
+        Console.WriteLine( "Verejne prazdniny Zajtra  ( Public Holiday tomorrow )" & " <=====") 
 #Else
-      Console.WriteLine( "Día festivo Mañá  ( Public Holiday tomorrow )" & " <====="  ) 
+        Console.WriteLine( "Día festivo Mañá  ( Public Holiday tomorrow )" & " <====="  ) 
 #End if
+      Next
       Console.WriteLine(VbLf)
       deferred.HolidayTomorrow = True
     End If
@@ -858,24 +860,24 @@ Module Program
   Private Sub dozweispaltigchecklist( ByVal left() As String, ByVal r() As String, url As String )
   ' fills in timestep2, timestep3 because this is website reading. website reading time and can vary.
 #If SlovakVersion Then
-    Console.WriteLine( VbCrLf & " Odpovedzte, ktorá strana bola spracovaná (L ou R, Ľ ou P)" & vbCrlf) ' Ľ = LETTER L WITH CARON #317, ľ = #318
+    Console.WriteLine( VbCrLf & "Odpovedzte, ktorá strana bola spracovaná (L ou R, Ľ ou P)" ) ' Ľ = LETTER L WITH CARON #317, ľ = #318
 #Else
-    Console.WriteLine( VbCrLf & " Responda de que lado se procesou (L ou R, E ou D)" & vbCrlf)
+    Console.WriteLine( VbCrLf & "Responda de que lado se procesou (L ou R, E ou D)" )
 #End if
     If Not IsNothing(url) Then
 #If SlovakVersion Then
-      Console.WriteLine( "Na vyvolanie URL je možné zadať U."& vbCrlf)
+      Console.WriteLine( "Na vyvolanie URL je možné zadať U.")
 #Else
-      Console.WriteLine( "Entre U pode introducirse para chamar á URL."& vbCrlf)
+      Console.WriteLine( "Entre U pode introducirse para chamar á URL.")
 #End if
     End If
     Dim lindex as Integer = 1
     Dim rindex as Integer = 1
     Dim line As String
 #If SlovakVersion Then
-    Console.WriteLine("Spracovať je {0} + {1} položiek." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
+    Console.WriteLine("Spracovať je {0} + {1} položiek."    & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
 #Else
-    Console.WriteLine("Hai {0} + {1} elementos a procesar." & VbCrLf & VbCrLf & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
+    Console.WriteLine("Hai {0} + {1} elementos a procesar." & VbCrLf  & VbCrLf & VbCrLf & VbCrLf, left.Length-1, r.Length-1)
 #End if
     Dim spaceline = new String( " "c, 78)
     Dim oneStepAdded = False
