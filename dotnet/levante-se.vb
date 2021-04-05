@@ -69,6 +69,13 @@ Module Program
       If Not isHeatingSeason() Then 
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
+      If DateTime.ToDay.DayOfWeek = 2 AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
+        Dim fnz As String = dirForJS & "zstring.mtxt"
+        Try
+          r( r.Length-1 ) = File.ReadAllText( fnz ).Trim()
+        Catch eeee As Exception  
+        End Try 
+      End If
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( left, r, todayurl ) 
       If wForM.SaveAStringPrompt.Length() >= 2 AndAlso Not Char.IsWhiteSpace(wForM.SaveAStringPrompt(1)) Then
