@@ -72,7 +72,8 @@ Module Program
       If DateTime.ToDay.DayOfWeek = 2 AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
         Dim fnz As String = dirForJS & "zstring.mtxt"
         Try
-          r( r.Length-1 ) = File.ReadAllText( fnz ).Trim()
+          r( r.Length-1 ) = File.ReadAllText( fnz ).Trim().Replace(VbLf," ")
+          If len(r( r.Length-1 ))>32 Then r( r.Length-1 ) = r( r.Length-1 ).SubString( 0,32 )&".."
         Catch eeee As Exception  
         End Try 
       End If
