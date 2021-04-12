@@ -374,10 +374,23 @@ Module Program
     If DateTime.ToDay.DayOfWeek = 2 Then 
       fn = dirForJS & "hdtws.mtxt"
       Console.Write( VbCrLf & VbCrLf & "How did the week start? " )
+    Else If DateTime.ToDay.DayOfWeek = 4 Then 
+      fn = dirForJS & "bureaucracy-or-looks.mtxt"
+#If SlovakVersion Then
+      Console.WriteLine(VbCrLf & VbCrLf &"Ako ste prišli s byrokraciou alebo vzhľadom?")
+#Else
+      Console.WriteLine(VbCrLf & VbCrLf &"Como você vasculhou com burocracia ou o olhar?")
+#End if
     Else
       Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
     End If
-    If DateTime.ToDay.DayOfWeek = 2-1 Then Console.Write( " (two days) " )
+    If DateTime.ToDay.DayOfWeek = 2-1 OrElse DateTime.ToDay.DayOfWeek = 4-1 Then 
+#If SlovakVersion Then
+      Console.Write( " (two days) " )
+#Else
+      Console.Write( " (two days) " )
+#End if
+    End If
     If Not "!?:".Contains( wForM.SaveAStringPrompt(wForM.SaveAStringPrompt.Length()-1)) Then Console.Write( ":" )
     Console.Write( " " )
     Dim input As String
