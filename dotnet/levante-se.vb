@@ -69,7 +69,7 @@ Module Program
       If Not isHeatingSeason() Then 
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
-      If DateTime.ToDay.DayOfWeek = 2 AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
+      If DateTime.ToDay.DayOfWeek = 2 OrElse DateTime.ToDay.DayOfWeek = 4 AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
         Dim fnz As String = dirForJS & "zstring.mtxt"
         Try
           r( r.Length-1 ) = File.ReadAllText( fnz ).Trim().Replace(VbLf," ")
@@ -322,9 +322,9 @@ Module Program
       writer.Close()
       Console.Write(  VbCrLf & fn )
 #If SlovakVersion Then
-        Console.WriteLine( "   uložené." & VbCrLf )
+      Console.WriteLine( "   uložené." & VbCrLf )
 #Else
-        Console.WriteLine( "   gardado." & VbCrLf )
+      Console.WriteLine( "   gardado." & VbCrLf )
 #End if
     Catch eee As Exception  
 #If SlovakVersion Then
@@ -386,9 +386,9 @@ Module Program
     End If
     If DateTime.ToDay.DayOfWeek = 2-1 OrElse DateTime.ToDay.DayOfWeek = 4-1 Then 
 #If SlovakVersion Then
-      Console.Write( " (two days) " )
+      Console.Write( " (Dva dni) " )
 #Else
-      Console.Write( " (two days) " )
+      Console.Write( " (Dous días) " )
 #End if
     End If
     If Not "!?:".Contains( wForM.SaveAStringPrompt(wForM.SaveAStringPrompt.Length()-1)) Then Console.Write( ":" )
@@ -398,12 +398,15 @@ Module Program
       input = Console.ReadLine()
       Dim old As String = ""
       If File.Exists(fn) Then
-        If DateTime.ToDay.DayOfWeek = 2 Then
+        If DateTime.ToDay.DayOfWeek = 2 or DateTime.ToDay.DayOfWeek = 4 Then
           Dim hinducalday =  (DateTime.ToDay.Year-2021)*366+DateTime.ToDay.DayOfYear-14
           ' Number the days as Hindu season which begin approximately Mid-Jan/Mar/May...
           old =  File.ReadAllText(fn) & VbCrLF & (hinducalday\61).ToString() & "." & (1+hinducalday mod 61).ToString().PadLeft(2,"0"c) & " : "
-        End If
+        End If 
         File.Delete(fn)
+      Else If DateTime.ToDay.DayOfWeek = 2 or DateTime.ToDay.DayOfWeek = 4 Then
+          Dim hinducaldaz =  (DateTime.ToDay.Year-2021)*366+DateTime.ToDay.DayOfYear-14
+          old = (hinducaldaz\61).ToString() & "." & (1+hinducaldaz mod 61).ToString().PadLeft(2,"0"c) & " : "
       End If
       Using fs As FileStream = File.Create(fn)
         Dim dw = New StreamWriter(fs)
