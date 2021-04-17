@@ -69,7 +69,7 @@ Module Program
       If Not isHeatingSeason() Then 
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
-      If DateTime.ToDay.DayOfWeek = 2 OrElse DateTime.ToDay.DayOfWeek = 4 AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
+      If (DateTime.ToDay.DayOfWeek = 2 OrElse DateTime.ToDay.DayOfWeek = 4 or DateTime.ToDay.DayOfWeek = 0)  AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
         Dim fnz As String = dirForJS & "zstring.mtxt"
         Try
           r( r.Length-1 ) = File.ReadAllText( fnz ).Trim().Replace(VbLf," ")
@@ -384,7 +384,7 @@ Module Program
     Else
       Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
     End If
-    If DateTime.ToDay.DayOfWeek = 2-1 OrElse DateTime.ToDay.DayOfWeek = 4-1 Then 
+    If DateTime.ToDay.DayOfWeek = 2-1 OrElse DateTime.ToDay.DayOfWeek = 4-1  OrElse DateTime.ToDay.DayOfWeek = 7-1 Then 
 #If SlovakVersion Then
       Console.Write( " (Dva dni) " )
 #Else
