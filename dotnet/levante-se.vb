@@ -381,6 +381,13 @@ Module Program
 #Else
       Console.WriteLine(VbCrLf & VbCrLf &"Como você vasculhou com burocracia ou o olhar?")
 #End if
+    Else If DateTime.ToDay.DayOfWeek = 0 Then 
+      fn = dirForJS & "repair-or-learn-edv.mtxt"
+#If SlovakVersion Then
+      Console.WriteLine(VbCrLf & VbCrLf &"What did you repair or what did you program or learn ?")
+#Else
+      Console.WriteLine(VbCrLf & VbCrLf &"What did you repair or what did you program or learn ?")
+#End if
     Else
       Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
     End If
@@ -398,13 +405,13 @@ Module Program
       input = Console.ReadLine()
       Dim old As String = ""
       If File.Exists(fn) Then
-        If DateTime.ToDay.DayOfWeek = 2 or DateTime.ToDay.DayOfWeek = 4 Then
+        If DateTime.ToDay.DayOfWeek = 2 or DateTime.ToDay.DayOfWeek = 4 or DateTime.ToDay.DayOfWeek = 0  Then
           Dim hinducalday =  (DateTime.ToDay.Year-2021)*366+DateTime.ToDay.DayOfYear-14
           ' Number the days as Hindu season which begin approximately Mid-Jan/Mar/May...
           old =  File.ReadAllText(fn) & VbCrLF & (hinducalday\61).ToString() & "." & (1+hinducalday mod 61).ToString().PadLeft(2,"0"c) & " : "
         End If 
         File.Delete(fn)
-      Else If DateTime.ToDay.DayOfWeek = 2 or DateTime.ToDay.DayOfWeek = 4 Then
+      Else If DateTime.ToDay.DayOfWeek = 2 or DateTime.ToDay.DayOfWeek = 4 or DateTime.ToDay.DayOfWeek = 0  Then
           Dim hinducaldaz =  (DateTime.ToDay.Year-2021)*366+DateTime.ToDay.DayOfYear-14
           old = (hinducaldaz\61).ToString() & "." & (1+hinducaldaz mod 61).ToString().PadLeft(2,"0"c) & " : "
       End If
