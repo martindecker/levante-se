@@ -413,7 +413,7 @@ Module Program
         File.Delete(fn)
       Else If DateTime.ToDay.DayOfWeek = 2 or DateTime.ToDay.DayOfWeek = 4 or DateTime.ToDay.DayOfWeek = 0  Then
           Dim hinducaldaz =  (DateTime.ToDay.Year-2021)*366+DateTime.ToDay.DayOfYear-14
-          old = (hinducaldaz\61).ToString() & "." & (1+hinducaldaz mod 61).ToString().PadLeft(2,"0"c) & " : "
+          old = "Ritu_(Indian_season)" & VbCrLF & (hinducaldaz\61).ToString() & "." & (1+hinducaldaz mod 61).ToString().PadLeft(2,"0"c) & " : "
       End If
       Using fs As FileStream = File.Create(fn)
         Dim dw = New StreamWriter(fs)
