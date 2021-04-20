@@ -384,9 +384,9 @@ Module Program
     Else If DateTime.ToDay.DayOfWeek = 0 Then 
       fn = dirForJS & "repair-or-learn-edv.mtxt"
 #If SlovakVersion Then
-      Console.WriteLine(VbCrLf & VbCrLf &"What did you repair or what did you program or learn ?")
+      Console.WriteLine(VbCrLf & VbCrLf &"Čo ste opravili alebo čo ste programovali alebo ste sa naučili?")
 #Else
-      Console.WriteLine(VbCrLf & VbCrLf &"What did you repair or what did you program or learn ?")
+      Console.WriteLine(VbCrLf & VbCrLf &"Que reparaches ou que programaches ou aprendiches?")
 #End if
     Else
       Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
