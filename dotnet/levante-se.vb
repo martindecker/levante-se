@@ -689,6 +689,14 @@ Module Program
       Console.WriteLine(VbLf)
       deferred.HolidayTomorrow = True
     End If
+    If DateTime.ToDay.DayOfYear = 114 AndAlso ((DateTime.ToDay.Year mod 4)>=1 OrElse (DateTime.ToDay.Year mod 20)=0 ) Then
+      If (DateTime.ToDay.Year mod 20)=0 Then Console.WriteLine( "tomorrow " )
+#If SlovakVersion Then
+      Console.WriteLine( "=====> " & "( Arménsky deň spomienok )" ) 
+#Else
+      Console.WriteLine( "=====> " & "( Día de Remembrance Armenian )" ) 
+#End if
+    End If
     If wForM.URL_ofDay.Length() > 0 Then
       Dim url as String = wForM.URL_ofDay( day146097 mod wForM.URL_ofDay.Length() )
       Console.WriteLine( "-----> " & url ) 
