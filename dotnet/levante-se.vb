@@ -283,7 +283,7 @@ Module Program
         Dim weekOfYear = cal.GetWeekOfYear(DateTime.ToDay,CalendarWeekRule.FirstDay,DayOfWeek.Monday)
         Dim lio As Integer = tsw.LastIndexOf( VbLf )
         If lio < 0 Then lio = 0
-        If 20*(tsw.Length()-lio)-333 > (theWeight-60)*(theWeight-60) Then tsw = tsw & VbCrLf
+        If 27*(tsw.Length()-lio)-333 > (theWeight-60)*(theWeight-60) Then tsw = tsw & VbCrLf
         tsw = tsw & theWeight.ToString().Replace(",",".") & "]]}"
         Console.Write( "(#" & countInYear & " / " & weekOfYear & ")" )
         If countInYear <= weekOfYear Then 
