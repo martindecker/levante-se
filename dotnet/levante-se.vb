@@ -437,6 +437,30 @@ Module Program
 
 
 
+  Private Sub SaveViewLater( url As String )
+    Dim fn As String = dirForJS & "view-later-top-in.json"
+    Try
+      Dim old As String = VbCrLF & "]"
+      If File.Exists(fn) AndAlso FileLen(fn)>9 Then
+        old =  VbCrLF & "," & VbCrLf & File.ReadAllText(fn).SubString(3)
+        File.Delete(fn)
+      End If
+      Using fs As FileStream = File.Create(fn)
+        Dim dw = New StreamWriter(fs)
+        dw.Write( "[" & VbCrLF & "    """ & url & """" & old )
+        dw.Close()
+      End Using
+    Catch eee As Exception  
+#If SlovakVersion Then
+      errorExit(fn & "   Chyba:", eee)
+#Else
+      errorExit(fn & "   Erro:", eee)
+#End if
+    End Try 
+  End Sub
+
+
+
   Function LoadOrSaveVitamin(savenumber As Integer) ' if > -2 then save
     Dim fn As String = dirForJS & "vitamintaken.mtxt"
     Dim numstring As String
