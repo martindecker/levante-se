@@ -441,7 +441,7 @@ Module Program
     Dim fn As String = dirForJS & "view-later-top-in.json"
     Try
       Dim old As String = VbCrLF & "]"
-      If File.Exists(fn) AndAlso FileLen(fn)>9 Then
+      If File.Exists(fn) AndAlso FileLen(fn)>9  AndAlso FileLen(fn)<888 Then
         old =  VbCrLF & "," & VbCrLf & File.ReadAllText(fn).SubString(3)
         File.Delete(fn)
       End If
@@ -858,16 +858,16 @@ Module Program
       Console.Write("{0} ? (s=y/n) ", text)
 #End if
      line = Console.ReadKey(true).KeyChar
-     If line.ToUpper() = "U" OrElse line.ToUpper() = "V" then 
+     If line.ToUpper() = "U" OrElse line.ToUpper() = "X" then 
        Console.write( VbCrLf &  "-URL-" & VbCrLf )
        ShowURL
      End if
-     If line.ToUpper() = "V" then 
+     If line.ToUpper() = "X" then 
 #If SlovakVersion Then
-      Console.WriteLine("V also means premature Exit")    
+      Console.WriteLine("X also means premature Exit")    
       Console.WriteLine("Program ukončíte stlačením klávesu.")
 #Else
-      Console.WriteLine("V also means premature Exit")    
+      Console.WriteLine("X also means premature Exit")    
       Console.WriteLine( "Prema unha tecla para rematar o programa." )
 #End if
       Console.ReadKey()
@@ -976,23 +976,23 @@ Module Program
 #End if
       End if
       line = Console.ReadKey(true).KeyChar 
-      If lindex = 1 AndAlso Rindex=1 AndAlso  line.ToUpper() = "V" Then 
+      If lindex = 1 AndAlso Rindex=1 AndAlso  line.ToUpper() = "X" Then 
        Console.write( VbCrLf &  "-URL-" & VbCrLf )
        ShowURL
 #If SlovakVersion Then
-       Console.WriteLine("V also means premature Exit")    
+       Console.WriteLine("X also means premature Exit")    
        Console.WriteLine("Program ukončíte stlačením klávesu.")
 #Else
-       Console.WriteLine("V also means premature Exit")    
+       Console.WriteLine("X also means premature Exit")    
        Console.WriteLine( "Prema unha tecla para rematar o programa." )
 #End if
        Console.ReadKey()
        Environment.Exit(-1)
       End if
 #If SlovakVersion Then
-     Loop Until "lLľĽpPrRustUST".Contains(line)
+     Loop Until "lLľĽpPrRuvstUVST".Contains(line)
 #Else
-     Loop Until "lLeEdDrRustUST".Contains(line)
+     Loop Until "lLeEdDrRuvstUVST".Contains(line)
 #End if
      upr = " "
      If line = "ľ" OrElse line="Ľ" Then Line = "L" ' ToUpper does not work with Character number 318, 317
@@ -1019,6 +1019,9 @@ Module Program
          upr = "…" ' Unicode Character : horizontal ellipsis, appears after Process.Start
        End if
        ShowURL
+     Elseif line.ToUpper() = "V" then 
+       Console.write( vbcr &  "SaveViewLater ...  ")
+       SaveViewLater( url )
      Else 
       If lindex < left.length Then nsteps = nsteps + 1
       lindex  = lindex  + 1
