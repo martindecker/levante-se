@@ -1154,6 +1154,10 @@ Public Module Interf
     Public VersionOfStruct As Decimal
     Public TodoPart2() As String
     Public SaveAStringPrompt As String
+    Public OneKindOfGarbDD As Integer
+    Public OneKindOfGarbMM As Integer
+    Public OneKindOfGarbYYYY As Integer
+    Public OneKOGEveryNWeeks As Integer
     Public URL_ofDay() As String
   End Structure
   

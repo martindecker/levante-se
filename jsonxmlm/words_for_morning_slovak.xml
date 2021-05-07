@@ -10,6 +10,10 @@
     <string>Zapíšte kalórie</string>
   </TodoPart2>
   <SaveAStringPrompt></SaveAStringPrompt>
+  <OneKindOfGarbDD>0</OneKindOfGarbDD>
+  <OneKindOfGarbMM>0</OneKindOfGarbMM>
+  <OneKindOfGarbYYYY>0</OneKindOfGarbYYYY>
+  <OneKOGEveryNWeeks>0</OneKOGEveryNWeeks>
   <URL_ofDay>
     <string>https://twitter.com/v_language</string>
     <string>https://github.com/dbohdan/embedded-scripting-languages</string>
