@@ -688,6 +688,29 @@ Module Program
     End If
     Console.WriteLine(   "-----> " & work1.ToString() ) 
     Console.WriteLine(VbLf)
+    Dim garbDayDiff As Integer? = Nothing
+    If wForM.OneKindOfGarbDD>0 AndAlso wForM.OneKindOfGarbMM>0 Then
+      Dim Ddd As DateTime
+      If wForM.OneKindOfGarbYYYY = 0 Then 
+        Ddd = New DateTime(DateTime.ToDay.Year    ,wForM.OneKindOfGarbMM,wForM.OneKindOfGarbDD)
+      Else
+        Ddd = New DateTime(wForM.OneKindOfGarbYYYY,wForM.OneKindOfGarbMM,wForM.OneKindOfGarbDD)
+      End If
+      garbDayDiff = DateDiff(DateInterval.Day, Ddd, DateTime.ToDay)
+    End If
+      Console.WriteLine(wForM.OneKindOfGarbDD)
+      Console.WriteLine(IsNothing(garbDayDiff))
+      Console.WriteLine(garbDayDiff)
+    If Not IsNothing(garbDayDiff) AndAlso garbDayDiff=0 Then
+      filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      Console.WriteLine( "=====> " & "Odpadu" ) 
+      todo1(filled1bis) = "Odpadu"
+#Else
+      Console.WriteLine( "=====> " & "Lixo" ) 
+      todo1(filled1bis) = "Lixo"
+#End if
+    End If
     Dim PublicHoliday = False
     deferred.HolidayToday = False
     If isPublicHoliday(0) Then
