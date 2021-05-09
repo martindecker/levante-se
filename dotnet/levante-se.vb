@@ -698,10 +698,7 @@ Module Program
       End If
       garbDayDiff = DateDiff(DateInterval.Day, Ddd, DateTime.ToDay)
     End If
-      Console.WriteLine(wForM.OneKindOfGarbDD)
-      Console.WriteLine(IsNothing(garbDayDiff))
-      Console.WriteLine(garbDayDiff)
-    If Not IsNothing(garbDayDiff) AndAlso garbDayDiff=0 Then
+    If Not IsNothing(garbDayDiff) AndAlso ( garbDayDiff=0 OrElse (wForM.OneKOGEveryNWeeks>0 AndAlso garbDayDiff mod (7*wForM.OneKOGEveryNWeeks)=0 ) ) Then
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
       Console.WriteLine( "=====> " & "Odpadu" ) 
