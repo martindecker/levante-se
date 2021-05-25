@@ -373,7 +373,11 @@ Module Program
     Dim fn As String = dirForJS & "zstring.mtxt"
     If DateTime.ToDay.DayOfWeek = 2 Then 
       fn = dirForJS & "hdtws.mtxt"
-      Console.Write( VbCrLf & VbCrLf & "How did the week start? " )
+#If SlovakVersion Then
+      Console.Write( VbCrLf & VbCrLf & "Ako začal týždeň?" )
+#Else
+      Console.Write( VbCrLf & VbCrLf & "Como comezou a semana?" )
+#End if
     Else If DateTime.ToDay.DayOfWeek = 4 Then 
       fn = dirForJS & "bureaucracy-or-looks.mtxt"
 #If SlovakVersion Then
