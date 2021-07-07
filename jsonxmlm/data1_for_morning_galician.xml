@@ -37,6 +37,8 @@
   <WaterWhenTimeTight>true</WaterWhenTimeTight>
   <WinterHeatingAbMMDD>1119</WinterHeatingAbMMDD>
   <WinterHeatingBisMDD>315</WinterHeatingBisMDD>
+  <WashHeatMinutes>0</WashHeatMinutes>
+  <WashHeatSummer>0</WashHeatSummer>
   <Brush>true</Brush>
   <TkWeight>true</TkWeight>
   <PublicHolidaysMDD>
