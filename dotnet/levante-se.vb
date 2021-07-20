@@ -119,6 +119,8 @@ Module Program
   Dim stoerungen2 As Boolean = false
   Dim theWeight As Decimal = -2
   Dim justTookV As Integer = -2
+  Dim wash2time As DateTime
+  Dim wash2do As Boolean = false
 
  
   Private Sub LoadAData
@@ -373,11 +375,7 @@ Module Program
     Dim fn As String = dirForJS & "zstring.mtxt"
     If DateTime.ToDay.DayOfWeek = 2 Then 
       fn = dirForJS & "hdtws.mtxt"
-#If SlovakVersion Then
-      Console.Write( VbCrLf & VbCrLf & "Ako začal týždeň?" )
-#Else
-      Console.Write( VbCrLf & VbCrLf & "Como comezou a semana?" )
-#End if
+      Console.Write( VbCrLf & VbCrLf & "How did the week start? " )
     Else If DateTime.ToDay.DayOfWeek = 4 Then 
       fn = dirForJS & "bureaucracy-or-looks.mtxt"
 #If SlovakVersion Then
@@ -574,6 +572,15 @@ Module Program
       Console.WriteLine("-----> " & "Ranné cvičenie dnes, potom")
 #Else
       Console.WriteLine("-----> " & "Hoxe mañá exercicio, logo")  
+#End if
+    Else If If( isHeatingSeason(), dataForM.WashHeatWinter, dataForM.WashHeatMinutes )
+      wash2do = True
+      wash2time = DateTime.Now + New TimeSpan( 0, If( isHeatingSeason(), dataForM.WashHeatWinter, dataForM.WashHeatMinutes ), 0 )
+      filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = "Umývanie 1"
+#Else
+      todo1(filled1bis) = "Lavarse " & string.Format("{0:HH':'mm}", wash2time) 
 #End if
     Else
       filled1bis = filled1bis + 1
@@ -1164,6 +1171,8 @@ Public Module Interf
     Public WaterWhenTimeTight As Boolean
     Public WinterHeatingAbMMDD As Integer
     Public WinterHeatingBisMDD As Integer
+    Public WashHeatMinutes As Integer
+    Public WashHeatWinter As Integer
     Public Brush As Boolean
     Public TkWeight As Boolean
     Public PublicHolidaysMDD() As Integer
