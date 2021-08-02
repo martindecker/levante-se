@@ -578,7 +578,7 @@ Module Program
       wash2time = DateTime.Now + New TimeSpan( 0, If( isHeatingSeason(), dataForM.WashHeatWinter, dataForM.WashHeatMinutes ), 0 )
       filled1bis = filled1bis + 1
 #If SlovakVersion Then
-      todo1(filled1bis) = "Umývanie 1"
+      todo1(filled1bis) = "Umývanie " & string.Format("{0:HH':'mm}", wash2time)
 #Else
       todo1(filled1bis) = "Lavarse " & string.Format("{0:HH':'mm}", wash2time) 
 #End if
