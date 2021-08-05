@@ -40,6 +40,7 @@
   <WashHeatMinutes>0</WashHeatMinutes>
   <WashHeatWinter>0</WashHeatWinter>
   <Brush>true</Brush>
+  <Freezer>true</Freezer>
   <TkWeight>true</TkWeight>
   <PublicHolidaysMDD>
     <int>101</int>
