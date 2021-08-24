@@ -855,6 +855,15 @@ Module Program
 #End if
         justTookV = day146097-1
     End If
+    If dataForM.Freezer AndAlso ((day146097+55) mod 2)=0 Then
+        filled1bis = filled1bis + 1
+#If SlovakVersion Then
+        todo1(filled1bis) = "Freezer ??"
+#Else
+        todo1(filled1bis) = "Freezer ??"
+#End if
+        justTookV = day146097-1
+    End If
   End Sub
  
  
@@ -1174,6 +1183,7 @@ Public Module Interf
     Public WashHeatMinutes As Integer
     Public WashHeatWinter As Integer
     Public Brush As Boolean
+    Public Freezer As Boolean
     Public TkWeight As Boolean
     Public PublicHolidaysMDD() As Integer
     Public PublicHolidayGoodFriday As Boolean
