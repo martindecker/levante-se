@@ -858,9 +858,9 @@ Module Program
     If dataForM.Freezer AndAlso ((day146097+55) mod 2)=0 Then
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
-        todo1(filled1bis) = "Freezer ??"
+        todo1(filled1bis) = "Rozmrazte bobule !"
 #Else
-        todo1(filled1bis) = "Freezer ??"
+        todo1(filled1bis) = "Descongela as bagas !"
 #End if
         justTookV = day146097-1
     End If
