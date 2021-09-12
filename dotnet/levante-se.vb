@@ -855,17 +855,25 @@ Module Program
 #End if
         justTookV = day146097-1
     End If
-    If dataForM.Freezer AndAlso ((day146097+55) mod 2)=0 Then
+    If dataForM.Freezer AndAlso ((day146097+57) mod 5)=0 Then
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
-        todo1(filled1bis) = "Rozmrazte bobule !"
+        todo1(filled1bis) = "Rozmrazte bobule"
 #Else
-        todo1(filled1bis) = "Descongela as bagas !"
+        todo1(filled1bis) = "Descongela as bagas"
+#End if
+        justTookV = day146097-1
+    ElseIf dataForM.Freezer AndAlso ((day146097+57) mod 3)=0 Then ' on average every 4 days
+        filled1bis = filled1bis + 1
+#If SlovakVersion Then
+        todo1(filled1bis) = "%%%%%"
+#Else
+        todo1(filled1bis) = "Descongela 150g a espinaca ou a col rizada"
 #End if
         justTookV = day146097-1
     End If
   End Sub
- 
+
  
   Function PhysicalActivityDays( day146097 As Integer, regelstruct As DataForMorningP ) As MorningExerciseMode
     Dim laenge = regelstruct.MorningExerciseModeArray.Length()
