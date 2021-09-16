@@ -863,10 +863,10 @@ Module Program
         todo1(filled1bis) = "Descongela as bagas"
 #End if
         justTookV = day146097-1
-    ElseIf dataForM.Freezer AndAlso ((day146097+57) mod 3)=0 Then ' on average every 4 days
+    ElseIf dataForM.Freezer AndAlso (((day146097+57)*4) mod 13)<4 Then ' on average every 4 days given 1/5 less
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
-        todo1(filled1bis) = "%%%%%"
+        todo1(filled1bis) = "Rozmrazte 150 g kelu alebo krémového špenátu"
 #Else
         todo1(filled1bis) = "Descongela 150g a espinaca ou a col rizada"
 #End if
