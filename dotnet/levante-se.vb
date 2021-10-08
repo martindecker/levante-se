@@ -612,6 +612,29 @@ Module Program
       todo1(filled1bis) = If( len(ur)<23, "Se é necesario " & ur, ur )     
 #End if
     End If
+    If dataForM.Freezer AndAlso ((day146097+57) mod 5)=0 Then
+        filled1bis = filled1bis + 1
+#If SlovakVersion Then
+        todo1(filled1bis) = "Rozmrazte bobule"
+#Else
+        todo1(filled1bis) = "Descongela as bagas"
+#End if
+    ElseIf dataForM.Freezer AndAlso (((day146097+57)*4) mod 13)<4 Then ' on average every 4 days given 1/5 less
+        filled1bis = filled1bis + 1
+        If DateTime.ToDay.Month >= 6 AndAlso DateTime.ToDay.Month <= 11 Then
+#If SlovakVersion Then
+          todo1(filled1bis) = "Rozmrazte 110 g kelu alebo krémového špenátu"
+#Else
+          todo1(filled1bis) = "Descongela 110g a espinaca ou a col rizada"
+#End if
+        Else
+#If SlovakVersion Then
+          todo1(filled1bis) = "Rozmrazte 150 g kelu alebo krémového špenátu"
+#Else
+          todo1(filled1bis) = "Descongela 150g a espinaca ou a col rizada"
+#End if
+        End If
+    End If
     If fs <> MorningExerciseMode.AlmostAlways Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
         If dataForM.OftenCleanClothing OrElse dataForM.OftenMatTraining OrElse day146097 mod 4 > 1 Then
@@ -853,31 +876,6 @@ Module Program
 #Else
         todo1(filled1bis) = "Toma as vitaminas de onte"
 #End if
-        justTookV = day146097-1
-    End If
-    If dataForM.Freezer AndAlso ((day146097+57) mod 5)=0 Then
-        filled1bis = filled1bis + 1
-#If SlovakVersion Then
-        todo1(filled1bis) = "Rozmrazte bobule"
-#Else
-        todo1(filled1bis) = "Descongela as bagas"
-#End if
-        justTookV = day146097-1
-    ElseIf dataForM.Freezer AndAlso (((day146097+57)*4) mod 13)<4 Then ' on average every 4 days given 1/5 less
-        filled1bis = filled1bis + 1
-        If DateTime.ToDay.Month >= 6 AndAlso DateTime.ToDay.Month <= 11 Then
-#If SlovakVersion Then
-          todo1(filled1bis) = "Rozmrazte 110 g kelu alebo krémového špenátu"
-#Else
-          todo1(filled1bis) = "Descongela 110g a espinaca ou a col rizada"
-#End if
-        Else
-#If SlovakVersion Then
-          todo1(filled1bis) = "Rozmrazte 150 g kelu alebo krémového špenátu"
-#Else
-          todo1(filled1bis) = "Descongela 150g a espinaca ou a col rizada"
-#End if
-        End If
         justTookV = day146097-1
     End If
   End Sub
