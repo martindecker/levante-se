@@ -784,6 +784,9 @@ Module Program
 #Else
       todo1(filled1bis) = If( len(url)<27, url, "Ver o URL anterior (U)")     
 #End if
+      deferred.URLtoday = URL
+      deferred.URLtomorrow = wForM.URL_ofDay( (day146097+1) mod wForM.URL_ofDay.Length() )
+      deferred.URLcomposite = wForM.URL_ofDay( (day146097+1+wForM.URL_ofDay.Length()\2) mod wForM.URL_ofDay.Length() )
       todayurl = url
     End if  
     If DateTime.Now.Hour < 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday AndAlso Not PublicHoliday Then
@@ -1236,7 +1239,10 @@ Public Module Interf
     Public LastSport As Integer ' currently not used
     Public HolidayToday As Boolean
     Public HolidayTomorrow As Boolean
- End Structure
+    Public URLtoday  As String
+    Public URLtomorrow  As String
+    Public URLcomposite  As String
+  End Structure
 End Module
 
 
