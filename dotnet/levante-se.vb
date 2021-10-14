@@ -910,7 +910,7 @@ Module Program
     Dim line As String
     Do
 #If SlovakVersion Then
-      Console.Write("{0} ? (á=y/ž=n) ", text)
+      Console.Write("{0} ? (á=y/n) ", text)
 #Else
       Console.Write("{0} ? (s=y/n) ", text)
 #End if
@@ -930,8 +930,7 @@ Module Program
       Console.ReadKey()
       Environment.Exit(-1)
     End if
-    Loop Until "aáAÁzžZŽjnJNsSyY".Contains(line) ' slovak umlauts for á Á are &#225; &#193; 
-    If line = "ž" OrElse line="Ž" Then Line = "z" ' ToUpper does not work with Character number &#382; or &#381;
+    Loop Until "aáAÁjnJNsSyY".Contains(line) ' slovak umlauts for á Á are &#225; &#193; 
     If line.ToUpper() = "A"  OrElse line.ToUpper() = "Á"  OrElse line.ToUpper() = "J"  OrElse line.ToUpper() = "S"  OrElse line.ToUpper() = "Y" then 
 #If SlovakVersion Then
       Console.WriteLine(" áno ")
@@ -941,7 +940,7 @@ Module Program
       Return True
     Else 
 #If SlovakVersion Then
-      Console.WriteLine(" žiadny ")
+      Console.WriteLine(" Nie ")
 #Else
       Console.WriteLine(" Non ")
 #End if
@@ -1012,7 +1011,7 @@ Module Program
       Elseif lindex < left.length AndAlso rindex < r.length AndAlso len(left(lindex))+len(r(rindex))>44 then
         Console.Write(vbcr &  "{0}. {1} ?  (L/P)"& upr, left(lindex),r(rindex))
       ElseIf lindex < left.length AndAlso rindex < r.length then
-        Console.Write(vbcr &  "{0}.: {1}, {2} ? (Ľavá,Pravá)" & upr, nsteps+1, left(lindex),r(rindex))
+        Console.Write(vbcr &  "{0}.: {1}, {2} ? (doĽava,doPrava)" & upr, nsteps+1, left(lindex),r(rindex))
       Elseif lindex < left.length  AndAlso len(left(lindex))>39  then
         Console.Write(vbcr &  "{0}, - ? (P)"& upr, left(lindex))
       Elseif lindex < left.length then
