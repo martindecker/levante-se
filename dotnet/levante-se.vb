@@ -621,7 +621,7 @@ Module Program
 #End if
     ElseIf dataForM.Freezer AndAlso (((day146097+57)*4) mod 13)<4 Then ' on average every 4 days given 1/5 less
         filled1bis = filled1bis + 1
-        If DateTime.ToDay.Month >= 6 AndAlso DateTime.ToDay.Month <= 11 Then
+        If DateTime.ToDay.DayOfYear >= 130 AndAlso DateTime.ToDay.DayOfYear <= 278 Then ' 5.10. and 10.5.
 #If SlovakVersion Then
           todo1(filled1bis) = "Rozmrazte 110 g kelu alebo krémového špenátu"
 #Else
