@@ -616,8 +616,10 @@ Module Program
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
         todo1(filled1bis) = "Rozmrazte bobule"
+        Console.WriteLine("Ak sú brusnice otvorené, bobule nerozmrazujte.")
 #Else
         todo1(filled1bis) = "Descongela as bagas"
+        Console.WriteLine("Se os arándanos están abertos, non desconxelos.")
 #End if
     ElseIf dataForM.Freezer AndAlso (((day146097+57)*4) mod 13)<4 Then ' on average every 4 days given 1/5 less
         filled1bis = filled1bis + 1
@@ -721,7 +723,7 @@ Module Program
       Console.WriteLine( line )
     End If
     Console.WriteLine(   "-----> " & work1.ToString() ) 
-    Console.WriteLine(VbLf)
+    Console.WriteLine("")
     Dim garbDayDiff As Integer? = Nothing
     If wForM.OneKindOfGarbDD>0 AndAlso wForM.OneKindOfGarbMM>0 Then
       Dim Ddd As DateTime
@@ -750,7 +752,7 @@ Module Program
 #Else
       Console.WriteLine( "=====> " & "Día festivo  ( Public Holiday )" ) 
 #End if
-      Console.WriteLine(VbLf)
+      Console.WriteLine("")
       PublicHoliday =  True
       deferred.HolidayToday = True
       filled1bis = 0
@@ -764,7 +766,7 @@ Module Program
         Console.WriteLine( "Día festivo Mañá  ( Public Holiday tomorrow )" & " <====="  ) 
 #End if
       Next
-      Console.WriteLine(VbLf)
+      Console.WriteLine("")
       deferred.HolidayTomorrow = True
     End If
     If DateTime.ToDay.DayOfYear = 114 AndAlso ((DateTime.ToDay.Year mod 4)>=1 OrElse (DateTime.ToDay.Year mod 20)=0 ) Then
