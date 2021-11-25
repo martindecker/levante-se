@@ -626,14 +626,18 @@ Module Program
         If DateTime.ToDay.DayOfYear >= 130 AndAlso DateTime.ToDay.DayOfYear <= 278 Then ' 5.10. and 10.5.
 #If SlovakVersion Then
           todo1(filled1bis) = "Rozmrazte 110 g kelu alebo krémového špenátu"
+          Console.WriteLine("Ak čerstvá žerucha alebo petržlen, tak žiadny špenát!")
 #Else
           todo1(filled1bis) = "Descongela 110g a espinaca ou a col rizada"
+          Console.WriteLine("Se o berro ou o perexil frescos, ¡non hai espinacas!")
 #End if
         Else
 #If SlovakVersion Then
           todo1(filled1bis) = "Rozmrazte 150 g kelu alebo krémového špenátu"
+          Console.WriteLine("Ak čerstvá žerucha alebo petržlen, tak žiadny špenát!")
 #Else
           todo1(filled1bis) = "Descongela 150g a espinaca ou a col rizada"
+          Console.WriteLine("Se o berro ou o perexil frescos, ¡non hai espinacas!")
 #End if
         End If
     End If
