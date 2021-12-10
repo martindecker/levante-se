@@ -6,6 +6,8 @@ Imports System.Text.Json.Serialization
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports System.Globalization
+Imports System.Text.RegularExpressions
+
 
 ' User language = Galician or Slowak, Enums and the Winter Keyword = English
 #Const SlovakVersion = False
@@ -70,12 +72,7 @@ Module Program
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
       If (DateTime.ToDay.DayOfWeek = 2 OrElse DateTime.ToDay.DayOfWeek = 4 or DateTime.ToDay.DayOfWeek = 0)  AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
-        Dim fnz As String = dirForJS & "zstring.mtxt"
-        Try
-          r( r.Length-1 ) = File.ReadAllText( fnz ).Trim().Replace(VbLf," ")
-          If len(r( r.Length-1 ))>32 Then r( r.Length-1 ) = r( r.Length-1 ).SubString( 0,32 )&".."
-        Catch eeee As Exception  
-        End Try 
+        LoadZString_Slov_G
       End If
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( left, r, todayurl ) 
@@ -437,6 +434,22 @@ Module Program
     End Try 
   End Sub
 
+
+  Private Sub LoadZString_Slov_G 
+    Dim fnz As String = dirForJS & "zstring.mtxt" 
+    Try
+      dim zcontent = File.ReadAllText( fnz ).Trim()
+    For Each element As Char In zcontent
+      If AscW(element) > &HD7FF Then Throw New ArgumentOutOfRangeException("zstring.mtxt must be UTF-8 and each char below utf16-Surrogates = 0xD800+")
+    Next
+    dim rex = "[^a-zA-Z0-9 ÁÄÜÖÉÍÓÚÝáäöüßéíóúýČĎŇŠŽčďňšžŤťŔŕĽľĹÀÂÃÇÊÔÕàâãçéêôõÑñ]"
+    r( r.Length-1 ) = Regex.Replace( zcontent, rex, "_")
+    If len(r( r.Length-1 ))>32 Then r( r.Length-1 ) = r( r.Length-1 ).SubString( 0,32 )&".."
+    If len(r( r.Length-1 ))<2 Then r( r.Length-1 ) = "Entscheide"&".."
+    Catch eeee As Exception  
+      Console.WriteLine(eeee)
+    End Try 
+  End Sub
 
 
   Private Sub SaveViewLater( url As String )
