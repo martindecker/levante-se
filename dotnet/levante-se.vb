@@ -834,6 +834,7 @@ Module Program
 #End if
     End If
     Dim gt As Integer = dataForM.WaterPlantsAfterDaysQ2Q3
+    Dim keiml As Boolean = False
     If DateTime.Now.Month <= 3 OrElse DateTime.Now.Month > 9 Then gt = dataForM.WaterPlantsAfterDaysQ1Q4
     If isHeatingSeason() Then 
       gt = dataForM.WaterInHeatingSeason
@@ -841,7 +842,8 @@ Module Program
     If deferred.SeedingDay    <= DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) AndAlso 
        deferred.SeedingDay+14 >= DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) AndAlso 
        dataForM.Water4SeedingInDay4to14 >= 1 Then
-      gt = dataForM.Water4SeedingInDay4to14
+      gt = dataForM.Water4SeedingInDay4to1
+      keiml = True
     End If
     If gt <= 0 Then gt = 99999999
     Dim giessen As Boolean = (((day146097+17) mod gt)=0) ' Alle gt Tage, wird prinzipiell gegossen aber es gibt Ausnahmen
@@ -877,6 +879,12 @@ Module Program
         todo1(filled1bis) = "Encha o Regadeira" ' Fill the Watering can, to remind to water in the afternoon
 #End if
         deferred.WaterLater = True
+      ElseIf keiml Then
+#If SlovakVersion Then
+        todo1(filled1bis) = "Rega as mudas"
+#Else
+        todo1(filled1bis) = "Plantas de rego"
+#End if
       Else
 #If SlovakVersion Then
         todo1(filled1bis) = "Zalievanie rastlín"
