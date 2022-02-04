@@ -558,14 +558,14 @@ Module Program
       fs = MorningExerciseMode.AlmostAlways
     End if
     Console.WriteLine(VbLf)
-    If DateTime.Now.Hour >= 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
-      filled1bis = filled1bis + 1
+    ' If DateTime.Now.Hour >= 7 AndAlso DateTime.Today.DayOfWeek = DayOfWeek.Monday Then
+    '  filled1bis = filled1bis + 1
 #If SlovakVersion Then
-      todo1(filled1bis) = "V prípade potreby zapnite umývačku riadu"
+    '  todo1(filled1bis) = "V prípade potreby zapnite umývačku riadu"
 #Else
-      todo1(filled1bis) = "Se é necesario, un lavaplatos"
+    '  todo1(filled1bis) = "Se é necesario, un lavaplatos"
 #End if
-    End If
+    ' End If
     Dim tookVit As Integer = LoadOrSaveVitamin(-2) - day146097
     If day146097 < = 44444 AndAlso tookVit > 77777 Then
       tookVit = tookVit - 146097
