@@ -881,9 +881,9 @@ Module Program
         deferred.WaterLater = True
       ElseIf keiml Then
 #If SlovakVersion Then
-        todo1(filled1bis) = "Rega as mudas"
+        todo1(filled1bis) = "Vodné sadenice"
 #Else
-        todo1(filled1bis) = "Plantas de rego"
+        todo1(filled1bis) = "Rega as mudas"
 #End if
       Else
 #If SlovakVersion Then
