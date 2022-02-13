@@ -842,7 +842,7 @@ Module Program
     If deferred.SeedingDay    <= DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) AndAlso 
        deferred.SeedingDay+14 >= DateTime.ToDay.DayOfYear + 365*((DateTime.ToDay.Year-1) mod 4 ) AndAlso 
        dataForM.Water4SeedingInDay4to14 >= 1 Then
-      gt = dataForM.Water4SeedingInDay4to1
+      gt = dataForM.Water4SeedingInDay4to14
       keiml = True
     End If
     If gt <= 0 Then gt = 99999999
