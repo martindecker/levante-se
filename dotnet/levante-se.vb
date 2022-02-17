@@ -76,8 +76,8 @@ Module Program
       End If
       timestamp1 = DateTime.Now
       dozweispaltigchecklist( left, r, todayurl ) 
-      If wForM.SaveAStringPrompt.Length() >= 2 AndAlso Not Char.IsWhiteSpace(wForM.SaveAStringPrompt(1)) Then
-        EnterAndSaveString
+      If wForM.SaveAStringPrompt.Length() >= 2 AndAlso DateTime.ToDay.DayOfWeek <> 0 AndAlso Not Char.IsWhiteSpace(wForM.SaveAStringPrompt(1)) Then
+        EnterAndSaveString ' Not in Sunday
       End If
       deferred.WaterPlants1 = False
       SaveMorningXml
@@ -380,7 +380,7 @@ Module Program
 #Else
       Console.WriteLine(VbCrLf & VbCrLf &"Como você vasculhou com burocracia ou o olhar?")
 #End if
-    Else If DateTime.ToDay.DayOfWeek = 0 Then 
+    Else If DateTime.ToDay.DayOfWeek = 5 Then 
       fn = dirForJS & "repair-or-learn-edv.mtxt"
 #If SlovakVersion Then
       Console.WriteLine(VbCrLf & VbCrLf &"Čo ste opravili alebo čo ste programovali alebo ste sa naučili?")
@@ -390,11 +390,17 @@ Module Program
     Else
       Console.Write( VbCrLf & VbCrLf & wForM.SaveAStringPrompt )
     End If
-    If DateTime.ToDay.DayOfWeek = 2-1 OrElse DateTime.ToDay.DayOfWeek = 4-1  OrElse DateTime.ToDay.DayOfWeek = 7-1 Then 
+    If DateTime.ToDay.DayOfWeek = 1 OrElse DateTime.ToDay.DayOfWeek = 6 Then 
 #If SlovakVersion Then
       Console.Write( " (Dva dni) " )
 #Else
       Console.Write( " (Dous días) " )
+#End if
+    Else If DateTime.ToDay.DayOfWeek = 3 Then 
+#If SlovakVersion Then
+      Console.Write( " (Tri dni) " )
+#Else
+      Console.Write( " (3 días) " )
 #End if
     End If
     If Not "!?:".Contains( wForM.SaveAStringPrompt(wForM.SaveAStringPrompt.Length()-1)) Then Console.Write( ":" )
