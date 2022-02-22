@@ -81,7 +81,7 @@ Module Program
       End If
       deferred.WaterPlants1 = False
       SaveMorningXml
-      If justTookV > -2 Then LoadOrSaveVitamin( justTookV )
+      If justTookV > -2 AndAlso LoadOrSaveVitamin(-2)=origTookV Then LoadOrSaveVitamin( justTookV )
       timestamp4 = DateTime.Now
       If DateTime.Today.DayOfWeek = DayOfWeek.Sunday AndAlso DateTime.Now.Hour >= 4  Then
         UpdateJsonStatist
@@ -116,6 +116,7 @@ Module Program
   Dim stoerungen2 As Boolean = false
   Dim theWeight As Decimal = -2
   Dim justTookV As Integer = -2
+  Dim origTookV As Integer = -222222
   Dim wash2time As DateTime
   Dim wash2do As Boolean = false
 
@@ -571,11 +572,13 @@ Module Program
 #Else
     '  todo1(filled1bis) = "Se é necesario, un lavaplatos"
 #End if
-    ' End If
-    Dim tookVit As Integer = LoadOrSaveVitamin(-2) - day146097
-    If day146097 < = 44444 AndAlso tookVit > 77777 Then
+    ' End If    
+    Dim tookVit As Integer = LoadOrSaveVitamin(-2)
+    origTookV = tookVit
+    tookVit = tookVit - day146097
+    If tookVit > 77777 Then
       tookVit = tookVit - 146097
-    Else If day146097 >= 77777 AndAlso tookVit < 44444 Then
+    Else If tookVit < -77777 Then
       tookVit = tookVit + 146097
     End If
     Dim takeVit As Boolean = tookVit  < -1 
