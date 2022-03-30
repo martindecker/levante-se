@@ -581,6 +581,7 @@ Module Program
     Else If tookVit < -77777 Then
       tookVit = tookVit + 146097
     End If
+    If -9=origTookV Then tookVit=-9 ' File does not exist                                                                                                                                  
     Dim takeVit As Boolean = tookVit  < -1 
 #If SlovakVersion Then
     If tookVit <> -1 Then Console.WriteLine( "       Vitamín prijatý: " & tookVit.ToString() & " deň" & VbCrLf )
