@@ -617,24 +617,6 @@ Module Program
       filled1bis = filled1bis + 1
       todo1(filled1bis) = todo3
     End If
-    If dataForM.LowCarbTeil.Length() > 0 Then
-      If takeVit AndAlso fs = MorningExerciseMode.AlmostAlways Then
-        filled1bis = filled1bis + 1
-#If SlovakVersion Then
-        todo1(filled1bis) = "Vezmite si včerajšie vitamíny"
-#Else
-        todo1(filled1bis) = "Toma as vitaminas de onte"
-#End if
-        justTookV = day146097-1
-      End If
-      Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
-      filled1bis = filled1bis + 1
-#If SlovakVersion Then
-      todo1(filled1bis) = If( len(ur)<23, "V prípade potreby " & ur, ur )     
-#Else
-      todo1(filled1bis) = If( len(ur)<23, "Se é necesario " & ur, ur )     
-#End if
-    End If
     If dataForM.Freezer AndAlso ((day146097+57) mod 5)=0 Then
         filled1bis = filled1bis + 1
 #If SlovakVersion Then
@@ -663,6 +645,24 @@ Module Program
           Console.WriteLine("Se o berro ou o perexil frescos, ¡non hai espinacas!")
 #End if
         End If
+    End If
+    If dataForM.LowCarbTeil.Length() > 0 Then
+      If takeVit AndAlso fs = MorningExerciseMode.AlmostAlways Then
+        filled1bis = filled1bis + 1
+#If SlovakVersion Then
+        todo1(filled1bis) = "Vezmite si včerajšie vitamíny"
+#Else
+        todo1(filled1bis) = "Toma as vitaminas de onte"
+#End if
+        justTookV = day146097-1
+      End If
+      Dim ur as String = dataForM.LowCarbTeil( day146097 mod dataForM.LowCarbTeil.Length() )
+      filled1bis = filled1bis + 1
+#If SlovakVersion Then
+      todo1(filled1bis) = If( len(ur)<23, "V prípade potreby " & ur, ur )     
+#Else
+      todo1(filled1bis) = If( len(ur)<23, "Se é necesario " & ur, ur )     
+#End if
     End If
     If fs <> MorningExerciseMode.AlmostAlways Then
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
