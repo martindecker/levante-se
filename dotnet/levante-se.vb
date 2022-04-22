@@ -71,7 +71,8 @@ Module Program
       If Not isHeatingSeason() Then 
           r = Array.FindAll( wForM.TodoPart2, Function(p As String ) IsNothing(p) OrElse Not p.StartsWith("Winter:") )
       End If
-      If (DateTime.ToDay.DayOfWeek = 2 OrElse DateTime.ToDay.DayOfWeek = 4 or DateTime.ToDay.DayOfWeek = 0)  AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
+      If (DateTime.ToDay.DayOfWeek = 2 OrElse DateTime.ToDay.DayOfWeek = 4 OrElse DateTime.ToDay.DayOfWeek = 5 or DateTime.ToDay.DayOfWeek = 0) _
+          AndAlso r( r.Length-1 ).StartsWith("Entscheide") Then
         LoadZString_Slov_G
       End If
       timestamp1 = DateTime.Now
