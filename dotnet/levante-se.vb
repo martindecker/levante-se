@@ -631,18 +631,18 @@ Module Program
         filled1bis = filled1bis + 1
         If DateTime.ToDay.DayOfYear >= 130 AndAlso DateTime.ToDay.DayOfYear <= 278 Then ' 5.10. and 10.5.
 #If SlovakVersion Then
-          todo1(filled1bis) = "Rozmrazte 110 g kelu alebo krémového špenátu"
+          todo1(filled1bis) = "Rozmrazte 70 g kelu alebo krémového špenátu"
           Console.WriteLine("Ak čerstvá žerucha alebo petržlen, tak žiadny špenát!")
 #Else
-          todo1(filled1bis) = "Descongela 110g a espinaca ou a col rizada"
+          todo1(filled1bis) = "Descongela 70g a espinaca ou a col rizada"
           Console.WriteLine("Se o berro ou o perexil frescos, ¡non hai espinacas!")
 #End if
         Else
 #If SlovakVersion Then
-          todo1(filled1bis) = "Rozmrazte 150 g kelu alebo krémového špenátu"
+          todo1(filled1bis) = "Rozmrazte 80 g kelu alebo krémového špenátu"
           Console.WriteLine("Ak čerstvá žerucha alebo petržlen, tak žiadny špenát!")
 #Else
-          todo1(filled1bis) = "Descongela 150g a espinaca ou a col rizada"
+          todo1(filled1bis) = "Descongela 80g a espinaca ou a col rizada"
           Console.WriteLine("Se o berro ou o perexil frescos, ¡non hai espinacas!")
 #End if
         End If
@@ -669,15 +669,7 @@ Module Program
       If DateTime.Today.DayOfWeek < dataForM.ZeitknapperAbTag OrElse DateTime.Today.DayOfWeek > dataForM.ZeitknapperBisTag Then
         If dataForM.OftenCleanClothing OrElse dataForM.OftenMatTraining OrElse day146097 mod 4 > 1 Then
           filled1bis = filled1bis + 2
-          If day146097 mod 2 = 1 AndAlso ( (dataForM.SeldomCleanClothing AndAlso day146097 mod 8 > 3 ) OrElse dataForM.OftenCleanClothing ) Then
-#If SlovakVersion Then
-            todo1(filled1bis-1) = "Pripravte uvarené raňajky"
-            todo1(filled1bis) = "Skontrolujte čistotu odevov"
-#Else
-            todo1(filled1bis-1) = "Cociña o almorzo"
-            todo1(filled1bis) = "Verifique a limpeza da roupa"
-#End if
-          Else If dataForM.SeldomMatTraining OrElse dataForM.OftenMatTraining Then
+          If dataForM.SeldomMatTraining OrElse dataForM.OftenMatTraining Then
 #If SlovakVersion Then
             todo1(filled1bis-1) = "Mat cvičenia"
             todo1(filled1bis) = "Pripravte uvarené raňajky"
